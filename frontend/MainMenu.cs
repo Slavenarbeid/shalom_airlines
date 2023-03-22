@@ -1,4 +1,5 @@
-﻿using Terminal.Gui;
+﻿using backend.Controllers;
+using Terminal.Gui;
 
 public class MainMenu : Window
 {
@@ -46,7 +47,7 @@ public class MainMenu : Window
 
         // When login button is clicked display a message popup
         btnLogin.Clicked += () => {
-            if (usernameText.Text == "admin" && passwordText.Text == "password") {
+            if (AuthController.Login(usernameText.Text, passwordText.Text)) {
                 MessageBox.Query ("Logging In", "Login Successful", "Ok");
                 Application.RequestStop ();
             } else {
