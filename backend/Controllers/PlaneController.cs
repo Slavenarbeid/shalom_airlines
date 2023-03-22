@@ -1,6 +1,13 @@
-﻿namespace backend.Controllers;
+﻿using backend.Models;
 
-public class PlaneController
+namespace backend.Controllers;
+
+public static class PlaneController
 {
+    public static Plane Create(string model, int businessSeats, int firstClassSeats)
+    {
+        return new Plane(model, businessSeats, firstClassSeats);
+    }
+    
     
 }
