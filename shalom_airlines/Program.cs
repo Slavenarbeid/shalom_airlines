@@ -1,3 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-Console.WriteLine("Hello, World!"); 
+using Terminal.Gui;
+
+
+Application.Run<MainMenu> ();
+
+Application.Shutdown (); 

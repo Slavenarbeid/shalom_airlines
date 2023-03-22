@@ -8,8 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="BackEnd" />
-      <Folder Include="FrontEnd" />
+      <PackageReference Include="Terminal.Gui" Version="1.10.0" />
     </ItemGroup>
 
 </Project>
