@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shalom_airlines", "shalom_airlines\shalom_airlines.csproj", "{186EF250-2C9A-4721-874D-B83E48EBEBBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "frontend", "frontend\frontend.csproj", "{186EF250-2C9A-4721-874D-B83E48EBEBBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backend", "backend\backend.csproj", "{22C33622-2C49-4CB0-9E86-5EAB40EED002}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +14,9 @@ Global
 		{186EF250-2C9A-4721-874D-B83E48EBEBBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{186EF250-2C9A-4721-874D-B83E48EBEBBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{186EF250-2C9A-4721-874D-B83E48EBEBBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22C33622-2C49-4CB0-9E86-5EAB40EED002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22C33622-2C49-4CB0-9E86-5EAB40EED002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22C33622-2C49-4CB0-9E86-5EAB40EED002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22C33622-2C49-4CB0-9E86-5EAB40EED002}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
