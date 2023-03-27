@@ -11,12 +11,11 @@ public class AdminOverview : Window
         {
             new MenuBarItem("Menu", new[]
             {
-                new MenuItem("Create", "Create a Flight", () => Application.Run<CreateFlight>())
+                new MenuItem("Create", "Create a Flight", () => Application.Run<CreateFlight>()),
+                new MenuItem("test", "test", () => Application.Run<Test>())
+                
             })
         });
-        
-        
-        
         Add(menu);
     }
 }
