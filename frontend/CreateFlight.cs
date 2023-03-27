@@ -7,112 +7,105 @@ public class CreateFlight : Window
     public CreateFlight()
     {
         Title = "Create a flight";
-
-        // Create input components and labels
-        var FlightNumberLabel = new Label()
+        
+        var flightNumberLabel = new Label()
         {
             Text = "Flight Number:",
         };
 
-        var FlightNumberText = new TextField("")
+        var flightNumberText = new TextField("")
         {
-            // Position text field adjacent to the label
-            X = Pos.Right(FlightNumberLabel) + 2,
-
-            // Fill remaining horizontal space
+            X = Pos.Right(flightNumberLabel) + 2,
             Width = Dim.Percent(75),
         };
 
-        var PlaneTypeLabel = new Label()
+        var planeTypeLabel = new Label()
         {
             Text = "Plane type:",
-            X = Pos.Left(FlightNumberLabel),
-            Y = Pos.Bottom(FlightNumberLabel) + 2
+            X = Pos.Left(flightNumberLabel),
+            Y = Pos.Bottom(flightNumberLabel) + 2
         };
 
-        var PlaneTypeText = new TextField("")
+        var planeTypeText = new TextField("")
         {
-            // align with the text box above
-            X = Pos.Left(FlightNumberText),
-            Y = Pos.Top(PlaneTypeLabel),
+            X = Pos.Left(flightNumberText),
+            Y = Pos.Top(planeTypeLabel),
             Width = Dim.Percent(75),
         };
 
-        var DepartureAirportLabel = new Label()
+        var departureAirportLabel = new Label()
         {
             Text = "Departure Airport:",
-            X = Pos.Left(PlaneTypeLabel),
-            Y = Pos.Bottom(PlaneTypeLabel) + 2
+            X = Pos.Left(planeTypeLabel),
+            Y = Pos.Bottom(planeTypeLabel) + 2
         };
 
-        var DepartureAirportText = new TextField("")
+        var departureAirportText = new TextField("")
         {
-            // align with the text box above
-            X = Pos.Left(FlightNumberText),
-            Y = Pos.Top(DepartureAirportLabel),
+            X = Pos.Left(planeTypeText),
+            Y = Pos.Top(departureAirportLabel),
             Width = Dim.Percent(75),
         };
 
-        var DepartureTimeLabel = new Label()
+        var departureTimeLabel = new Label()
         {
             Text = "Departure Time:",
-            X = Pos.Left(DepartureAirportLabel),
-            Y = Pos.Bottom(DepartureAirportLabel) + 2
+            X = Pos.Left(departureAirportLabel),
+            Y = Pos.Bottom(departureAirportLabel) + 2
         };
 
-        var DepartureTimeText = new TextField("")
+        var departureTimeText = new TextField("")
         {
-            // align with the text box above
-            X = Pos.Left(DepartureAirportText),
-            Y = Pos.Top(DepartureTimeLabel),
+            X = Pos.Left(departureAirportText),
+            Y = Pos.Top(departureTimeLabel),
             Width = Dim.Percent(75),
         };
 
-        var ArrivalAirportLabel = new Label()
+        var arrivalAirportLabel = new Label()
         {
             Text = "Arrival Airport:",
-            X = Pos.Left(DepartureTimeLabel),
-            Y = Pos.Bottom(DepartureTimeLabel) + 2
+            X = Pos.Left(departureTimeLabel),
+            Y = Pos.Bottom(departureTimeLabel) + 2
         };
 
-        var ArrivalAirportText = new TextField("")
+        var arrivalAirportText = new TextField("")
         {
-            // align with the text box above
-            X = Pos.Left(DepartureTimeText),
-            Y = Pos.Top(ArrivalAirportLabel),
+            X = Pos.Left(departureTimeText),
+            Y = Pos.Top(arrivalAirportLabel),
             Width = Dim.Percent(75),
         };
 
-        var ArrivalATimeLabel = new Label()
+        var arrivalATimeLabel = new Label()
         {
             Text = "Arrival Airport:",
-            X = Pos.Left(ArrivalAirportLabel),
-            Y = Pos.Bottom(ArrivalAirportLabel) + 2
+            X = Pos.Left(arrivalAirportLabel),
+            Y = Pos.Bottom(arrivalAirportLabel) + 2
         };
 
-        var ArrivalATimeText = new TextField("")
+        var arrivalATimeText = new TextField("")
         {
-            // align with the text box above
-            X = Pos.Left(ArrivalAirportText),
-            Y = Pos.Top(ArrivalATimeLabel),
+            X = Pos.Left(arrivalAirportText),
+            Y = Pos.Top(arrivalATimeLabel),
             Width = Dim.Percent(75),
         };
-
-        // Create login button
+        
         var btnCreate = new Button()
         {
             Text = "Create",
-            Y = Pos.Bottom(ArrivalATimeText) + 2,
-            // center the login button horizontally
+            Y = Pos.Bottom(arrivalATimeText) + 2,
             X = Pos.Center(),
             IsDefault = true,
         };
+        
+        btnCreate.Clicked += () =>
+        {
+            MessageBox.Query("Creating Flight", "Flight Created", "Ok");
+            Application.RequestStop();
+            Application.Run<AdminOverview>();
+        };
 
-        // When login button is clicked display a message popup
-        btnCreate.Clicked += () => { };
-
-        Add(FlightNumberLabel, FlightNumberText, PlaneTypeLabel, PlaneTypeText, DepartureAirportLabel,
-            DepartureAirportText, DepartureTimeLabel, DepartureTimeText, ArrivalAirportLabel, ArrivalAirportText,
-            ArrivalATimeLabel, ArrivalATimeText, btnCreate);
+        Add(flightNumberLabel, flightNumberText, planeTypeLabel, planeTypeText, departureAirportLabel,
+            departureAirportText, departureTimeLabel ,departureTimeText, arrivalAirportLabel, arrivalAirportText,
+            arrivalATimeLabel, arrivalATimeText, btnCreate);
     }
 }
