@@ -14,13 +14,15 @@ public class Login : Window
         // Create input components and labels
         var usernameLabel = new Label()
         {
-            Text = "Username:"
+            Text = "Username:",
+            Y = Pos.Center()
         };
 
         usernameText = new TextField("")
         {
             // Position text field adjacent to the label
             X = Pos.Right(usernameLabel) + 1,
+            Y = Pos.Center(),
 
             // Fill remaining horizontal space
             Width = Dim.Fill(),
@@ -59,6 +61,7 @@ public class Login : Window
             {
                 MessageBox.Query("Logging In", "Login Successful", "Ok");
                 Application.RequestStop();
+                Application.Run<AdminOverview>();
             }
             else
             {
