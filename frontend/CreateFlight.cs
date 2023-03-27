@@ -1,4 +1,5 @@
-﻿using Terminal.Gui;
+﻿using backend.Controllers;
+using Terminal.Gui;
 
 namespace shalom_airlines;
 
@@ -47,65 +48,88 @@ public class CreateFlight : Window
             Width = Dim.Percent(75),
         };
 
-        var departureTimeLabel = new Label()
+        var departureDateLabel = new Label()
         {
-            Text = "Departure Time:",
+            Text = "Departure Date:",
             X = Pos.Left(departureAirportLabel),
             Y = Pos.Bottom(departureAirportLabel) + 2
         };
 
-        var departureTimeText = new TextField("")
+        var departureDateText = new DateField(new DateTime(2023, 3, 27, 10, 12, 0))
         {
             X = Pos.Left(departureAirportText),
-            Y = Pos.Top(departureTimeLabel),
+            Y = Pos.Top(departureDateLabel),
             Width = Dim.Percent(75),
         };
 
         var arrivalAirportLabel = new Label()
         {
             Text = "Arrival Airport:",
-            X = Pos.Left(departureTimeLabel),
-            Y = Pos.Bottom(departureTimeLabel) + 2
+            X = Pos.Left(departureDateLabel),
+            Y = Pos.Bottom(departureDateLabel) + 2
         };
 
-        var arrivalAirportText = new TextField("")
+        var arrivalAirportText = new TextField()
         {
-            X = Pos.Left(departureTimeText),
+            X = Pos.Left(departureDateText),
             Y = Pos.Top(arrivalAirportLabel),
             Width = Dim.Percent(75),
         };
 
-        var arrivalATimeLabel = new Label()
+        var arrivalAtDateLabel = new Label()
         {
-            Text = "Arrival Airport:",
+            Text = "Arrival Date:",
             X = Pos.Left(arrivalAirportLabel),
             Y = Pos.Bottom(arrivalAirportLabel) + 2
         };
 
-        var arrivalATimeText = new TextField("")
+        var arrivalAtDateText = new DateField(new DateTime(2023, 3, 27, 10, 12, 0))
         {
             X = Pos.Left(arrivalAirportText),
-            Y = Pos.Top(arrivalATimeLabel),
+            Y = Pos.Top(arrivalAtDateLabel),
             Width = Dim.Percent(75),
         };
         
         var btnCreate = new Button()
         {
             Text = "Create",
-            Y = Pos.Bottom(arrivalATimeText) + 2,
+            Y = Pos.Bottom(arrivalAtDateText) + 2,
             X = Pos.Center(),
             IsDefault = true,
         };
         
         btnCreate.Clicked += () =>
         {
+            // add validation func
+
+            // parse types
+            int flightNumberValue = Convert.ToInt32(flightNumberText.Text);
+            var planeTypeValue = PlaneController.Create((string)planeTypeText.Text, 30, 10);
+            string departureAirportValue = (string)departureAirportText.Text;
+            DateTime departureDateValue = departureDateText.Date;
+            string arrivalAirportValue = (string)arrivalAirportText.Text;
+            DateTime arrivalAtDateValue = arrivalAtDateText.Date;
+
+            FlightController.Create(
+                flightNumberValue, 
+                planeTypeValue, 
+                departureAirportValue, 
+                departureDateValue, 
+                arrivalAirportValue, 
+                arrivalAtDateValue);
+            
             MessageBox.Query("Creating Flight", "Flight Created", "Ok");
             Application.RequestStop();
             Application.Run<AdminOverview>();
         };
 
-        Add(flightNumberLabel, flightNumberText, planeTypeLabel, planeTypeText, departureAirportLabel,
-            departureAirportText, departureTimeLabel ,departureTimeText, arrivalAirportLabel, arrivalAirportText,
-            arrivalATimeLabel, arrivalATimeText, btnCreate);
+        Add(
+            flightNumberLabel, flightNumberText, 
+            planeTypeLabel, planeTypeText, 
+            departureAirportLabel, departureAirportText, 
+            departureDateLabel ,departureDateText, 
+            arrivalAirportLabel, arrivalAirportText,
+            arrivalAtDateLabel, arrivalAtDateText, 
+            btnCreate);
     }
 }
