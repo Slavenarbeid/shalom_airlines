@@ -23,6 +23,7 @@ public class Show : Window
             if (FlightController.Delete(flight))
             {
                 MessageBox.Query("Deleting Flight", "Flight Deleted", "Ok");
+                Application.Run<shalom_airlines.Admin.Flights.Index>();
                 return;
             }
             MessageBox.Query("Deleting Flight Failed", "Flight not Deleted", "Ok");

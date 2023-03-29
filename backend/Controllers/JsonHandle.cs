@@ -22,8 +22,8 @@ public class JsonHandle<TItem>
     public bool RemoveFromJson(TItem item)
     {
         List<TItem> listOfObjects = LoadJson();
-        
-        bool succes = listOfObjects.Remove(item);
+        TItem itemToRemove = listOfObjects.FirstOrDefault(obj => obj.ToString() == item.ToString());
+        bool succes = listOfObjects.Remove(itemToRemove);
         
         SaveJsonFile(listOfObjects);
 
