@@ -7,10 +7,25 @@ public class JsonHandle<TItem>
 
     public JsonHandle(string jsonFileName)
     {
-        JsonFileName = @"../../../../backend/Data" + jsonFileName;
+        JsonFileName = @"../../../../backend/Data/" + jsonFileName;
     }
 
     public void SaveToJson(TItem item)
+    {
+        List<TItem> listOfObjects = LoadJson();
+
+        
+        string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\"));
+        listOfObjects.Add(item);
+        
+        using (StreamWriter writer = new StreamWriter(JsonFileName))
+        {
+            string list2Json = JsonConvert.SerializeObject(listOfObjects);
+            writer.Write(list2Json);
+        }
+    }
+
+    public List<TItem> LoadJson()
     {
         List<TItem> listOfObjects = new List<TItem>();
         if(File.Exists(JsonFileName)){
@@ -20,13 +35,6 @@ public class JsonHandle<TItem>
                 listOfObjects = JsonConvert.DeserializeObject<List<TItem>>(file2Json);
             }
         }
-        
-        listOfObjects.Add(item);
-        
-        using (StreamWriter writer = new StreamWriter(JsonFileName))
-        {
-            string list2Json = JsonConvert.SerializeObject(listOfObjects);
-            writer.Write(list2Json);
-        }
+        return listOfObjects;
     }
 }
