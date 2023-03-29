@@ -21,4 +21,6 @@ public class Flight
         ArrivalAirport = arrivalAirport;
         ArrivalATime = arrivalATime;
     }
+
+    public override string ToString() => $"[{FlightNumber}] {DepartureAirport} -> {ArrivalAirport} | {DepartureTime.ToString()}";
 }

@@ -1,4 +1,4 @@
-﻿using NStack;
+using NStack;
 using backend.Controllers;
 using Terminal.Gui;
 
