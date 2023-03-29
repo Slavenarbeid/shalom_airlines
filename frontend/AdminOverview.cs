@@ -11,11 +11,13 @@ public class AdminOverview : Window
         {
             new MenuBarItem("Menu", new[]
             {
+                new MenuItem("Overview", "See all Flights", () => Application.Run<shalom_airlines.Admin.Flights.Index>()),
                 new MenuItem("Create", "Create a Flight", () => Application.Run<CreateFlight>()),
-                new MenuItem("test", "test", () => Application.Run<Test>())
-                
             })
         });
+        
+        
+        
         Add(menu);
     }
 }
