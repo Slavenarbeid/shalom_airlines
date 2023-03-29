@@ -89,38 +89,38 @@ public class CreateFlight : Window
             Width = Dim.Percent(75),
         };
 
-        var arrivalATimeLabel = new Label()
+        var arrivalAtDateLabel = new Label()
         {
-            Text = "Arrival Time:  ",
+            Text = "Arrival Date:",
             X = Pos.Left(arrivalAirportLabel),
             Y = Pos.Bottom(arrivalAirportLabel) + 2
         };
 
-        var arrivalATimeText = new TextField("")
+        var arrivalAtDateText = new DateField(new DateTime(2023, 3, 27, 10, 12, 0))
         {
             X = Pos.Left(arrivalAirportText),
-            Y = Pos.Top(arrivalATimeLabel),
+            Y = Pos.Top(arrivalAtDateLabel),
             Width = Dim.Percent(75),
         };
         
-        var arrivalAtDateLabel = new Label()
+        var arrivalAtTimeLabel = new Label()
         {
-            Text = "Arrival Date:",
-            X = Pos.Left(arrivalATimeLabel),
-            Y = Pos.Bottom(arrivalATimeLabel) + 2
+            Text = "Arrival Time:  ",
+            X = Pos.Left(arrivalAtDateLabel),
+            Y = Pos.Bottom(arrivalAtDateLabel) + 2
         };
 
-        var arrivalAtDateText = new DateField(new DateTime(2023, 3, 27, 10, 12, 0))
+        var arrivalAtTimeText = new TimeField(new TimeSpan(0,0, 0))
         {
-            X = Pos.Left(arrivalATimeText),
-            Y = Pos.Top(arrivalAtDateLabel),
+            X = Pos.Left(arrivalAtDateText),
+            Y = Pos.Top(arrivalAtTimeLabel),
             Width = Dim.Percent(75),
         };
         
         var btnCreate = new Button()
         {
             Text = "Create",
-            Y = Pos.Bottom(arrivalAtDateText) + 2,
+            Y = Pos.Bottom(arrivalAtTimeText) + 2,
             X = Pos.Center(),
             IsDefault = true,
         };
@@ -150,8 +150,14 @@ public class CreateFlight : Window
             Application.Run<AdminOverview>();
         };
 
-        Add(flightNumberLabel, flightNumberText, planeTypeLabel, planeType, departureAirportLabel,
-            departureAirportText, departureDateLabel, departureDateText, departureTimeLabel ,departureTimeText, arrivalAirportLabel, arrivalAirportText,
-            arrivalATimeLabel, arrivalATimeText, arrivalAtDateLabel, arrivalAtDateText, btnCreate);
+        Add(flightNumberLabel, flightNumberText, 
+            planeTypeLabel, planeType, 
+            departureAirportLabel, departureAirportText, 
+            departureDateLabel, departureDateText, 
+            departureTimeLabel ,departureTimeText, 
+            arrivalAirportLabel, arrivalAirportText,
+            arrivalAtDateLabel, arrivalAtDateText, 
+            arrivalAtTimeLabel, arrivalAtTimeText, 
+            btnCreate);
     }
 }
