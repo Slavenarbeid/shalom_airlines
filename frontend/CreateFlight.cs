@@ -150,8 +150,8 @@ public class CreateFlight : Window
             Application.Run<AdminOverview>();
         };
 
-        Add(flightNumberLabel, flightNumberText, planeTypeLabel, planeTypeText, departureAirportLabel,
-            departureAirportText, departureTimeLabel ,departureTimeText, arrivalAirportLabel, arrivalAirportText,
-            arrivalATimeLabel, arrivalATimeText, btnCreate);
+        Add(flightNumberLabel, flightNumberText, planeTypeLabel, planeType, departureAirportLabel,
+            departureAirportText, departureDateLabel, departureDateText, departureTimeLabel ,departureTimeText, arrivalAirportLabel, arrivalAirportText,
+            arrivalATimeLabel, arrivalATimeText, arrivalAtDateLabel, arrivalAtDateText, btnCreate);
     }
 }
