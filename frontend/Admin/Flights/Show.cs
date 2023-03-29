@@ -1,3 +1,4 @@
+using backend.Controllers;
 using backend.Models;
 using Terminal.Gui;
 
@@ -7,6 +8,25 @@ public class Show : Window
 {
     public Show(Flight flight)
     {
-        Add(new Label(flight.ToString()));
+
+        var flightLabel = new Label(flight.ToString());
+        var btnDelete = new Button()
+        {
+            Text = "Delete",
+            Y = Pos.Bottom(flightLabel) + 2,
+            X = 0,
+            IsDefault = true,
+        };
+
+        btnDelete.Clicked += () =>
+        {
+            if (FlightController.Delete(flight))
+            {
+                MessageBox.Query("Deleting Flight", "Flight Deleted", "Ok");
+                return;
+            }
+            MessageBox.Query("Deleting Flight Failed", "Flight not Deleted", "Ok");
+        };
+        Add(flightLabel, btnDelete);
     }
 }

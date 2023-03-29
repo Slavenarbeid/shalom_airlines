@@ -10,18 +10,24 @@ public class JsonHandle<TItem>
         JsonFileName = @"../../../../backend/Data/" + jsonFileName + ".json";
     }
 
-    public void SaveToJson(TItem item)
+    public void AddToJson(TItem item)
     {
         List<TItem> listOfObjects = LoadJson();
-
         
         listOfObjects.Add(item);
         
-        using (StreamWriter writer = new StreamWriter(JsonFileName))
-        {
-            string list2Json = JsonConvert.SerializeObject(listOfObjects);
-            writer.Write(list2Json);
-        }
+        SaveJsonFile(listOfObjects);
+    }
+
+    public bool RemoveFromJson(TItem item)
+    {
+        List<TItem> listOfObjects = LoadJson();
+        
+        bool succes = listOfObjects.Remove(item);
+        
+        SaveJsonFile(listOfObjects);
+
+        return succes;
     }
 
     public List<TItem> LoadJson()
@@ -35,5 +41,14 @@ public class JsonHandle<TItem>
             }
         }
         return listOfObjects;
+    }
+
+    public void SaveJsonFile(List<TItem> listOfObjects)
+    {
+        using (StreamWriter writer = new StreamWriter(JsonFileName))
+        {
+            string list2Json = JsonConvert.SerializeObject(listOfObjects);
+            writer.Write(list2Json);
+        }
     }
 }

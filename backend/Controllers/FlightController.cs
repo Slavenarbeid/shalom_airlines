@@ -10,9 +10,17 @@ public static class FlightController
     {
         Flight flight = new(flightNumber, planeType, departureAirport, departureTime, arrivalAirport, arrivalATime);
         JsonHandle<Flight> jsonHandle = new JsonHandle<Flight>("Flights");
-        jsonHandle.SaveToJson(flight);
+        jsonHandle.AddToJson(flight);
         _flights.Add(flight);
-
+        
         return flight;
     }
+
+    public static bool Delete(Flight flight)
+    {
+        JsonHandle<Flight> jsonHandle = new JsonHandle<Flight>("Flights");
+        return jsonHandle.RemoveFromJson(flight);
+    }
+    
+
 }
