@@ -7,7 +7,7 @@ public class JsonHandle<TItem>
 
     public JsonHandle(string jsonFileName)
     {
-        JsonFileName = @"../../../../backend/Data/" + jsonFileName;
+        JsonFileName = @"../../../../backend/Data/" + jsonFileName + ".json";
     }
 
     public void SaveToJson(TItem item)
@@ -15,7 +15,6 @@ public class JsonHandle<TItem>
         List<TItem> listOfObjects = LoadJson();
 
         
-        string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\"));
         listOfObjects.Add(item);
         
         using (StreamWriter writer = new StreamWriter(JsonFileName))

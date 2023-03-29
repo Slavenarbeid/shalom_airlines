@@ -1,3 +1,4 @@
+using backend.Controllers;
 using backend.Models;
 using Terminal.Gui;
 
@@ -19,13 +20,8 @@ public class Index : Window
                 new MenuItem("Create", "Create a Flight", () => Application.Run<CreateFlight>()),
             })
         });
-        
-        Flights = new List<Flight>()
-        {
-            new(1, new Plane("plane 1", 15, 15), "airport 1", new DateTime(), "airport 2", new DateTime()),
-            new(2, new Plane("plane 2", 15, 15), "airport 2", new DateTime(), "airport 3", new DateTime()),
-            new(3, new Plane("plane 3", 15, 15), "airport 3", new DateTime(), "airport 1", new DateTime()),
-        };
+        JsonHandle<Flight> jsonHandle = new JsonHandle<Flight>("Flights");
+        Flights = jsonHandle.LoadJson();
 
 
         var list = new ListView(Flights)
