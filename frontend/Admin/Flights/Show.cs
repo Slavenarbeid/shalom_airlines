@@ -28,6 +28,20 @@ public class Show : Window
             }
             MessageBox.Query("Deleting Flight Failed", "Flight not Deleted", "Ok");
         };
-        Add(flightLabel, btnDelete);
+
+        var btnEdit = new Button()
+        {
+            Text = "Edit",
+            Y = Pos.Bottom(btnDelete) + 2,
+            X = 0,
+            IsDefault = true,
+        };
+
+        btnEdit.Clicked += () =>
+        {
+            Application.Run(new EditFlight(flight));
+        };
+        
+        Add(flightLabel, btnDelete, btnEdit);
     }
 }
