@@ -54,7 +54,7 @@ public class CreateFlight : Window
             Y = Pos.Bottom(departureAirportLabel) + 2
         };
 
-        var departureDateText = new DateField(new DateTime(2023, 3, 27, 10, 12, 0))
+        var departureDateText = new DateField(DateTime.Today)
         {
             X = Pos.Left(departureAirportText),
             Y = Pos.Top(departureDateLabel),
@@ -89,38 +89,38 @@ public class CreateFlight : Window
             Width = Dim.Percent(75),
         };
 
-        var arrivalATimeLabel = new Label()
+        var arrivalDateLabel = new Label()
         {
-            Text = "Arrival Time:  ",
+            Text = "Arrival Date:",
             X = Pos.Left(arrivalAirportLabel),
             Y = Pos.Bottom(arrivalAirportLabel) + 2
         };
 
-        var arrivalATimeText = new TextField("")
+        var arrivalDateText = new DateField(DateTime.Today)
         {
             X = Pos.Left(arrivalAirportText),
-            Y = Pos.Top(arrivalATimeLabel),
+            Y = Pos.Top(arrivalDateLabel),
             Width = Dim.Percent(75),
         };
         
-        var arrivalAtDateLabel = new Label()
+        var arrivalTimeLabel = new Label()
         {
-            Text = "Arrival Date:",
-            X = Pos.Left(arrivalATimeLabel),
-            Y = Pos.Bottom(arrivalATimeLabel) + 2
+            Text = "Arrival Time:  ",
+            X = Pos.Left(arrivalDateLabel),
+            Y = Pos.Bottom(arrivalDateLabel) + 2
         };
 
-        var arrivalAtDateText = new DateField(new DateTime(2023, 3, 27, 10, 12, 0))
+        var arrivalTimeText = new TimeField(new TimeSpan(0,0, 0))
         {
-            X = Pos.Left(arrivalATimeText),
-            Y = Pos.Top(arrivalAtDateLabel),
+            X = Pos.Left(arrivalDateText),
+            Y = Pos.Top(arrivalTimeLabel),
             Width = Dim.Percent(75),
         };
         
         var btnCreate = new Button()
         {
             Text = "Create",
-            Y = Pos.Bottom(arrivalAtDateText) + 2,
+            Y = Pos.Bottom(arrivalTimeText) + 2,
             X = Pos.Center(),
             IsDefault = true,
         };
@@ -132,26 +132,40 @@ public class CreateFlight : Window
             // parse types
             int flightNumberValue = Convert.ToInt32(flightNumberText.Text);
             var planeTypeValue = PlaneController.Create((string)planeType.Text, 30, 10);
+            
             string departureAirportValue = (string)departureAirportText.Text;
             DateTime departureDateValue = departureDateText.Date;
+            TimeSpan departureTimeValue = departureTimeText.Time;
+
+            DateTime departureDateTimeValue = departureDateValue + departureTimeValue;
+            
             string arrivalAirportValue = (string)arrivalAirportText.Text;
-            DateTime arrivalAtDateValue = arrivalAtDateText.Date;
+            DateTime arrivalDateValue = arrivalDateText.Date;
+            TimeSpan arrivalTimeValue = arrivalTimeText.Time;
+
+            DateTime arrivalDateTimeValue = arrivalDateValue + arrivalTimeValue;
 
             FlightController.Create(
                 flightNumberValue, 
                 planeTypeValue, 
                 departureAirportValue, 
-                departureDateValue, 
+                departureDateTimeValue, 
                 arrivalAirportValue, 
-                arrivalAtDateValue);
+                arrivalDateTimeValue);
             
             MessageBox.Query("Creating Flight", "Flight Created", "Ok");
             Application.RequestStop();
             Application.Run<AdminOverview>();
         };
 
-        Add(flightNumberLabel, flightNumberText, planeTypeLabel, planeType, departureAirportLabel,
-            departureAirportText, departureDateLabel, departureDateText, departureTimeLabel ,departureTimeText, arrivalAirportLabel, arrivalAirportText,
-            arrivalATimeLabel, arrivalATimeText, arrivalAtDateLabel, arrivalAtDateText, btnCreate);
+        Add(flightNumberLabel, flightNumberText, 
+            planeTypeLabel, planeType, 
+            departureAirportLabel, departureAirportText, 
+            departureDateLabel, departureDateText, 
+            departureTimeLabel ,departureTimeText, 
+            arrivalAirportLabel, arrivalAirportText,
+            arrivalDateLabel, arrivalDateText, 
+            arrivalTimeLabel, arrivalTimeText, 
+            btnCreate);
     }
 }
