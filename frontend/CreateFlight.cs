@@ -1,6 +1,5 @@
 using NStack;
 using backend.Controllers;
-using backend.Models;
 using Terminal.Gui;
 
 namespace shalom_airlines;
@@ -27,16 +26,8 @@ public class CreateFlight : Window
             X = Pos.Left(flightNumberLabel),
             Y = Pos.Bottom(flightNumberLabel) + 2
         };
-
-        // in the future get this list from PlaneController
-        var planes = new List<Plane>()
-        {
-            new("Boeing 737", 15, 5),
-            new("Airbus 330", 15, 5),
-            new("Boeing 787", 15, 5)
-        };
         
-        ustring[] planeTypeRadioGroup = planes
+        ustring[] planeTypeRadioGroup = PlaneController.Planes
             .Select(plane => ustring.Make(plane.Model))
             .ToArray();
         
@@ -142,7 +133,7 @@ public class CreateFlight : Window
         {
             // extract values
             int flightNumberValue = Convert.ToInt32(flightNumberText.Text);
-            var planeTypeValue = planes[planeType.SelectedItem];
+            var planeTypeValue = PlaneController.Planes[planeType.SelectedItem];
 
             string departureAirportValue = (string)departureAirportText.Text;
             DateTime departureDateTimeValue = departureDateText.Date + departureTimeText.Time;

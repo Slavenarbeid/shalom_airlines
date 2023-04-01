@@ -4,7 +4,7 @@ namespace backend.Controllers;
 
 public static class FlightController
 {
-    private static List<Flight> _flights = new List<Flight>();
+    private static List<Flight> _flights = new ();
         
     public static Flight Create(int flightNumber, Plane planeType, string departureAirport, DateTime departureTime, string arrivalAirport, DateTime arrivalTime)
     {
