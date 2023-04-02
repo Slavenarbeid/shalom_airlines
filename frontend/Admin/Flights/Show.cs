@@ -15,7 +15,6 @@ public class Show : Window
             Text = "Delete",
             Y = Pos.Bottom(flightLabel) + 2,
             X = 0,
-            IsDefault = true,
         };
 
         btnDelete.Clicked += () =>

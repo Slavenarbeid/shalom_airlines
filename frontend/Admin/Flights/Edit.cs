@@ -10,7 +10,7 @@ public class EditFlight : Window
 {
     public EditFlight(Flight flight)
     {
-        Title = "Create a flight";
+        Title = $"Edit flight: {flight.FlightNumber}";
         
         var flightNumberLabel = new Label()
         {
@@ -60,7 +60,7 @@ public class EditFlight : Window
 
         var departureDateText = new DateField(DateTime.Today)
         {
-            Text = flight.DepartureTime.Date.ToString(),
+            Date = flight.DepartureTime.Date,
             X = Pos.Left(departureAirportText),
             Y = Pos.Top(departureDateLabel),
             Width = Dim.Percent(75),
@@ -75,7 +75,7 @@ public class EditFlight : Window
 
         var departureTimeText = new TimeField(new TimeSpan(0,0, 0))
         {
-            Text = flight.DepartureTime.TimeOfDay.ToString(),
+            Time = flight.DepartureTime.TimeOfDay,
             X = Pos.Left(departureDateText),
             Y = Pos.Top(departureTimeLabel),
             Width = Dim.Percent(75),
@@ -105,7 +105,7 @@ public class EditFlight : Window
 
         var arrivalDateText = new DateField(DateTime.Today)
         {
-            Text = flight.DepartureTime.Date.ToString(),
+            Date = flight.ArrivalTime.Date,
             X = Pos.Left(arrivalAirportText),
             Y = Pos.Top(arrivalDateLabel),
             Width = Dim.Percent(75),
@@ -120,20 +120,21 @@ public class EditFlight : Window
 
         var arrivalTimeText = new TimeField(new TimeSpan(0,0, 0))
         {
+            Time = flight.ArrivalTime.TimeOfDay,
             X = Pos.Left(arrivalDateText),
             Y = Pos.Top(arrivalTimeLabel),
             Width = Dim.Percent(75),
         };
         
-        var btnCreate = new Button()
+        var btnEdit = new Button()
         {
-            Text = "Create",
+            Text = "Edit",
             Y = Pos.Bottom(arrivalTimeText) + 2,
             X = Pos.Center(),
             IsDefault = true,
         };
         
-        btnCreate.Clicked += () =>
+        btnEdit.Clicked += () =>
         {
             // add validation func
 
@@ -153,7 +154,8 @@ public class EditFlight : Window
 
             DateTime arrivalDateTimeValue = arrivalDateValue + arrivalTimeValue;
 
-            FlightController.Create(
+            FlightController.Update(
+                flight,
                 flightNumberValue, 
                 planeTypeValue, 
                 departureAirportValue, 
@@ -161,7 +163,7 @@ public class EditFlight : Window
                 arrivalAirportValue, 
                 arrivalDateTimeValue);
             
-            MessageBox.Query("Creating Flight", "Flight Created", "Ok");
+            MessageBox.Query("Editing Flight", "Flight Edited", "Ok");
             Application.RequestStop();
             Application.Run<AdminOverview>();
         };
@@ -174,6 +176,6 @@ public class EditFlight : Window
             arrivalAirportLabel, arrivalAirportText,
             arrivalDateLabel, arrivalDateText, 
             arrivalTimeLabel, arrivalTimeText, 
-            btnCreate);
+            btnEdit);
     }
 }

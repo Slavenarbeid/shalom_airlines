@@ -29,6 +29,19 @@ public class JsonHandle<TItem>
 
         return succes;
     }
+    
+    public void UpdateJson(TItem itemToUpdate, TItem newItem)
+    {
+        List<TItem> listOfObjects = LoadJson();
+        
+        TItem listItemToUpdate = listOfObjects.Find(obj => obj.ToString() == itemToUpdate.ToString());
+        var index = listOfObjects.IndexOf(listItemToUpdate);
+        if(index != -1)
+            listOfObjects[index] = newItem;
+        
+        SaveJsonFile(listOfObjects);
+    }
+    
 
     public List<TItem> LoadJson()
     {
