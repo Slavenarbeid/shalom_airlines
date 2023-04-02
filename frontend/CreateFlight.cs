@@ -27,7 +27,11 @@ public class CreateFlight : Window
             Y = Pos.Bottom(flightNumberLabel) + 2
         };
         
-        var planeType = new RadioGroup(new ustring[] {"Boeing 737", "Airbus 330 ", "Boeing 787"})
+        ustring[] planeTypeRadioGroup = PlaneController.Planes
+            .Select(plane => ustring.Make(plane.Model))
+            .ToArray();
+        
+        var planeType = new RadioGroup(planeTypeRadioGroup)
         {
             X = Pos.Left(flightNumberText),
             Y = Pos.Top(planeTypeLabel)
@@ -127,27 +131,22 @@ public class CreateFlight : Window
         
         btnCreate.Clicked += () =>
         {
-            // add validation func
-
-            // parse types
+            // extract values
             int flightNumberValue = Convert.ToInt32(flightNumberText.Text);
-            var planeTypeValue = PlaneController.Create((string)planeType.Text, 30, 10);
-            
-            string departureAirportValue = (string)departureAirportText.Text;
-            DateTime departureDateValue = departureDateText.Date;
-            TimeSpan departureTimeValue = departureTimeText.Time;
+            var planeTypeValue = PlaneController.Planes[planeType.SelectedItem];
 
-            DateTime departureDateTimeValue = departureDateValue + departureTimeValue;
+            string departureAirportValue = (string)departureAirportText.Text;
+            DateTime departureDateTimeValue = departureDateText.Date + departureTimeText.Time;
             
             string arrivalAirportValue = (string)arrivalAirportText.Text;
-            DateTime arrivalDateValue = arrivalDateText.Date;
-            TimeSpan arrivalTimeValue = arrivalTimeText.Time;
+            DateTime arrivalDateTimeValue = arrivalDateText.Date + arrivalTimeText.Time;
+            
+            // validate values
 
-            DateTime arrivalDateTimeValue = arrivalDateValue + arrivalTimeValue;
-
+            // create flight
             FlightController.Create(
                 flightNumberValue, 
-                planeTypeValue, 
+                planeTypeValue,
                 departureAirportValue, 
                 departureDateTimeValue, 
                 arrivalAirportValue, 

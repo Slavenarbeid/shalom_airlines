@@ -13,6 +13,7 @@ public class AdminOverview : Window
             {
                 new MenuItem("Overview", "See all Flights", () => Application.Run<shalom_airlines.Admin.Flights.Index>()),
                 new MenuItem("Create", "Create a Flight", () => Application.Run<CreateFlight>()),
+                new MenuItem("Create", "Create a Plane", () => Application.Run<CreatePlane>()),
             })
         });
         
