@@ -164,8 +164,7 @@ public class EditFlight : Window
                 arrivalDateTimeValue);
             
             MessageBox.Query("Editing Flight", "Flight Edited", "Ok");
-            Application.RequestStop();
-            Application.Run<AdminOverview>();
+            Layout.OpenWindow<Show>(flight);
         };
 
         Add(flightNumberLabel, flightNumberText, 

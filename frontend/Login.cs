@@ -61,7 +61,7 @@ public class Login : Window
             {
                 MessageBox.Query("Logging In", "Login Successful", "Ok");
                 Application.RequestStop();
-                Application.Run<AdminOverview>();
+                Application.Run<Layout>();
             }
             else
             {

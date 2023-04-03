@@ -8,7 +8,8 @@ public class Show : Window
 {
     public Show(Flight flight)
     {
-
+        Title = $"Viewing flight {flight.FlightNumber}";
+        
         var flightLabel = new Label(flight.ToString());
         var btnDelete = new Button()
         {
@@ -22,7 +23,7 @@ public class Show : Window
             if (FlightController.Delete(flight))
             {
                 MessageBox.Query("Deleting Flight", "Flight Deleted", "Ok");
-                Application.Run<shalom_airlines.Admin.Flights.Index>();
+                Layout.OpenWindow<Index>();
                 return;
             }
             MessageBox.Query("Deleting Flight Failed", "Flight not Deleted", "Ok");
@@ -38,7 +39,7 @@ public class Show : Window
 
         btnEdit.Clicked += () =>
         {
-            Application.Run(new EditFlight(flight));
+            Layout.OpenWindow<EditFlight>(flight);
         };
         
         Add(flightLabel, btnDelete, btnEdit);
