@@ -2,11 +2,11 @@ using NStack;
 using backend.Controllers;
 using Terminal.Gui;
 
-namespace shalom_airlines;
+namespace shalom_airlines.Admin.Flights;
 
-public class CreateFlight : Window
+public partial class Create : Window
 {
-    public CreateFlight()
+    public Create()
     {
         Title = "Create a flight";
         
@@ -154,7 +154,7 @@ public class CreateFlight : Window
             
             MessageBox.Query("Creating Flight", "Flight Created", "Ok");
             Application.RequestStop();
-            Application.Run<AdminOverview>();
+            Application.Run<Index>();
         };
 
         Add(flightNumberLabel, flightNumberText, 

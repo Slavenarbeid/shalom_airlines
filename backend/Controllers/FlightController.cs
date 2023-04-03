@@ -4,7 +4,10 @@ namespace backend.Controllers;
 
 public static class FlightController
 {
-    private static List<Flight> _flights = new ();
+    public static List<Flight> Index()
+    {
+        return Flight.All();
+    }
         
     public static Flight Create(int flightNumber, Plane planeType, string departureAirport, DateTime departureTime, string arrivalAirport, DateTime arrivalTime)
     {
@@ -12,7 +15,6 @@ public static class FlightController
 
         JsonHandle<Flight> jsonHandle = new JsonHandle<Flight>("Flights");
         jsonHandle.AddToJson(flight);
-        _flights.Add(flight);
         
         return flight;
     }

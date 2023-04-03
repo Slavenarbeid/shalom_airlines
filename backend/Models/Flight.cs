@@ -1,6 +1,6 @@
 ﻿namespace backend.Models;
 
-public class Flight
+public class Flight : Model<Flight>
 {
     public int FlightNumber { get; }
     public Plane PlaneType { get; }
