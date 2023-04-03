@@ -1,13 +1,14 @@
 using backend.Controllers;
+using PluralizeService.Core;
 
 namespace backend.Models;
 
-public abstract class Model<T>
+public abstract class Model<TModel>
 {
-    public static List<T> All()
+    public static List<TModel> All()
     {
-        var a = typeof(T).ToString();
-        JsonHandle<T> jsonHandle = new(typeof(T).ToString());
+        var pluralName = PluralizationProvider.Pluralize(typeof(TModel).Name);
+        JsonHandle<TModel> jsonHandle = new(pluralName);
         return jsonHandle.LoadJson();
     }
 }
