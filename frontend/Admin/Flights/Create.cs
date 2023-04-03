@@ -153,8 +153,7 @@ public partial class Create : Window
                 arrivalDateTimeValue);
             
             MessageBox.Query("Creating Flight", "Flight Created", "Ok");
-            Application.RequestStop();
-            Application.Run<Index>();
+            Layout.OpenWindow<Index>();
         };
 
         Add(flightNumberLabel, flightNumberText, 

@@ -6,8 +6,6 @@ namespace shalom_airlines.Admin.Flights;
 
 public class Index : Window
 {
-    public List<Flight> Flights;
-    
     public Index()
     {
         Title = "Flights";
@@ -20,7 +18,7 @@ public class Index : Window
 
         list.OpenSelectedItem += f =>
         {
-            Application.Run(new Show((Flight)f.Value));
+            Layout.OpenWindow<Show>(f.Value);
         };
         
         Add(list);

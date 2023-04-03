@@ -19,22 +19,44 @@ public class Layout : Toplevel
         {
             new MenuBarItem("Menu", new[]
             {
-                new MenuItem("Dashboard", "Main Overview", () => OpenWindow(new AdminOverview())),
+                new MenuItem("Dashboard", "Main Overview", OpenWindow<AdminOverview>),
             }),
             new MenuBarItem("Flights", new[]
             {
-                new MenuItem("Overview", "See all Flights", () => OpenWindow(new Admin.Flights.Index())),
-                new MenuItem("Create", "Create a Flight", () => OpenWindow(new Create())),
+                new MenuItem("Overview", "See all Flights", OpenWindow<Admin.Flights.Index>),
+                new MenuItem("Create", "Create a Flight", OpenWindow<Create>),
             })
         });
         
         Add(menu, _win);
     }
 
-    private void OpenWindow(Window window)
+    public static void OpenWindow(Window window)
     {
-        Remove(_win);
-        _win = window;
-        Add(_win);
+        if (Application.Top is Layout layout)
+        {
+            layout.Remove(layout._win);
+            layout._win = window;
+            layout.Add(layout._win);
+        }
+        else
+        {
+            throw new Exception("Toplevel is not of class `Layout`.");
+        }
+        
+    }
+
+    public static void OpenWindow<TWindow>(params object?[]? args) where TWindow : Window
+    {
+        var window = (TWindow)Activator.CreateInstance(typeof(TWindow), args)!;
+        if (window == null)
+            throw new Exception($"Class `{typeof(TWindow)}` is not of class `Window`.");
+
+        OpenWindow(window);
+    }
+
+    public static void OpenWindow<TWindow>() where TWindow : Window
+    {
+        OpenWindow<TWindow>(null);
     }
 }

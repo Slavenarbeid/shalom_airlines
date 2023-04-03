@@ -1,5 +1,6 @@
 using backend.Controllers;
 using Terminal.Gui;
+using Index = shalom_airlines.Admin.Flights.Index;
 
 namespace shalom_airlines;
 
@@ -72,8 +73,7 @@ public class CreatePlane : Window
                 firstClassSeatsValue);
             
             MessageBox.Query("Creating Plane", "Plane Created", "Ok");
-            Application.RequestStop();
-            Application.Run<AdminOverview>();
+            Layout.OpenWindow<Index>();
         };
 
         Add(planeModelLabel, planeModelText, 
