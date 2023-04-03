@@ -16,7 +16,7 @@ public static class PlaneController
         Plane plane = new Plane(model, businessSeats, firstClassSeats);
 
         JsonHandle<Plane> jsonHandle = new JsonHandle<Plane>("Planes");
-        jsonHandle.SaveToJson(plane);
+        jsonHandle.AddToJson(plane);
 
         Planes.Add(plane);
 

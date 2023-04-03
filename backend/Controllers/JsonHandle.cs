@@ -10,19 +10,38 @@ public class JsonHandle<TItem>
         JsonFileName = @"../../../../backend/Data/" + jsonFileName + ".json";
     }
 
-    public void SaveToJson(TItem item)
+    public void AddToJson(TItem item)
     {
         List<TItem> listOfObjects = LoadJson();
-
         
         listOfObjects.Add(item);
         
-        using (StreamWriter writer = new StreamWriter(JsonFileName))
-        {
-            string list2Json = JsonConvert.SerializeObject(listOfObjects);
-            writer.Write(list2Json);
-        }
+        SaveJsonFile(listOfObjects);
     }
+
+    public bool RemoveFromJson(TItem item)
+    {
+        List<TItem> listOfObjects = LoadJson();
+        TItem itemToRemove = listOfObjects.FirstOrDefault(obj => obj.ToString() == item.ToString());
+        bool succes = listOfObjects.Remove(itemToRemove);
+        
+        SaveJsonFile(listOfObjects);
+
+        return succes;
+    }
+    
+    public void UpdateJson(TItem itemToUpdate, TItem newItem)
+    {
+        List<TItem> listOfObjects = LoadJson();
+        
+        TItem listItemToUpdate = listOfObjects.Find(obj => obj.ToString() == itemToUpdate.ToString());
+        var index = listOfObjects.IndexOf(listItemToUpdate);
+        if(index != -1)
+            listOfObjects[index] = newItem;
+        
+        SaveJsonFile(listOfObjects);
+    }
+    
 
     public List<TItem> LoadJson()
     {
@@ -35,5 +54,14 @@ public class JsonHandle<TItem>
             }
         }
         return listOfObjects;
+    }
+
+    public void SaveJsonFile(List<TItem> listOfObjects)
+    {
+        using (StreamWriter writer = new StreamWriter(JsonFileName))
+        {
+            string list2Json = JsonConvert.SerializeObject(listOfObjects);
+            writer.Write(list2Json);
+        }
     }
 }
