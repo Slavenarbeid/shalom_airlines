@@ -4,16 +4,50 @@ namespace backend.Controllers;
 
 public static class PlaneController
 {
-    public static List<Plane> Planes { get; } = new ()
-    { 
-        new Plane("Boeing 737", 30, 10),
-        new Plane("Airbus 330", 20, 5),
-        new Plane("Boeing 787", 40, 15),
+    // {
+    //     "first class", {
+    //          "A", {
+    //              {1, bool (istaken)},
+    //              {2, bool (istaken)},
+    //          }
+    //      }    
+    //     "business class", {
+    //          "A", {
+    //              {1, "seat test1"},
+    //              {2, "seat test2"},
+    //          }
+    //      }
+    // }
+    
+    // bool will become reservation?
+    private static Dictionary<string, Dictionary<string, Dictionary<int, bool>>> _boeing737Layout = new ()
+    {
+        {
+            "First class", new Dictionary<string, Dictionary<int, bool>>()
+        {
+            {
+                "A", new Dictionary<int, bool>() 
+                {
+                    {1, true}
+                }
+            }
+        }}
     };
 
-    public static Plane Create(string model, int businessSeats, int firstClassSeats)
+
+    private static Dictionary<int, string> _airbus330Layout = new ();
+    private static Dictionary<int, string> _boeing787Layout = new ();
+
+    public static List<Plane> Planes { get; } = new ()
+    { 
+        new Plane("Boeing 737", _boeing737Layout, "A small Boeing 737"),
+        // new Plane("Airbus 330", _airbus330Layout, "An small Airbus 330"),
+        // new Plane("Boeing 787", _boeing787Layout, "A big Boeing 787"),
+    };
+
+    public static Plane Create(string model, Dictionary<string, Dictionary<string, Dictionary<int, bool>>> seatsLayout, string info = "")
     {
-        Plane plane = new Plane(model, businessSeats, firstClassSeats);
+        Plane plane = new Plane(model, seatsLayout, info);
 
         JsonHandle<Plane> jsonHandle = new JsonHandle<Plane>("Planes");
         jsonHandle.SaveToJson(plane);
