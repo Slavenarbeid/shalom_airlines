@@ -14,14 +14,4 @@ public class Plane
         SeatsLayout = seatsLayout;
         Info = info;
     }
-    
-    // seats {
-    //  int: seat ID, string: seat info 
-    //     
-    //     
-    //         
-    //     
-    //     
-    //
-    //  }
 }
