@@ -7,7 +7,6 @@ public static class PlaneController
     // bool will become reservation?
     private static Dictionary<string, Dictionary<string, Dictionary<int, bool>>> _boeing737Layout =
         CreateSeatingLayout(4, 5, 10, 15);
-
     private static Dictionary<string, Dictionary<string, Dictionary<int, bool>>> _airbus330Layout =
         CreateSeatingLayout(4, 5, 10, 15);
     private static Dictionary<string, Dictionary<string, Dictionary<int, bool>>> _boeing787Layout = 
@@ -26,9 +25,7 @@ public static class PlaneController
 
         JsonHandle<Plane> jsonHandle = new JsonHandle<Plane>("Planes");
         jsonHandle.AddToJson(plane);
-
-        Planes.Add(plane);
-
+        
         return plane;
     }
 
