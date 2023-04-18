@@ -6,7 +6,7 @@ public static class PlaneController
 {
     // bool will become reservation?
     private static Dictionary<string, Dictionary<string, Dictionary<int, bool>>> _boeing737Layout =
-        CreateSeatingLayout(4, 5, 10, 15, new [] { "A", "B", "C", "D", "E", "F" });
+        CreateSeatingLayout(4, 5, 10, 15);
 
     private static Dictionary<string, Dictionary<string, Dictionary<int, bool>>> _airbus330Layout =
         CreateSeatingLayout(4, 5, 10, 15);
@@ -16,8 +16,8 @@ public static class PlaneController
     public static List<Plane> Planes { get; } = new()
     {
         new Plane("Boeing 737", _boeing737Layout, "A small Boeing 737"),
-        // new Plane("Airbus 330", _airbus330Layout, "An small Airbus 330"),
-        // new Plane("Boeing 787", _boeing787Layout, "A big Boeing 787"),
+        new Plane("Airbus 330", _airbus330Layout, "An small Airbus 330"),
+        new Plane("Boeing 787", _boeing787Layout, "A big Boeing 787"),
     };
 
     public static Plane Create(string model, Dictionary<string, Dictionary<string, Dictionary<int, bool>>> seatsLayout, string info = "")
