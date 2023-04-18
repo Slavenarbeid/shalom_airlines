@@ -1,6 +1,6 @@
 ﻿namespace backend.Models;
 
-public class Plane
+public class Plane : Model<Plane>
 {
     public string Model { get; }
 
