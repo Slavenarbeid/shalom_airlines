@@ -3,13 +3,15 @@
 public class Plane : Model<Plane>
 {
     public string Model { get; }
-    public int BusinessSeats { get; }
-    public int FirstClassSeats { get; }
-    
-    public Plane(string model, int businessSeats, int firstClassSeats)
+
+    public Dictionary<string, Dictionary<string, Dictionary<int, bool>>> SeatsLayout { get; }
+
+    public string Info { get; set; }
+
+    public Plane(string model, Dictionary<string, Dictionary<string, Dictionary<int, bool>>> seatsLayout, string info = "")
     {
         Model = model;
-        BusinessSeats = businessSeats;
-        FirstClassSeats = firstClassSeats;
+        SeatsLayout = seatsLayout;
+        Info = info;
     }
 }

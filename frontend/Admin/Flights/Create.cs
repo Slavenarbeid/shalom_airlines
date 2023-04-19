@@ -133,7 +133,9 @@ public partial class Create : Window
         {
             // extract values
             int flightNumberValue = Convert.ToInt32(flightNumberText.Text);
-            var planeTypeValue = PlaneController.Planes[planeType.SelectedItem];
+            
+            var selectedPlane = PlaneController.Planes[planeType.SelectedItem];
+            var planeTypeValue = PlaneController.Create(selectedPlane.Model, selectedPlane.SeatsLayout, selectedPlane.Info);
 
             string departureAirportValue = (string)departureAirportText.Text;
             DateTime departureDateTimeValue = departureDateText.Date + departureTimeText.Time;
