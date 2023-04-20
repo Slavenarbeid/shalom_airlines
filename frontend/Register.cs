@@ -44,10 +44,26 @@ public class Register : Window
             Width = Dim.Fill(),
         };
         
+        var passwordAuthLabel = new Label()
+        {
+            Text = "Password:",
+            X = Pos.Left(passwordLabel),
+            Y = Pos.Bottom(passwordLabel) + 1
+        };
+
+        var passwordAuthText = new TextField("")
+        {
+            Secret = true,
+            // align with the text box above
+            X = Pos.Left(passwordText),
+            Y = Pos.Top(passwordAuthLabel),
+            Width = Dim.Fill(),
+        };
+        
         // Create login button
         var btnRegister = new Button()
         {
-            Text = "Login",
+            Text = "Register",
             Y = Pos.Bottom(passwordAuthLabel) + 1,
             // center the login button horizontally
             X = Pos.Center(),
@@ -63,19 +79,19 @@ public class Register : Window
                 return;
             }
 
-            if (AuthController.Login(usernameText.Text, passwordText.Text))
-            {
-                MessageBox.Query("Logging In", "Login Successful", "Ok");
-                Application.RequestStop();
-                Application.Run<Layout>();
-            }
-            else
-            {
-                MessageBox.ErrorQuery("Logging In", "Incorrect username or password", "Ok");
-            }
+            // if (AuthController.Login(usernameText.Text, passwordText.Text))
+            // {
+            //     MessageBox.Query("Logging In", "Login Successful", "Ok");
+            //     Application.RequestStop();
+            //     Application.Run<Layout>();
+            // }
+            // else
+            // {
+            //     MessageBox.ErrorQuery("Logging In", "Incorrect username or password", "Ok");
+            // }
         };
 
         // Add the views to the Window
-        Add(usernameLabel, usernameText, passwordLabel, passwordText, passwordAuthLabel, passwordAuthText, btnLogin);
+        Add(usernameLabel, usernameText, passwordLabel, passwordText, passwordAuthLabel, passwordAuthText, btnRegister);
     }
 }
