@@ -9,7 +9,7 @@ public class Show : Window
     public Show(Flight flight)
     {
         Title = $"Viewing flight {flight.FlightNumber}";
-        
+
         var flightLabel = new Label(flight.ToString());
         var btnDelete = new Button()
         {
