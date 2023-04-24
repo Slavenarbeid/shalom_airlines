@@ -1,10 +1,9 @@
-﻿using backend.Models;
-
-namespace shalom_airlines.Admin.Flights;
-using NStack;
+﻿using NStack;
+using backend.Models;
 using backend.Controllers;
 using Terminal.Gui;
 
+namespace shalom_airlines.Admin.Flights;
 
 public class EditFlight : Window
 {
@@ -30,7 +29,11 @@ public class EditFlight : Window
             Y = Pos.Bottom(flightNumberLabel) + 2
         };
         
-        var planeType = new RadioGroup(new ustring[] {"Boeing 737", "Airbus 330 ", "Boeing 787"})
+        ustring[] planeTypeRadioGroup = PlaneController.Planes
+            .Select(plane => ustring.Make(plane.Model))
+            .ToArray();
+        
+        var planeType = new RadioGroup(planeTypeRadioGroup)
         {
             X = Pos.Left(flightNumberText),
             Y = Pos.Top(planeTypeLabel)
@@ -136,24 +139,21 @@ public class EditFlight : Window
         
         btnEdit.Clicked += () =>
         {
-            // add validation func
-
-            // parse types
+            // extract values
             int flightNumberValue = Convert.ToInt32(flightNumberText.Text);
-            var planeTypeValue = PlaneController.Create((string)planeType.Text, 30, 10);
             
-            string departureAirportValue = (string)departureAirportText.Text;
-            DateTime departureDateValue = departureDateText.Date;
-            TimeSpan departureTimeValue = departureTimeText.Time;
+            var selectedPlane = PlaneController.Planes[planeType.SelectedItem];
+            var planeTypeValue = PlaneController.Create(selectedPlane.Model, selectedPlane.SeatsLayout, selectedPlane.Info);
 
-            DateTime departureDateTimeValue = departureDateValue + departureTimeValue;
+            string departureAirportValue = (string)departureAirportText.Text;
+            DateTime departureDateTimeValue = departureDateText.Date + departureTimeText.Time;
             
             string arrivalAirportValue = (string)arrivalAirportText.Text;
-            DateTime arrivalDateValue = arrivalDateText.Date;
-            TimeSpan arrivalTimeValue = arrivalTimeText.Time;
+            DateTime arrivalDateTimeValue = arrivalDateText.Date + arrivalTimeText.Time;
+            
+            // validate values
 
-            DateTime arrivalDateTimeValue = arrivalDateValue + arrivalTimeValue;
-
+            // update flight
             FlightController.Update(
                 flight,
                 flightNumberValue, 
