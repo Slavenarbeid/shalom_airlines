@@ -42,6 +42,16 @@ public class Show : Window
             Layout.OpenWindow<EditFlight>(flight);
         };
         
-        Add(flightLabel, btnDelete, btnEdit);
+        var seatsTableLabel = new Label("Seats overview");
+        var seatsTableView = new TableView () {
+            X = 0,
+            Y = 0,
+            Width = 50,
+            Height = 25,
+        };
+        
+        seatsTableView.Table = flight.PlaneType.SeatsLayout;
+        
+        Add(flightLabel, btnDelete, btnEdit, seatsTableLabel, seatsTableView);
     }
 }
