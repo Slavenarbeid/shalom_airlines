@@ -5,23 +5,23 @@ namespace shalom_airlines;
 
 public class Login : Window
 {
-    public TextField usernameText;
+    public TextField emailText;
 
     public Login()
     {
         Title = "Example App (Ctrl+Q to quit)";
 
         // Create input components and labels
-        var usernameLabel = new Label()
+        var emailLabel = new Label()
         {
             Text = "Username:",
             Y = Pos.Center()
         };
 
-        usernameText = new TextField("")
+        emailText = new TextField("")
         {
             // Position text field adjacent to the label
-            X = Pos.Right(usernameLabel) + 1,
+            X = Pos.Right(emailLabel) + 1,
             Y = Pos.Center(),
 
             // Fill remaining horizontal space
@@ -31,15 +31,15 @@ public class Login : Window
         var passwordLabel = new Label()
         {
             Text = "Password:",
-            X = Pos.Left(usernameLabel),
-            Y = Pos.Bottom(usernameLabel) + 1
+            X = Pos.Left(emailLabel),
+            Y = Pos.Bottom(emailLabel) + 1
         };
 
         var passwordText = new TextField("")
         {
             Secret = true,
             // align with the text box above
-            X = Pos.Left(usernameText),
+            X = Pos.Left(emailText),
             Y = Pos.Top(passwordLabel),
             Width = Dim.Fill(),
         };
@@ -57,7 +57,7 @@ public class Login : Window
         // When login button is clicked display a message popup
         btnLogin.Clicked += () =>
         {
-            if (AuthController.Login(usernameText.Text, passwordText.Text))
+            if (AuthController.Login(emailText.Text, passwordText.Text))
             {
                 MessageBox.Query("Logging In", "Login Successful", "Ok");
                 Application.RequestStop();
@@ -70,6 +70,6 @@ public class Login : Window
         };
 
         // Add the views to the Window
-        Add(usernameLabel, usernameText, passwordLabel, passwordText, btnLogin);
+        Add(emailLabel, emailText, passwordLabel, passwordText, btnLogin);
     }
 }

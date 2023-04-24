@@ -27,7 +27,15 @@ _  ___ |  / _  /   _  / _  / _  / / /  __/(__  )
             Text = "Login",
             Y = Pos.Bottom(welcomeMessage) + 1,
             // center the login button horizontally
-            X = Pos.Center(),
+            X = Pos.Percent(38),
+            IsDefault = true,
+        };
+        
+        var btnRegister = new Button()
+        {
+            Text = "Register",
+            Y = Pos.Bottom(welcomeMessage) + 1,
+            X = Pos.Right(btnLogin) + 1,
             IsDefault = true,
         };
 
@@ -36,7 +44,13 @@ _  ___ |  / _  /   _  / _  / _  / / /  __/(__  )
             Application.RequestStop();
             Application.Run<Login>();
         };
+        
+        btnRegister.Clicked += () =>
+        {
+            Application.RequestStop();
+            Application.Run<Register>();
+        };
 
-        Add(welcomeMessage, btnLogin);
+        Add(welcomeMessage, btnLogin, btnRegister);
     }
 }

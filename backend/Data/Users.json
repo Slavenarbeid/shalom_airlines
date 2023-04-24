@@ -1,0 +1,16 @@
+[
+  {
+    "Email": "admin@airlines.com",
+    "FirstName": "admin",
+    "Lastname": "admin",
+    "Password": "admin",
+    "Level": 1
+  },
+  {
+    "Email": "Lucas@airlines.com",
+    "FirstName": "lucas",
+    "Lastname": "remeeus",
+    "Password": "1234",
+    "Level": 0
+  }
+]
