@@ -42,16 +42,30 @@ public class Show : Window
             Layout.OpenWindow<EditFlight>(flight);
         };
         
-        var seatsTableLabel = new Label("Seats overview");
-        var seatsTableView = new TableView () {
+        var firstclass = flight.PlaneType.SeatsLayout["FirstClass"];
+        var businessClass = flight.PlaneType.SeatsLayout["BusinessClass"];
+        var economyClass = flight.PlaneType.SeatsLayout["EconomyClass"];
+
+        var firstClassSeatsLabel = new Label("First class overview");
+        var firstClassSeatsView = new TableView () {
             X = 0,
-            Y = 0,
+            Y = Pos.Bottom(btnEdit) + 2,
             Width = 50,
             Height = 25,
         };
+        firstClassSeatsView.Table = firstclass;
         
-        seatsTableView.Table = flight.PlaneType.SeatsLayout;
+        var businessClassSeatsLabel = new Label("Business class overview");
+        var businessClassSeatsView = new TableView () {
+            X = Pos.Right(firstClassSeatsView) + 5,
+            Y = Pos.Top(firstClassSeatsView),
+            Width = 50,
+            Height = 25,
+        };
+        businessClassSeatsView.Table = businessClass;
         
-        Add(flightLabel, btnDelete, btnEdit, seatsTableLabel, seatsTableView);
+        Add(flightLabel, btnDelete, btnEdit, 
+            firstClassSeatsLabel, firstClassSeatsView,
+            businessClassSeatsLabel, businessClassSeatsView);
     }
 }
