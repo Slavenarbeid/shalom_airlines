@@ -44,51 +44,75 @@ public static class PlaneController
         Planes.Remove(Planes.Find(plane => plane.Model == modelToDelete));
     }
     
-    public static Dictionary<string, DataTable> CreateSeatingLayout(int numFirstClassRows, int numFirstClassColumns, int numBusinessClassColumns, int numEconomyClassColumns, string[]? rowLetters = null)
+    public static Dictionary<string, DataTable> CreateSeatingLayout(
+        int numFirstClassRows, 
+        int numFirstClassColumns, 
+        int numBusinessClassColumns, 
+        int numEconomyClassColumns, 
+        string[]? rowLetters = null)
     {
-        var seatLayout = new Dictionary<string, DataTable>();
-        var firstClassTable = new DataTable("FirstClass");
-        var businessClassTable = new DataTable("BusinessClass");
-        var economyClassTable = new DataTable("EconomyClass");
-        var allTables = new DataTable[] { firstClassTable, businessClassTable, economyClassTable };
-        var numColumns = new int[] { numFirstClassColumns, numBusinessClassColumns, numEconomyClassColumns };
-        var rowLettersPerClass = rowLetters ?? new string[] { "A", "B", "C", "D", "E", "F" };
-
-        for (var i = 0; i < allTables.Length; i++)
+        // Initialize default row letters if not provided
+        if (rowLetters == null)
         {
-            var table = allTables[i];
-            var columns = numColumns[i];
-            var rowLetter = rowLettersPerClass[i];
-
-            table.Columns.Add("Row", typeof(string));
-            for (var j = 1; j <= columns; j++)
-            {
-                table.Columns.Add($"Seat{j}", typeof(bool));
-            }
-
-            for (var k = 1; k <= (i == 0 ? numFirstClassRows : 20); k++) // separate loop for first class rows
-            {
-                var newRow = table.NewRow();
-                newRow["Row"] = rowLetter;
-                for (var l = 1; l <= columns; l++)
-                {
-                    newRow[$"Seat{l}"] = false;
-                }
-                table.Rows.Add(newRow);
-                rowLetter = NextChar(rowLetter);
-            }
+            rowLetters = new string[] {"A", "B", "C", "D", "E", "F"};
         }
 
-        seatLayout.Add("FirstClass", firstClassTable);
-        seatLayout.Add("BusinessClass", businessClassTable);
-        seatLayout.Add("EconomyClass", economyClassTable);
-        return seatLayout;
-    }
+        // Create data tables for each seating class
+        var firstClassTable = new DataTable();
+        var businessClassTable = new DataTable();
+        var economyClassTable = new DataTable();
 
-    private static string NextChar(string currentChar)
-    {
-        var currentAscii = Convert.ToInt32(currentChar[0]);
-        var nextAscii = currentAscii + 1;
-        return Convert.ToChar(nextAscii).ToString();
+        // Add columns to the data tables
+        firstClassTable.Columns.Add("Row", typeof(string));
+        for (int i = 1; i <= numFirstClassColumns; i++)
+        {
+            firstClassTable.Columns.Add(i.ToString(), typeof(bool));
+        }
+        businessClassTable.Columns.Add("Row", typeof(string));
+        for (int i = 1; i <= numBusinessClassColumns; i++)
+        {
+            businessClassTable.Columns.Add(i.ToString(), typeof(bool));
+        }
+        economyClassTable.Columns.Add("Row", typeof(string));
+        for (int i = 1; i <= numEconomyClassColumns; i++)
+        {
+            economyClassTable.Columns.Add(i.ToString(), typeof(bool));
+        }
+
+        // Add rows to the data tables
+        foreach (string letter in rowLetters)
+        {
+            var row = firstClassTable.NewRow();
+            row["Row"] = letter;
+            for (int j = 1; j <= numFirstClassColumns; j++)
+            {
+                row[j.ToString()] = false;
+            }
+            firstClassTable.Rows.Add(row);
+
+            row = businessClassTable.NewRow();
+            row["Row"] = letter;
+            for (int j = 1; j <= numBusinessClassColumns; j++)
+            {
+                row[j.ToString()] = false;
+            }
+            businessClassTable.Rows.Add(row);
+
+            row = economyClassTable.NewRow();
+            row["Row"] = letter;
+            for (int j = 1; j <= numEconomyClassColumns; j++)
+            {
+                row[j.ToString()] = false;
+            }
+            economyClassTable.Rows.Add(row);
+        }
+
+        // Create the dictionary and add the data tables
+        var seatingLayout = new Dictionary<string, DataTable>();
+        seatingLayout.Add("First Class", firstClassTable);
+        seatingLayout.Add("Business Class", businessClassTable);
+        seatingLayout.Add("Economy Class", economyClassTable);
+
+        return seatingLayout;
     }
 }

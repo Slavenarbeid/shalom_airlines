@@ -42,9 +42,9 @@ public class Show : Window
             Layout.OpenWindow<EditFlight>(flight);
         };
         
-        var firstclass = flight.PlaneType.SeatsLayout["FirstClass"];
-        var businessClass = flight.PlaneType.SeatsLayout["BusinessClass"];
-        var economyClass = flight.PlaneType.SeatsLayout["EconomyClass"];
+        var firstclass = flight.PlaneType.SeatsLayout["First Class"];
+        var businessClass = flight.PlaneType.SeatsLayout["Business Class"];
+        var economyClass = flight.PlaneType.SeatsLayout["Economy Class"];
 
         var firstClassSeatsLabel = new Label("First class overview");
         var firstClassSeatsView = new TableView () {
