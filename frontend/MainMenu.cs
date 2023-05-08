@@ -25,19 +25,28 @@ _  ___ |  / _  /   _  / _  / _  / / /  __/(__  )
         var btnLogin = new Button()
         {
             Text = "Login",
-            Y = Pos.Bottom(welcomeMessage) + 1,
-            // center the login button horizontally
-            X = Pos.Percent(38),
             IsDefault = true,
         };
         
         var btnRegister = new Button()
         {
             Text = "Register",
-            Y = Pos.Bottom(welcomeMessage) + 1,
             X = Pos.Right(btnLogin) + 1,
             IsDefault = true,
         };
+
+        var btns = new FrameView()
+        {
+            Y = Pos.Bottom(welcomeMessage) + 1,
+            X = Pos.Center(),
+            Width = Dim.Width(btnLogin) + Dim.Width(btnRegister) + 1,
+            Height = Dim.Height(btnLogin),
+            Border = new Border()
+            {
+                BorderStyle = BorderStyle.None
+            }
+        };
+        btns.Add(btnLogin, btnRegister);
 
         btnLogin.Clicked += () =>
         {
@@ -51,6 +60,6 @@ _  ___ |  / _  /   _  / _  / _  / / /  __/(__  )
             Application.Run<Register>();
         };
 
-        Add(welcomeMessage, btnLogin, btnRegister);
+        Add(welcomeMessage, btns);
     }
 }
