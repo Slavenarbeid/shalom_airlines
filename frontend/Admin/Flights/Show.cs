@@ -45,27 +45,49 @@ public class Show : Window
         var firstclass = flight.PlaneType.SeatsLayout["First Class"];
         var businessClass = flight.PlaneType.SeatsLayout["Business Class"];
         var economyClass = flight.PlaneType.SeatsLayout["Economy Class"];
-
-        var firstClassSeatsLabel = new Label("First class overview");
+        
         var firstClassSeatsView = new TableView () {
             X = 0,
             Y = Pos.Bottom(btnEdit) + 2,
             Width = 50,
-            Height = 25,
+            Height = 10,
+        };
+        var firstClassSeatsLabel = new Label("First class overview")
+        {
+            X = Pos.Left(firstClassSeatsView),
+            Y = Pos.Top(firstClassSeatsView) - 1,
         };
         firstClassSeatsView.Table = firstclass;
         
-        var businessClassSeatsLabel = new Label("Business class overview");
         var businessClassSeatsView = new TableView () {
-            X = Pos.Right(firstClassSeatsView) + 5,
-            Y = Pos.Top(firstClassSeatsView),
+            X = 0,
+            Y = Pos.Bottom(firstClassSeatsView) + 2,
             Width = 50,
-            Height = 25,
+            Height = 10,
         };
-        businessClassSeatsView.Table = businessClass;
+        var businessClassSeatsLabel = new Label("Business class overview")
+        {
+            X = Pos.Left(businessClassSeatsView),
+            Y = Pos.Top(businessClassSeatsView) - 1,
+        };
+        businessClassSeatsView.Table = businessClass;     
+        
+        var economyClassSeatsView = new TableView () {
+            X = 0,
+            Y = Pos.Bottom(businessClassSeatsView) + 2,
+            Width = 50,
+            Height = 10,
+        };
+        var economyClassSeatsLabel = new Label("Economy class overview")
+        {
+            X = Pos.Left(economyClassSeatsView),
+            Y = Pos.Top(economyClassSeatsView) - 1,
+        };
+        economyClassSeatsView.Table = economyClass;
         
         Add(flightLabel, btnDelete, btnEdit, 
             firstClassSeatsLabel, firstClassSeatsView,
-            businessClassSeatsLabel, businessClassSeatsView);
+            businessClassSeatsLabel, businessClassSeatsView,
+            economyClassSeatsLabel, economyClassSeatsView);
     }
 }
