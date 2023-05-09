@@ -5,14 +5,30 @@ namespace backend.Controllers;
 
 public static class PlaneController
 {
-    // bool will become reservation?
     private static Dictionary<string, DataTable> _boeing737Layout =
-        CreateSeatingLayout(4, 5, 10, 15);
+        CreateSeatingLayout(
+            new []{"A", "B", "C", "D"}, 
+            5, 
+            new []{"A", "B", "C", "D", "E", "F"},
+            10,
+            new []{"A", "B", "C", "D", "E", "F"},
+            15);
     private static Dictionary<string, DataTable> _airbus330Layout =
-        CreateSeatingLayout(4, 5, 10, 15);
-    private static Dictionary<string, DataTable> _boeing787Layout = 
-        CreateSeatingLayout(4, 5, 10, 15);
-
+        CreateSeatingLayout(
+            new []{"A", "B", "C", "D"}, 
+            5, 
+            new []{"A", "B", "C", "D", "E", "F"},
+            10,
+            new []{"A", "B", "C", "D", "E", "F"},
+            15);    private static Dictionary<string, DataTable> _boeing787Layout = 
+        CreateSeatingLayout(
+            new []{"A", "B", "C", "D"}, 
+            5, 
+            new []{"A", "B", "C", "D", "E", "F"},
+            10,
+            new []{"A", "B", "C", "D", "E", "F"},
+            15);
+    
     public static List<Plane> Planes { get; } = new()
     {
         new Plane("Boeing 737", _boeing737Layout, "A small Boeing 737"),
@@ -45,18 +61,13 @@ public static class PlaneController
     }
     
     public static Dictionary<string, DataTable> CreateSeatingLayout(
-        int numFirstClassRows, 
-        int numFirstClassColumns, 
-        int numBusinessClassColumns, 
-        int numEconomyClassColumns, 
-        string[]? rowLetters = null)
+        string[] firstClassRowLetters,
+        int numFirstClassColumns,
+        string[] businessClassRowLetters,
+        int numBusinessClassColumns,
+        string[] economyClassRowLetters,
+        int numEconomyClassColumns)
     {
-        // Initialize default row letters if not provided
-        if (rowLetters == null)
-        {
-            rowLetters = new string[] {"A", "B", "C", "D", "E", "F"};
-        }
-
         // Create data tables for each seating class
         var firstClassTable = new DataTable();
         var businessClassTable = new DataTable();
@@ -79,8 +90,8 @@ public static class PlaneController
             economyClassTable.Columns.Add(i.ToString(), typeof(bool));
         }
 
-        // Add rows to the data tables
-        foreach (string letter in rowLetters)
+        // Add rows to the data tables for each seating class
+        foreach (string letter in firstClassRowLetters)
         {
             var row = firstClassTable.NewRow();
             row["Row"] = letter;
@@ -89,16 +100,22 @@ public static class PlaneController
                 row[j.ToString()] = false;
             }
             firstClassTable.Rows.Add(row);
+        }
 
-            row = businessClassTable.NewRow();
+        foreach (string letter in businessClassRowLetters)
+        {
+            var row = businessClassTable.NewRow();
             row["Row"] = letter;
             for (int j = 1; j <= numBusinessClassColumns; j++)
             {
                 row[j.ToString()] = false;
             }
             businessClassTable.Rows.Add(row);
+        }
 
-            row = economyClassTable.NewRow();
+        foreach (string letter in economyClassRowLetters)
+        {
+            var row = economyClassTable.NewRow();
             row["Row"] = letter;
             for (int j = 1; j <= numEconomyClassColumns; j++)
             {
