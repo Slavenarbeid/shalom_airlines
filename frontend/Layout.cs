@@ -6,9 +6,10 @@ namespace shalom_airlines;
 public class Layout : Toplevel
 {
     private Window _win = new AdminOverview();
-
-    public Layout()
+    public backend.Models.User User;
+    public Layout(backend.Models.User user)
     {
+        User = user;
         X = 0;
         Y = 0;
         Width = Dim.Fill();

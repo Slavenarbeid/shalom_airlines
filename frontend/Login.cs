@@ -57,11 +57,13 @@ public class Login : Window
         // When login button is clicked display a message popup
         btnLogin.Clicked += () =>
         {
-            if (AuthController.Login(emailText.Text, passwordText.Text))
+            var loggin = AuthController.Login(emailText.Text, passwordText.Text);
+            if (loggin.Item1)
             {
                 MessageBox.Query("Logging In", "Login Successful", "Ok");
                 Application.RequestStop();
-                Application.Run<Layout>();
+                
+                Application.Run(new Layout(loggin.Item2));
             }
             else
             {
