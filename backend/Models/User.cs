@@ -8,9 +8,9 @@ public class User : Model<User>
     public string FirstName { get; set; }
     public string Lastname { get; set; }
     public string Password { get; set; }
-    public int Level { get; }
+    public string Level { get; }
 
-    public User(string email, string firstName, string lastname, string password, int level = 0)
+    public User(string email, string firstName, string lastname, string password, string level = "user")
     {
         Email = email;
         FirstName = firstName;
