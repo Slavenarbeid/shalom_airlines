@@ -42,6 +42,31 @@ public class Show : Window
             Layout.OpenWindow<EditFlight>(flight);
         };
         
+        
+        for (int rowInt = 0; rowInt < flight.PlaneType.SeatsLayout.Count; rowInt++)
+        {
+            Pos xCord = 0;
+            Button? lastSeat = null;
+            if (flight.PlaneType.SeatsLayout[rowInt] == null) continue;
+            for (int seatInt = 0; seatInt < flight.PlaneType.SeatsLayout[rowInt].Count; seatInt++)
+            {
+                if (lastSeat != null)
+                {
+                    xCord = Pos.Right(lastSeat) + 1; 
+                }
+                
+                var seatDisplay = new Button()
+                {
+                    
+                    Text = flight.PlaneType.SeatsLayout[rowInt][seatInt].Type,
+                    Y = Pos.Bottom(btnEdit) + 2 + rowInt,
+                    X = xCord,
+                };
+                lastSeat = seatDisplay;
+                Add(seatDisplay);
+            }
+        }
+        
         Add(flightLabel, btnDelete, btnEdit);
     }
 }

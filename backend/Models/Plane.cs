@@ -4,11 +4,11 @@ public class Plane : Model<Plane>
 {
     public string Model { get; }
 
-    public Dictionary<string, Dictionary<string, Dictionary<int, bool>>> SeatsLayout { get; }
+    public List<List<Seat?>?> SeatsLayout { get; }
 
     public string Info { get; set; }
 
-    public Plane(string model, Dictionary<string, Dictionary<string, Dictionary<int, bool>>> seatsLayout, string info = "")
+    public Plane(string model, List<List<Seat?>?> seatsLayout, string info = "")
     {
         Model = model;
         SeatsLayout = seatsLayout;
