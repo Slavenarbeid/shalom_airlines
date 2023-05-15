@@ -57,15 +57,21 @@ public class Show : Window
                 
                 var seatDisplay = new Button()
                 {
-                    
-                    Text = flight.PlaneType.SeatsLayout[rowInt][seatInt].Type,
+                    Id = $"{rowInt}-{seatInt}",
+                    Text = flight.PlaneType.SeatsLayout[rowInt][seatInt].Type+$":{rowInt}-{seatInt}",
                     Y = Pos.Bottom(btnEdit) + 2 + rowInt,
                     X = xCord,
                 };
-                lastSeat = seatDisplay;
+                seatDisplay.Clicked += () =>
+                {
+                    MessageBox.Query("Seat", $"Seat {seatDisplay.Id}", "Ok");
+                };
                 Add(seatDisplay);
+                lastSeat = seatDisplay;
             }
         }
+        
+
         
         Add(flightLabel, btnDelete, btnEdit);
     }
