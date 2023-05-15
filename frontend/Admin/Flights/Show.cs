@@ -42,30 +42,31 @@ public class Show : Window
             Layout.OpenWindow<EditFlight>(flight);
         };
         
-        var firstclass = flight.PlaneType.SeatsLayout["First Class"];
-        var businessClass = flight.PlaneType.SeatsLayout["Business Class"];
-        var economyClass = flight.PlaneType.SeatsLayout["Economy Class"];
-
-        var firstClassSeatsLabel = new Label("First class overview");
-        var firstClassSeatsView = new TableView () {
-            X = 0,
-            Y = Pos.Bottom(btnEdit) + 2,
-            Width = 50,
-            Height = 25,
-        };
-        firstClassSeatsView.Table = firstclass;
         
-        var businessClassSeatsLabel = new Label("Business class overview");
-        var businessClassSeatsView = new TableView () {
-            X = Pos.Right(firstClassSeatsView) + 5,
-            Y = Pos.Top(firstClassSeatsView),
-            Width = 50,
-            Height = 25,
-        };
-        businessClassSeatsView.Table = businessClass;
+        for (int rowInt = 0; rowInt < flight.PlaneType.SeatsLayout.Count; rowInt++)
+        {
+            Pos xCord = 0;
+            Button? lastSeat = null;
+            if (flight.PlaneType.SeatsLayout[rowInt] == null) continue;
+            for (int seatInt = 0; seatInt < flight.PlaneType.SeatsLayout[rowInt].Count; seatInt++)
+            {
+                if (lastSeat != null)
+                {
+                    xCord = Pos.Right(lastSeat) + 1; 
+                }
+                
+                var seatDisplay = new Button()
+                {
+                    
+                    Text = flight.PlaneType.SeatsLayout[rowInt][seatInt].Type,
+                    Y = Pos.Bottom(btnEdit) + 2 + rowInt,
+                    X = xCord,
+                };
+                lastSeat = seatDisplay;
+                Add(seatDisplay);
+            }
+        }
         
-        Add(flightLabel, btnDelete, btnEdit, 
-            firstClassSeatsLabel, firstClassSeatsView,
-            businessClassSeatsLabel, businessClassSeatsView);
+        Add(flightLabel, btnDelete, btnEdit);
     }
 }

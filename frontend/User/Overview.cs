@@ -1,6 +1,10 @@
-﻿namespace shalom_airlines.User;
+﻿using Terminal.Gui;
+namespace shalom_airlines.User;
 
-public class Overview
+public class UserOverview : Window
 {
-    
+    public UserOverview()
+    {
+        Title = "User Overview";
+    }
 }

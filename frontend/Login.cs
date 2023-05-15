@@ -57,16 +57,17 @@ public class Login : Window
         // When login button is clicked display a message popup
         btnLogin.Clicked += () =>
         {
-            if (AuthController.Login(emailText.Text, passwordText.Text))
+            var loggin = AuthController.Login(emailText.Text, passwordText.Text);
+            // check if login successful
+            if (loggin.Item1)
             {
                 MessageBox.Query("Logging In", "Login Successful", "Ok");
                 Application.RequestStop();
-                Application.Run<Layout>();
+                
+                Application.Run(new Layout(loggin.Item2));
+                return;
             }
-            else
-            {
-                MessageBox.ErrorQuery("Logging In", "Incorrect username or password", "Ok");
-            }
+            MessageBox.ErrorQuery("Logging In", "Incorrect username or password", "Ok");
         };
 
         // Add the views to the Window
