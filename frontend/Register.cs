@@ -110,7 +110,6 @@ public class Register : Window
             MessageBox.Query("Creating User", "User Created", "Ok");
             Application.Run<MainMenu>();
         };
-
         // Add the views to the Window
         Add(emailLabel, emailText, firstNameLabel, firstNameText, lastNameLabel, lastNameText, passwordLabel, passwordText, passwordAuthLabel, passwordAuthText, btnRegister);
     }

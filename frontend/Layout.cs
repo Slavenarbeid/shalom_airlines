@@ -8,10 +8,10 @@ public class Layout : Toplevel
 {
     private Window _win;
 
-    public backend.Models.User User;
+    public static backend.Models.User LoggedInUser;
     public Layout(backend.Models.User user)
     {
-        User = user;
+        LoggedInUser = user;
         X = 0;
         Y = 0;
         Width = Dim.Fill();
