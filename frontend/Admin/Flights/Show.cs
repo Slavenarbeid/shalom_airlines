@@ -8,7 +8,7 @@ public class Show : Window
 {
     public Show(Flight flight)
     {
-        Title = $"Viewing flight {flight.FlightNumber}";
+        Title = $"Viewing flight details of flight {flight.FlightNumber}";
 
         var flightLabel = new Label(flight.ToString());
         var btnDelete = new Button()
@@ -17,6 +17,7 @@ public class Show : Window
             Y = Pos.Bottom(flightLabel) + 2,
             X = 0,
         };
+        
 
         btnDelete.Clicked += () =>
         {
@@ -28,6 +29,7 @@ public class Show : Window
             }
             MessageBox.Query("Deleting Flight Failed", "Flight not Deleted", "Ok");
         };
+        
 
         var btnEdit = new Button()
         {
@@ -40,6 +42,23 @@ public class Show : Window
         btnEdit.Clicked += () =>
         {
             Layout.OpenWindow<EditFlight>(flight);
+        };
+        
+        
+        
+        
+        var btnBack = new Button()
+        {
+            Text = "Back",
+            Y = Pos.Bottom(btnEdit) + 1,
+            X = 0,
+        };
+        
+        btnBack.Clicked += () =>
+        {
+            {
+                Layout.OpenWindow<Admin.Flights.Index>();
+            }
         };
         
         
@@ -71,8 +90,9 @@ public class Show : Window
             }
         }
         
+        
 
         
-        Add(flightLabel, btnDelete, btnEdit);
+        Add(flightLabel, btnDelete, btnEdit, btnBack);
     }
 }
