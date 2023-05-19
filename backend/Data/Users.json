@@ -5,12 +5,12 @@
     "Lastname": "admin",
     "Password": "$2a$11$nuylIoGPPu3lFasjG9hWlejtVtLai8k7crlY86tYcVVN1OY6wk8ke",
     "Level": "admin"
-  }, 
+  },
   {
     "Email": "test",
     "FirstName": "test",
     "Lastname": "test",
-    "Password": "$2a$11$nuylIoGPPu3lFasjG9hWlejtVtLai8k7crlY86tYcVVN1OY6wk8ke",
+    "Password": "$2a$11$d8DaKS1MlIKvJR2iIBPVSO4Ew7/v0EEVwsciUiWoY86v/qRtDcTxO",
     "Level": "user"
   }
 ]
