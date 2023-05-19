@@ -1,23 +1,16 @@
 [
   {
-	"Email": "admin@airlines.com",
-	"FirstName": "admin",
-	"Lastname": "admin",
-	"Password": "admin",
-	"Level": 1
-  },
+    "Email": "admin",
+    "FirstName": "admin",
+    "Lastname": "admin",
+    "Password": "$2a$11$nuylIoGPPu3lFasjG9hWlejtVtLai8k7crlY86tYcVVN1OY6wk8ke",
+    "Level": "admin"
+  }, 
   {
-	"Email": "Lucas@airlines.com",
-	"FirstName": "lucas",
-	"Lastname": "remeeus",
-	"Password": "1234",
-	"Level": 0
-  },
-  {
-	"Email": "test",
-	"FirstName": "dasadsa",
-	"Lastname": "adssd",
-	"Password": "$2a$11$sfs.93Nqd679GSzbhsMZN.zZ7JmA9oepQaFGGnloKp5mc//Z1GoSS",
-	"Level": 0
+    "Email": "test",
+    "FirstName": "test",
+    "Lastname": "test",
+    "Password": "$2a$11$nuylIoGPPu3lFasjG9hWlejtVtLai8k7crlY86tYcVVN1OY6wk8ke",
+    "Level": "user"
   }
 ]
