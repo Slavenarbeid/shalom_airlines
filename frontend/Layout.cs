@@ -1,19 +1,31 @@
 using shalom_airlines.Admin.Flights;
+using shalom_airlines.User;
 using Terminal.Gui;
 
 namespace shalom_airlines;
 
 public class Layout : Toplevel
 {
-    private Window _win = new AdminOverview();
+    private Window _win;
 
-    public Layout()
+    public backend.Models.User User;
+    public Layout(backend.Models.User user)
     {
+        User = user;
         X = 0;
         Y = 0;
         Width = Dim.Fill();
         Height = Dim.Fill() - 1;
-
+        
+        switch (user.Level)
+        {
+            case "admin":
+                _win = new AdminOverview();
+                break;
+            default:
+                _win = new UserOverview();
+                break;
+        }
         
         var menu = new MenuBar(new[]
         {

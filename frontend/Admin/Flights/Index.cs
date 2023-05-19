@@ -10,29 +10,29 @@ public class Index : Window
     public Index() : this(null)
     {
     }
-    
+
     public Index(Dictionary<string, object>? filters)
     {
-
         Title = "Flights";
-        
+
         var SearchIdlLabel = new Label()
         {
             Text = "ID: ",
         };
-        
+
         string text = "";
         if (filters != null && filters.ContainsKey("FlightNumber"))
         {
             text = Convert.ToString(filters["FlightNumber"]);
         }
+
         var SearchIdFieldText = new TextField("")
         {
             Text = text,
             X = Pos.Right(SearchIdlLabel) + 1,
             Width = Dim.Percent(30),
         };
-        
+
         // Field  Departure -> Arrival
         var SearchDeparturelLabel = new Label()
         {
@@ -44,6 +44,7 @@ public class Index : Window
         {
             text = Convert.ToString(filters["DepartureAirport"]);
         }
+
         var SearchDepartureFieldText = new TextField("")
         {
             Text = text,
@@ -62,6 +63,7 @@ public class Index : Window
         {
             text = Convert.ToString(filters["ArrivalAirport"]);
         }
+
         var SearchArrivalFieldText = new TextField("")
         {
             Text = text,
@@ -69,7 +71,7 @@ public class Index : Window
             X = Pos.Right(SearchArrivallLabel) + 1,
             Width = Dim.Percent(30),
         };
- 
+
         // Button Search
         var SearchFieldButton = new Button()
         {
@@ -83,16 +85,20 @@ public class Index : Window
             };
             if (SearchIdFieldText.Text != "")
             {
-                int SearchIdValue = Convert.ToInt32(SearchIdFieldText.Text);
-                newFilter.Add("FlightNumber", SearchIdValue);
+                int a;
+                if (int.TryParse((string)SearchIdFieldText.Text, out a))
+                {
+                    int SearchIdValue = Convert.ToInt32(a);
+                    newFilter.Add("FlightNumber", SearchIdValue);
+                }
             }
-            
+
             if (SearchDepartureFieldText.Text != "")
             {
                 string SearchDepartureValue = (string)SearchDepartureFieldText.Text;
                 newFilter.Add("DepartureAirport", SearchDepartureValue);
             }
-            
+
             if (SearchArrivalFieldText.Text != "")
             {
                 string SearchArrivalValue = (string)SearchArrivalFieldText.Text;
@@ -109,28 +115,23 @@ public class Index : Window
             X = Pos.Right(SearchFieldButton) + 1,
             Text = "Reset",
         };
-        SearchResetButton.Clicked += () =>
-        {
-            Layout.OpenWindow<Admin.Flights.Index>(null);
-        };
-        
+        SearchResetButton.Clicked += () => { Layout.OpenWindow<Admin.Flights.Index>(null); };
+
         List<Flight> flightView = new List<Flight>();
         flightView = filters == null ? Flight.All() : Flight.Search(filters);
-        
+
         var list = new ListView(flightView)
         {
             Y = Pos.Bottom(SearchFieldButton) + 2,
             Width = Width,
             Height = Dim.Fill(),
         };
-        
-        list.OpenSelectedItem += f =>
-        {
-            Layout.OpenWindow<Show>(f.Value);
-        };
-        
+
+        list.OpenSelectedItem += f => { Layout.OpenWindow<Show>(f.Value); };
+
         Add(SearchIdlLabel, SearchIdFieldText, // ID search
-            SearchDeparturelLabel, SearchDepartureFieldText, SearchArrivalFieldText, SearchArrivallLabel, // Departure -> Arrival search
+            SearchDeparturelLabel, SearchDepartureFieldText, SearchArrivalFieldText,
+            SearchArrivallLabel, // Departure -> Arrival search
             SearchFieldButton, SearchResetButton, // Search buttons
             list);
     }

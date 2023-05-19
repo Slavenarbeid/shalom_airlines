@@ -42,52 +42,37 @@ public class Show : Window
             Layout.OpenWindow<EditFlight>(flight);
         };
         
-        var firstclass = flight.PlaneType.SeatsLayout["First Class"];
-        var businessClass = flight.PlaneType.SeatsLayout["Business Class"];
-        var economyClass = flight.PlaneType.SeatsLayout["Economy Class"];
         
-        var firstClassSeatsView = new TableView () {
-            X = 0,
-            Y = Pos.Bottom(btnEdit) + 2,
-            Width = 50,
-            Height = 10,
-        };
-        var firstClassSeatsLabel = new Label("First class overview")
+        for (int rowInt = 0; rowInt < flight.PlaneType.SeatsLayout.Count; rowInt++)
         {
-            X = Pos.Left(firstClassSeatsView),
-            Y = Pos.Top(firstClassSeatsView) - 1,
-        };
-        firstClassSeatsView.Table = firstclass;
+            Pos xCord = 0;
+            Button? lastSeat = null;
+            if (flight.PlaneType.SeatsLayout[rowInt] == null) continue;
+            for (int seatInt = 0; seatInt < flight.PlaneType.SeatsLayout[rowInt].Count; seatInt++)
+            {
+                if (lastSeat != null)
+                {
+                    xCord = Pos.Right(lastSeat) + 1; 
+                }
+                
+                var seatDisplay = new Button()
+                {
+                    Id = $"{rowInt}-{seatInt}",
+                    Text = flight.PlaneType.SeatsLayout[rowInt][seatInt].Type+$":{rowInt}-{seatInt}",
+                    Y = Pos.Bottom(btnEdit) + 2 + rowInt,
+                    X = xCord,
+                };
+                seatDisplay.Clicked += () =>
+                {
+                    MessageBox.Query("Seat", $"Seat {seatDisplay.Id}", "Ok");
+                };
+                Add(seatDisplay);
+                lastSeat = seatDisplay;
+            }
+        }
         
-        var businessClassSeatsView = new TableView () {
-            X = 0,
-            Y = Pos.Bottom(firstClassSeatsView) + 2,
-            Width = 50,
-            Height = 10,
-        };
-        var businessClassSeatsLabel = new Label("Business class overview")
-        {
-            X = Pos.Left(businessClassSeatsView),
-            Y = Pos.Top(businessClassSeatsView) - 1,
-        };
-        businessClassSeatsView.Table = businessClass;     
+
         
-        var economyClassSeatsView = new TableView () {
-            X = 0,
-            Y = Pos.Bottom(businessClassSeatsView) + 2,
-            Width = 50,
-            Height = 10,
-        };
-        var economyClassSeatsLabel = new Label("Economy class overview")
-        {
-            X = Pos.Left(economyClassSeatsView),
-            Y = Pos.Top(economyClassSeatsView) - 1,
-        };
-        economyClassSeatsView.Table = economyClass;
-        
-        Add(flightLabel, btnDelete, btnEdit, 
-            firstClassSeatsLabel, firstClassSeatsView,
-            businessClassSeatsLabel, businessClassSeatsView,
-            economyClassSeatsLabel, economyClassSeatsView);
+        Add(flightLabel, btnDelete, btnEdit);
     }
 }
