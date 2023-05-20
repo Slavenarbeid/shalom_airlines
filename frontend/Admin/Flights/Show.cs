@@ -55,11 +55,11 @@ public class Show : Window
                 {
                     xCord = Pos.Right(lastSeat) + 1;
                 }
-
+                int rowInt1 = rowInt;
+                int seatInt1 = seatInt;
                 if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation == null)
                 {
-                    int rowInt1 = rowInt;
-                    int seatInt1 = seatInt;
+
                     var seatButton = new Button()
                     {
                         Text = $"{seatType[0]}: {rowInt1}-{seatInt1}",
@@ -91,9 +91,7 @@ public class Show : Window
                     // seatDisplay.ColorScheme.Normal = new Attribute(Color.Red, Color.Black);
                     seatDisplay.Clicked += () =>
                     {
-
-                        MessageBox.Query("test", $"test", "Ok");
-
+                        Layout.OpenWindow<ShowReservation>(flight, rowInt1, seatInt1);
                     };
                     Add(seatDisplay);
                     lastSeat = seatDisplay;
@@ -105,19 +103,20 @@ public class Show : Window
         Add(flightLabel, btnDelete, btnEdit);
         
         if (lastSeat != null) {
-            // var confirmReservationButton = new Button()
-            // {
-            //     Text = "Confirm",
-            //     Y = Pos.Bottom(lastSeat) + 2,
-            //     X = 0,
-            // };
-            //
-            // confirmReservationButton.Clicked += () =>
-            // {
-            //     JsonHandle<Flight> jsonHandle = new JsonHandle<Flight>("Flights");
-            //     jsonHandle.UpdateJson(oldFlight,newFlight);
-            //     Layout.OpenWindow<Show>(flight);
-            // };
+            var confirmReservationButton = new Button()
+            {
+                Text = "Confirm",
+                Y = Pos.Bottom(lastSeat) + 2,
+                X = 0,
+            };
+            
+            confirmReservationButton.Clicked += () =>
+            {
+                FlightController.UpdateFlightByFlightNumber(flight.FlightNumber, flight);
+                MessageBox.Query("Saved", $"Reservations Saved", "Ok");
+                Layout.OpenWindow<Show>(flight);
+            };
+            Add(confirmReservationButton);
         }
     }
 }

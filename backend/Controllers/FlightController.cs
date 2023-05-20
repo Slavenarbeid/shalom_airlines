@@ -33,4 +33,15 @@ public static class FlightController
         JsonHandle<Flight> jsonHandle = new JsonHandle<Flight>("Flights");
         jsonHandle.UpdateJson(oldFlight,newFlight);
     }
+    
+    public static void UpdateFlightByFlightNumber(int flightNumber, Flight newFLight)
+    {
+        JsonHandle<Flight> jsonHandle = new JsonHandle<Flight>("Flights");
+        List<Flight> flights = Flight.All();
+        Flight flightToUpdate = flights.Find(obj => obj.FlightNumber == flightNumber);
+        var index = flights.IndexOf(flightToUpdate);
+        if(index != -1)
+            flights[index] = newFLight;
+        jsonHandle.SaveJsonFile(flights);
+    }
 }
