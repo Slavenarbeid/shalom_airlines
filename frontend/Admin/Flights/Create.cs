@@ -162,7 +162,7 @@ public partial class Create : Window
         {
             Text = "Back",
             Y = Pos.Bottom(btnCreate) + 2,
-            X = Pos.Center()5,
+            X = Pos.Center(),
         };
         
         btnBack.Clicked += () =>
