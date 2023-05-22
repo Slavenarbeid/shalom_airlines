@@ -110,6 +110,8 @@ public class Register : Window
             // create user
             UserController.Create((string)emailText.Text, (string)firstNameText.Text, (string)lastNameText.Text, (string)passwordText.Text);
             MessageBox.Query("Creating User", "User Created", "Ok");
+            Application.RequestStop();
+            Application.Top.RemoveAll();
             Application.Run<MainMenu>();
         }
         btnRegister.Clicked += BtnRegisterClickedHandler;
