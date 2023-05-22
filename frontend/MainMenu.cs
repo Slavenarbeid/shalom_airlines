@@ -48,17 +48,23 @@ _  ___ |  / _  /   _  / _  / _  / / /  __/(__  )
         };
         btns.Add(btnLogin, btnRegister);
 
-        btnLogin.Clicked += () =>
+        void BtnLoginClickedHandler()
         {
+            btnLogin.Clicked -= BtnLoginClickedHandler;
             Application.RequestStop();
+            Application.Top.RemoveAll();
             Application.Run<Login>();
-        };
-        
-        btnRegister.Clicked += () =>
+        }
+        btnLogin.Clicked += BtnLoginClickedHandler;
+
+        void BtnRegisterClickedHandler()
         {
+            btnRegister.Clicked -= BtnRegisterClickedHandler;
             Application.RequestStop();
+            Application.Top.RemoveAll();
             Application.Run<Register>();
-        };
+        }
+        btnRegister.Clicked += BtnRegisterClickedHandler;
 
         Add(welcomeMessage, btns);
     }
