@@ -5,7 +5,6 @@ namespace shalom_airlines;
 
 public class Register : Window
 {
-    public TextField emailText;
     public Register()
     {
         Title = "Example App (Ctrl+Q to quit)";
@@ -17,7 +16,7 @@ public class Register : Window
             Y = Pos.Center()
         };
 
-        emailText = new TextField("")
+        var emailText = new TextField("")
         {
             // Position text field adjacent to the label
             X = Pos.Right(emailLabel) + 1,
@@ -97,6 +96,13 @@ public class Register : Window
             IsDefault = true,
         };
 
+        // Field validation
+        if (backend.Models.User.EmailUsedBefore((string)emailText.Text))
+        {
+            MessageBox.ErrorQuery("Creating User", "Email used before", "Ok");
+            return;
+        }
+        
         // When login button is clicked display a message popup
         btnRegister.Clicked += () =>
         {

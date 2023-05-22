@@ -144,6 +144,7 @@ public partial class Create : Window
             DateTime arrivalDateTimeValue = arrivalDateText.Date + arrivalTimeText.Time;
             
             // validate values
+            // no same flight id
 
             // create flight
             FlightController.Create(
