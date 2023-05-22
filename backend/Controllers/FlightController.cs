@@ -44,4 +44,22 @@ public static class FlightController
             flights[index] = newFLight;
         jsonHandle.SaveJsonFile(flights);
     }
+
+    public static Dictionary<string, int> AvailableSeatsPerClass(Flight flight)
+    {
+        Dictionary<string, int> availableSeats = new Dictionary<string, int>();
+        for (int rowInt = 0; rowInt < flight.PlaneType.SeatsLayout.Count; rowInt++)
+        {
+            if (flight.PlaneType.SeatsLayout[rowInt] == null) continue;
+            for (int seatInt = 0; seatInt < flight.PlaneType.SeatsLayout[rowInt].Count; seatInt++)
+            {
+                String seatType = flight.PlaneType.SeatsLayout[rowInt][seatInt].Type;
+                if (!availableSeats.ContainsKey(seatType)) availableSeats.Add(seatType, 1);
+                if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation != null) continue;
+                availableSeats[seatType]++;
+            }
+        }
+
+        return availableSeats;
+    }
 }

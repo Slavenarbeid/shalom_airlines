@@ -1,7 +1,7 @@
+using System.CodeDom;
 using backend.Controllers;
 using backend.Models;
 using Terminal.Gui;
-using Attribute = Terminal.Gui.Attribute;
 
 namespace shalom_airlines.Admin.Flights;
 
@@ -9,15 +9,35 @@ public class Show : Window
 {
     public Show(Flight flight)
     {
+        Title = $"Viewing flight details of flight {flight.FlightNumber}";
 
-        Title = $"Viewing flight {flight.FlightNumber}";
+        var flightLabel = new Label()
+        {
+            Text = $"From {flight.DepartureAirport} to {flight.ArrivalAirport}\nDeparture date and time:{flight.DepartureTime.Date}\nArrival date and time: {flight.ArrivalTime}",
+             
+            
+        };
 
-        var flightLabel = new Label(flight.ToString());
+
+        var btnEdit = new Button()
+        {
+            Text = "Edit",
+            Y = Pos.Bottom(flightLabel) + 1,
+            X = 0,
+            IsDefault = true,
+        };
+
+        btnEdit.Clicked += () =>
+        {
+            Layout.OpenWindow<EditFlight>(flight);
+        };
+
+        
         var btnDelete = new Button()
         {
             Text = "Delete",
-            Y = Pos.Bottom(flightLabel) + 2,
-            X = 0,
+            Y = Pos.Bottom(flightLabel) + 1,
+            X = Pos.Bottom(btnEdit) + 6,
         };
 
         btnDelete.Clicked += () =>
@@ -28,20 +48,23 @@ public class Show : Window
                 Layout.OpenWindow<Index>();
                 return;
             }
-
             MessageBox.Query("Deleting Flight Failed", "Flight not Deleted", "Ok");
         };
-
-        var btnEdit = new Button()
+        
+        
+        var btnBack = new Button()
         {
-            Text = "Edit",
-            Y = Pos.Bottom(btnDelete) + 2,
+            Text = "Back",
+            Y = Pos.Bottom(btnEdit) + 1,
             X = 0,
-            IsDefault = true,
         };
-
-        btnEdit.Clicked += () => { Layout.OpenWindow<EditFlight>(flight); };
-
+        
+        btnBack.Clicked += () =>
+        {
+            {
+                Layout.OpenWindow<Admin.Flights.Index>();
+            }
+        };
         View? lastSeat = null;
         for (int rowInt = 0; rowInt < flight.PlaneType.SeatsLayout.Count; rowInt++)
         {
@@ -98,9 +121,10 @@ public class Show : Window
                 }
             }
         }
+        
 
 
-        Add(flightLabel, btnDelete, btnEdit);
+        Add(flightLabel, btnDelete, btnEdit, btnBack);
         
         if (lastSeat != null) {
             var confirmReservationButton = new Button()
