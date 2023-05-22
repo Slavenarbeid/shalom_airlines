@@ -23,12 +23,7 @@ public class User : Model<User>
     {
         List<User> users = All();
 
-        if (users.Find(user => user.Email == email) == null)
-        {
-            return false;
-        }
-
-        return true;
+        return users.Find(user => user.Email == email) != null;
     }
 }
     

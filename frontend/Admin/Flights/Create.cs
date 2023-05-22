@@ -1,5 +1,6 @@
 using NStack;
 using backend.Controllers;
+using backend.Models;
 using Terminal.Gui;
 
 namespace shalom_airlines.Admin.Flights;
@@ -143,8 +144,12 @@ public partial class Create : Window
             string arrivalAirportValue = (string)arrivalAirportText.Text;
             DateTime arrivalDateTimeValue = arrivalDateText.Date + arrivalTimeText.Time;
             
-            // validate values
-            // no same flight id
+            // Field validation
+            if (Flight.FlightNumberUsedBefore(flightNumberValue))
+            {
+                MessageBox.ErrorQuery("Creating Flight", "Flight number used before", "Ok");
+                return;
+            }
 
             // create flight
             FlightController.Create(

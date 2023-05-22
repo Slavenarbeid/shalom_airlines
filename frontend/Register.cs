@@ -96,16 +96,16 @@ public class Register : Window
             IsDefault = true,
         };
 
-        // Field validation
-        if (backend.Models.User.EmailUsedBefore((string)emailText.Text))
-        {
-            MessageBox.ErrorQuery("Creating User", "Email used before", "Ok");
-            return;
-        }
-        
         // When login button is clicked display a message popup
         void BtnRegisterClickedHandler()
         {
+            // Field validation
+            if (backend.Models.User.EmailUsedBefore((string)emailText.Text))
+            {
+                MessageBox.ErrorQuery("Creating User", "Email used before", "Ok");
+                return;
+            }
+            
             if (passwordText.Text != passwordAuthText.Text)
             {
                 MessageBox.ErrorQuery("Creating User", "Passwords do not match", "Ok");
