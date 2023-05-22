@@ -9,7 +9,7 @@ public class Login : Window
 
     public Login()
     {
-        Title = "Example App (Ctrl+Q to quit)";
+        Title = "Login";
 
         // Create input components and labels
         var emailLabel = new Label()
@@ -55,20 +55,22 @@ public class Login : Window
         };
 
         // When login button is clicked display a message popup
-        btnLogin.Clicked += () =>
+        void BtnLoginClickedHandler()
         {
-            var loggin = AuthController.Login(emailText.Text, passwordText.Text);
+            var login = AuthController.Login(emailText.Text, passwordText.Text);
             // check if login successful
-            if (loggin.Item1)
+            if (login.Item1)
             {
+                btnLogin.Clicked -= BtnLoginClickedHandler;
                 MessageBox.Query("Logging In", "Login Successful", "Ok");
+                Application.Top.RemoveAll();
                 Application.RequestStop();
-                
-                Application.Run(new Layout(loggin.Item2));
-                return;
+
+                Application.Run(new Layout(login.Item2));
             }
             MessageBox.ErrorQuery("Logging In", "Incorrect username or password", "Ok");
-        };
+        }
+        btnLogin.Clicked += BtnLoginClickedHandler;
 
         // Add the views to the Window
         Add(emailLabel, emailText, passwordLabel, passwordText, btnLogin);

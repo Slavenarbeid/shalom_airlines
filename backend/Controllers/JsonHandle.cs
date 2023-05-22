@@ -50,7 +50,7 @@ public class JsonHandle<TItem>
             using (StreamReader reader = new StreamReader(JsonFileName))
             {
                 string file2Json = reader.ReadToEnd();
-                listOfObjects = JsonConvert.DeserializeObject<List<TItem>>(file2Json);
+                listOfObjects = JsonConvert.DeserializeObject<List<TItem>>(file2Json) ?? new List<TItem>();
             }
         }
         return listOfObjects;

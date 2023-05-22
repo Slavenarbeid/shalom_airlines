@@ -7,7 +7,7 @@ public class Register : Window
 {
     public Register()
     {
-        Title = "Example App (Ctrl+Q to quit)";
+        Title = "Register";
 
         // Create input components and labels
         var emailLabel = new Label()
@@ -104,18 +104,21 @@ public class Register : Window
         }
         
         // When login button is clicked display a message popup
-        btnRegister.Clicked += () =>
+        void BtnRegisterClickedHandler()
         {
             if (passwordText.Text != passwordAuthText.Text)
             {
                 MessageBox.ErrorQuery("Creating User", "Passwords do not match", "Ok");
                 return;
             }
+
+            btnRegister.Clicked -= BtnRegisterClickedHandler;
             // create user
             UserController.Create((string)emailText.Text, (string)firstNameText.Text, (string)lastNameText.Text, (string)passwordText.Text);
             MessageBox.Query("Creating User", "User Created", "Ok");
             Application.Run<MainMenu>();
-        };
+        }
+        btnRegister.Clicked += BtnRegisterClickedHandler;
 
         // Add the views to the Window
         Add(emailLabel, emailText, firstNameLabel, firstNameText, lastNameLabel, lastNameText, passwordLabel, passwordText, passwordAuthLabel, passwordAuthText, btnRegister);
