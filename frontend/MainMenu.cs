@@ -25,32 +25,47 @@ _  ___ |  / _  /   _  / _  / _  / / /  __/(__  )
         var btnLogin = new Button()
         {
             Text = "Login",
-            Y = Pos.Bottom(welcomeMessage) + 1,
-            // center the login button horizontally
-            X = Pos.Percent(38),
             IsDefault = true,
         };
         
         var btnRegister = new Button()
         {
             Text = "Register",
-            Y = Pos.Bottom(welcomeMessage) + 1,
             X = Pos.Right(btnLogin) + 1,
             IsDefault = true,
         };
 
-        btnLogin.Clicked += () =>
+        var btns = new FrameView()
         {
-            Application.RequestStop();
-            Application.Run<Login>();
+            Y = Pos.Bottom(welcomeMessage) + 1,
+            X = Pos.Center(),
+            Width = Dim.Width(btnLogin) + Dim.Width(btnRegister) + 1,
+            Height = Dim.Height(btnLogin),
+            Border = new Border()
+            {
+                BorderStyle = BorderStyle.None
+            }
         };
-        
-        btnRegister.Clicked += () =>
-        {
-            Application.RequestStop();
-            Application.Run<Register>();
-        };
+        btns.Add(btnLogin, btnRegister);
 
-        Add(welcomeMessage, btnLogin, btnRegister);
+        void BtnLoginClickedHandler()
+        {
+            btnLogin.Clicked -= BtnLoginClickedHandler;
+            Application.RequestStop();
+            Application.Top.RemoveAll();
+            Application.Run<Login>();
+        }
+        btnLogin.Clicked += BtnLoginClickedHandler;
+
+        void BtnRegisterClickedHandler()
+        {
+            btnRegister.Clicked -= BtnRegisterClickedHandler;
+            Application.RequestStop();
+            Application.Top.RemoveAll();
+            Application.Run<Register>();
+        }
+        btnRegister.Clicked += BtnRegisterClickedHandler;
+
+        Add(welcomeMessage, btns);
     }
 }

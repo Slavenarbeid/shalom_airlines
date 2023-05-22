@@ -6,11 +6,12 @@ public class AuthController
 {
     public static (bool, User) Login(NStack.ustring email, NStack.ustring password)
     {
+        List<User> userList = User.All();
+        User? findUser = userList.Find(i => i.Email == (string)email);
+        if (findUser == null)
+            return (false, null);
         
-        JsonHandle<User> jsonHandle = new JsonHandle<User>("Users");
-        List<User> userList = jsonHandle.LoadJson();
-        User findUser = userList.Find(i => i.Email == (string)email);
-        bool loggin = BCrypt.Net.BCrypt.Verify((string)password, findUser.Password);
-        return (loggin, findUser);
+        bool login = BCrypt.Net.BCrypt.Verify((string)password, findUser.Password);
+        return (login, findUser);
     }
 }
