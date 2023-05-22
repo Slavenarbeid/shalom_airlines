@@ -21,6 +21,13 @@ public class Flight : Model<Flight>
         ArrivalAirport = arrivalAirport;
         ArrivalTime = arrivalTime;
     }
+    
+    public static bool FlightNumberUsedBefore(int flightNumber)
+    {
+        List<Flight> flights = All();
+
+        return flights.Find(flight => flight.FlightNumber == flightNumber) != null;
+    }
 
     public override string ToString() => $"[{FlightNumber}] {DepartureAirport} -> {ArrivalAirport} | {DepartureTime.ToString()}";
 }

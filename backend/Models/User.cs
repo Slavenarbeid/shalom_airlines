@@ -18,6 +18,13 @@ public class User : Model<User>
         Password = password;
         Level = level;
     }
+    
+    public static bool EmailUsedBefore(string email)
+    {
+        List<User> users = All();
+
+        return users.Find(user => user.Email == email) != null;
+    }
 }
     
     
