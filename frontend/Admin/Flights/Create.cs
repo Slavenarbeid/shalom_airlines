@@ -163,6 +163,20 @@ public partial class Create : Window
             MessageBox.Query("Creating Flight", "Flight Created", "Ok");
             Layout.OpenWindow<Index>();
         };
+        
+        var btnBack = new Button()
+        {
+            Text = "Back",
+            Y = Pos.Bottom(btnCreate) + 2,
+            X = Pos.Center(),
+        };
+        
+        btnBack.Clicked += () =>
+        {
+            {
+                Layout.OpenWindow<Admin.Flights.Index>();
+            }
+        };
 
         Add(flightNumberLabel, flightNumberText, 
             planeTypeLabel, planeType, 
@@ -172,6 +186,6 @@ public partial class Create : Window
             arrivalAirportLabel, arrivalAirportText,
             arrivalDateLabel, arrivalDateText, 
             arrivalTimeLabel, arrivalTimeText, 
-            btnCreate);
+            btnCreate, btnBack);
     }
 }
