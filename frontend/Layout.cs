@@ -9,6 +9,7 @@ public class Layout : Toplevel
     private Window _win;
 
     public backend.Models.User User;
+
     public Layout(backend.Models.User user)
     {
         User = user;
@@ -16,30 +17,40 @@ public class Layout : Toplevel
         Y = 0;
         Width = Dim.Fill();
         Height = Dim.Fill() - 1;
-        
+
+        MenuBar menu;
         switch (user.Level)
         {
             case "admin":
                 _win = new AdminOverview();
+                menu = new MenuBar(new[]
+                {
+                    new MenuBarItem("Menu", new[]
+                    {
+                        new MenuItem("Dashboard", "Main Overview", OpenWindow<AdminOverview>),
+                    }),
+                    new MenuBarItem("Flights", new[]
+                    {
+                        new MenuItem("Overview", "See all Flights", OpenWindow<Admin.Flights.Index>),
+                        new MenuItem("Create", "Create a Flight", OpenWindow<Create>),
+                    })
+                });
                 break;
             default:
                 _win = new UserOverview();
+                menu = new MenuBar(new[]
+                {
+                    new MenuBarItem("Menu", new[]
+                    {
+                        new MenuItem("Dashboard", "Main Overview", OpenWindow<UserOverview>),
+                    }),
+                    new MenuBarItem("Flights", new[]
+                    {
+                        new MenuItem("Overview", "See all Flights", OpenWindow<User.Flights.Index>),
+                    })
+                });
                 break;
         }
-        
-        var menu = new MenuBar(new[]
-        {
-            new MenuBarItem("Menu", new[]
-            {
-                new MenuItem("Dashboard", "Main Overview", OpenWindow<AdminOverview>),
-            }),
-            new MenuBarItem("Flights", new[]
-            {
-                new MenuItem("Overview", "See all Flights", OpenWindow<Admin.Flights.Index>),
-                new MenuItem("Create", "Create a Flight", OpenWindow<Create>),
-            })
-        });
-        
         Add(menu, _win);
     }
 
@@ -55,7 +66,6 @@ public class Layout : Toplevel
         {
             throw new Exception("Toplevel is not of class `Layout`.");
         }
-        
     }
 
     public static void OpenWindow<TWindow>(params object?[]? args) where TWindow : Window
