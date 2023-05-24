@@ -37,7 +37,7 @@ public class Layout : Toplevel
                 });
                 break;
             default:
-                _win = new UserOverview();
+                _win = new UserOverview(User);
                 menu = new MenuBar(new[]
                 {
                     new MenuBarItem("Menu", new[]
