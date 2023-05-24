@@ -22,7 +22,7 @@ public class Layout : Toplevel
         switch (LoggedInUser.Level)
         {
             case "admin":
-                _win = new AdminOverview();
+                _win = new AdminOverview(LoggedInUser);
                 menu = new MenuBar(new[]
                 {
                     new MenuBarItem("Menu", new[]
@@ -37,7 +37,7 @@ public class Layout : Toplevel
                 });
                 break;
             default:
-                _win = new UserOverview(User);
+                _win = new UserOverview(LoggedInUser);
                 menu = new MenuBar(new[]
                 {
                     new MenuBarItem("Menu", new[]
