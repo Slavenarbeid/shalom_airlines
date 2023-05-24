@@ -8,9 +8,6 @@ public class Flight : Model<Flight>
     public DateTime DepartureTime { get; set; }
     public string ArrivalAirport { get; set; }
     public DateTime ArrivalTime { get; set; }
-    
-    public List<int> AvailableSeats = new();
-    // public List<Reservation> Reservations = new();
 
     public Flight(int flightNumber, Plane planeType, string departureAirport, DateTime departureTime, string arrivalAirport, DateTime arrivalTime)
     {
