@@ -3,8 +3,9 @@ namespace shalom_airlines;
 
 public class AdminOverview : Window
 {
-    public AdminOverview(backend.Models.User admin)
+    public AdminOverview()
     {
+        var admin = Layout.LoggedInUser;
         Title = "Admin Overview";
         
         // show admin fields
@@ -29,8 +30,8 @@ public class AdminOverview : Window
             X = 0,
         };
         
-        Add(fullName, email, level);
         
-        // show user flights
+        
+        Add(fullName, email, level);
     }
 }

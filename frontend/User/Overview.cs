@@ -4,8 +4,9 @@ namespace shalom_airlines.User;
 
 public class UserOverview : Window
 {
-    public UserOverview(backend.Models.User user)
+    public UserOverview()
     {
+        var user = Layout.LoggedInUser;
         Title = "User Overview";
         
         // show user fields
