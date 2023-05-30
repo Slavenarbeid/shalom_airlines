@@ -91,6 +91,7 @@ public class Show : Window
                     X = xCord,
                 };
                 lastButton = confirmReservationButton;
+                var i1 = i;
                 confirmReservationButton.Clicked += () =>
                 {
                     var AmountOfReservation = new TextField("")
@@ -107,12 +108,15 @@ public class Show : Window
                         X = Pos.Right(AmountOfReservation),
                     };
 
+                    var i2 = i1;
                     StartReservation.Clicked += () =>
                     {
                         int a;
+                        string seatType = avaibleSeatTypes[i2];
                         if (int.TryParse((string)AmountOfReservation.Text, out a))
                         {
-                            Layout.OpenWindow<SelectReservation>(flight, avaibleSeatTypes[i], a);
+                            
+                            Layout.OpenWindow<SelectReservation>(flight, seatType, a);
                         }
                     };
                     Add(AmountOfReservation, StartReservation);

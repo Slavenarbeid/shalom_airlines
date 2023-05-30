@@ -8,7 +8,7 @@ public class SelectReservation : Window
 {
     public SelectReservation(Flight flight, string type, int amount)
     {
-        Title = $"Viewing flight {flight.FlightNumber}";
+        Title = $"{flight.FlightNumber} - Amount of selections left {amount}";
 
         var flightLabel = new Label(flight.ToString());
 
@@ -30,25 +30,37 @@ public class SelectReservation : Window
 
                 int rowInt1 = rowInt;
                 int seatInt1 = seatInt;
-                if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation == null)
+                if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation == null && flight.PlaneType.SeatsLayout[rowInt][seatInt].Type == type && amount != 0)
                 {
-                    var seatButton = new Label()
+                    var seatButton = new Button()
                     {
-                        Text = $"( {seatType[0]}: {rowInt}-{seatInt} )",
+                        Text = $"{seatType[0]}: {rowInt1}-{seatInt1}",
                         Y = Pos.Bottom(flightLabel) + 2 + rowInt,
                         X = xCord,
                     };
 
+                    seatButton.Clicked += () =>
+                    {
+                        ReservationController.ReserveSeat(flight, rowInt1, seatInt1, Layout.LoggedInUser);
+                        MessageBox.Query("Seat", $"{seatType[0]}: {rowInt1}-{seatInt1}", "Ok");
+                        amount--;
+                        Layout.OpenWindow<SelectReservation>(flight, type, amount);
+                    };
                     Add(seatButton);
                     lastSeat = seatButton;
-                    if (avaibleSeatTypes.Contains(seatType)) continue;
-                    avaibleSeatTypes.Add(seatType);
                 }
                 else
                 {
+                    string LabelText = "( xxxxxx )";
+                    if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation == Layout.LoggedInUser)
+                    {
+                        LabelText = "( Yours  )";
+                    }
+                    
+                    
                     var seatDisplay = new Label()
                     {
-                        Text = $"( xxxxxx )",
+                        Text = LabelText,
 
                         Y = Pos.Bottom(flightLabel) + 2 + rowInt,
                         X = xCord,
@@ -57,6 +69,36 @@ public class SelectReservation : Window
                     lastSeat = seatDisplay;
                 }
             }
+        }
+        
+        if (lastSeat != null) {
+            var confirmReservationButton = new Button()
+            {
+                Text = "Confirm",
+                Y = Pos.Bottom(lastSeat) + 2,
+                X = 0,
+            };
+            
+            confirmReservationButton.Clicked += () =>
+            {
+                FlightController.UpdateFlightByFlightNumber(flight.FlightNumber, flight);
+                MessageBox.Query("Saved", $"Reservations Saved", "Ok");
+                Layout.OpenWindow<Show>(flight);
+            };
+            Add(confirmReservationButton);
+            
+            var CancelReservationButton = new Button()
+            {
+                Text = "Cancel",
+                Y = Pos.Bottom(lastSeat) + 2,
+                X = Pos.Right(confirmReservationButton),
+            };
+            
+            CancelReservationButton.Clicked += () =>
+            {
+                Layout.OpenWindow<Show>(flight);
+            };
+            Add(CancelReservationButton);
         }
     }
 }
