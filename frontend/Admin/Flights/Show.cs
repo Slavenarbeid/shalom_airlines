@@ -2,6 +2,7 @@ using System.CodeDom;
 using backend.Controllers;
 using backend.Models;
 using Terminal.Gui;
+using Attribute = Terminal.Gui.Attribute;
 
 namespace shalom_airlines.Admin.Flights;
 
@@ -101,8 +102,8 @@ public class Show : Window
                 }
                 else
                 {
-                    
-                    var myColor = Application.Driver.MakeAttribute (Color.Blue, Color.Red);
+                    var colorScheme = new ColorScheme();
+                    colorScheme.Normal = new Attribute(Color.Blue, Color.Red);
                     var seatDisplay = new Label()
                     {
 
@@ -110,6 +111,8 @@ public class Show : Window
                         
                         Y = Pos.Bottom(btnEdit) + 2 + rowInt,
                         X = xCord,
+                         
+                        ColorScheme = colorScheme
                     };
                     // seatDisplay.ColorScheme.Normal = new Attribute(Color.Red, Color.Black);
                     seatDisplay.Clicked += () =>
