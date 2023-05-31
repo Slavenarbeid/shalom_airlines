@@ -116,7 +116,7 @@ public class Show : Window
                         if (int.TryParse((string)AmountOfReservation.Text, out a))
                         {
                             
-                            Layout.OpenWindow<SelectReservation>(flight, seatType, a);
+                            Layout.OpenWindow<SelectReservation>(flight, seatType, a, true);
                         }
                     };
                     Add(AmountOfReservation, StartReservation);

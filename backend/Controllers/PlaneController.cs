@@ -16,17 +16,21 @@ public static class PlaneController
     {
         new []{"B", "B", "B", "B", "E", "E", "E"},
         new []{"B", "B", "B", "B", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E"},
         null,
+        new []{"B", "B", "B", "B", "E", "E", "E"},
         new []{"B", "B", "B", "B", "E", "E", "E"},
         new []{"B", "B", "B", "B", "E", "E", "E"},
     };
     private static string[]?[]? _boeing787Layout = new string[][]
     {
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
         null,
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
     };
     public static List<Plane> Planes { get; } = new()
     {
