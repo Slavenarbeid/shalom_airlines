@@ -11,30 +11,13 @@ public class AdminOverview : Window
         var user = Layout.LoggedInUser;
         Title = "Admin Overview";
         
-        // show admin fields
-        var fullName = new Label
+        var flightsLabel = new Label
         {
-            Text = $"Name: {user.FirstName} {user.Lastname}",
+            Text = "Your flights:",
             Y = 1,
             X = 0,
         };
-        
-        var email = new Label
-        {
-            Text = $"Email: {user.Email}",
-            Y = Pos.Bottom(fullName) + 1,
-            X = 0,
-        };
 
-        var level = new Label
-        {
-            Text = $"Permission level: {user.Level}",
-            Y = Pos.Bottom(email) + 1,
-            X = 0,
-        };
-
-        Dictionary<string, object>? filters = null;
-        
         List<Flight> flightView = new List<Flight>();
 
         foreach (var flight in Flight.All())
@@ -47,13 +30,13 @@ public class AdminOverview : Window
 
         var list = new ListView(flightView)
         {
-            Y = Pos.Bottom(level) + 2,
+            Y = Pos.Bottom(flightsLabel) + 1,
             Width = Width,
             Height = Dim.Fill(),
         };
         
         list.OpenSelectedItem += f => { Layout.OpenWindow<Show>(f.Value); };
         
-        Add(fullName, email, level, list);
+        Add(flightsLabel, list);
     }
 }

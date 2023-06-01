@@ -1,4 +1,6 @@
-﻿using Terminal.Gui;
+﻿using backend.Models;
+using shalom_airlines.User.Flights;
+using Terminal.Gui;
 
 namespace shalom_airlines.User;
 
@@ -9,13 +11,32 @@ public class UserOverview : Window
         var user = Layout.LoggedInUser;
         Title = "User Overview";
         
-        // show user fields
-        var fullName = new Label($"{user.FirstName} {user.Lastname}");
-        var email = new Label(user.Email); 
+        var flightsLabel = new Label
+        {
+            Text = "Your flights:",
+            Y = 1,
+            X = 0,
+        };
+
+        List<Flight> flightView = new List<Flight>();
+
+        foreach (var flight in Flight.All())
+        {
+            if (flight.FlightHasUser(user))
+            {
+                flightView.Add(flight);
+            }
+        }
+
+        var list = new ListView(flightView)
+        {
+            Y = Pos.Bottom(flightsLabel) + 1,
+            Width = Width,
+            Height = Dim.Fill(),
+        };
         
-        Add(fullName, email);
+        list.OpenSelectedItem += f => { Layout.OpenWindow<Show>(f.Value); };
         
-        // show user flights
-        
+        Add(flightsLabel, list);
     }
 }
