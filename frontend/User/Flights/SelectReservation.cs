@@ -7,12 +7,13 @@ namespace shalom_airlines.User.Flights;
 public class SelectReservation : Window
 {
     static int? chosenRow = null;
+    private static Flight? oldFlight = null;
     public SelectReservation(Flight flight, string type, int amount, bool newReservation)
     {
         if (newReservation)
         {
+            oldFlight = flight;
             chosenRow = null;
-            newReservation = false;
         }
         Title = $"{flight.FlightNumber} - Amount of selections left {amount}";
         var flightLabel = new Label(flight.ToString());
@@ -37,10 +38,11 @@ public class SelectReservation : Window
 
                 int rowInt1 = rowInt;
                 int seatInt1 = seatInt;
+                bool firstSeatSelectionBool = Firstselectionseat(flight, rowInt, seatInt, chosenRow);
                 if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation == null
                     && flight.PlaneType.SeatsLayout[rowInt][seatInt].Type == type
                     && amount != 0
-                    && Firstselectionseat(flight, rowInt, seatInt, chosenRow))
+                    && firstSeatSelectionBool)
                 {
                     var seatButton = new Button()
                     {
@@ -55,7 +57,7 @@ public class SelectReservation : Window
                         ReservationController.ReserveSeat(flight, rowInt1, seatInt1, Layout.LoggedInUser);
                         MessageBox.Query("Seat", $"{seatType[0]}: {rowInt1}-{seatInt1}", "Ok");
                         amount--;
-                        Layout.OpenWindow<SelectReservation>(flight, type, amount, newReservation);
+                        Layout.OpenWindow<SelectReservation>(flight, type, amount, false);
                     };
                     Add(seatButton);
                     lastSeat = seatButton;
@@ -104,7 +106,7 @@ public class SelectReservation : Window
                 X = Pos.Right(confirmReservationButton),
             };
 
-            CancelReservationButton.Clicked += () => { Layout.OpenWindow<Show>(flight); };
+            CancelReservationButton.Clicked += () => { Layout.OpenWindow<Show>(oldFlight); };
             Add(CancelReservationButton);
         }
     }
@@ -112,10 +114,24 @@ public class SelectReservation : Window
 
     private bool Firstselectionseat(Flight flight, int rowInt, int seatInt, int? chosenRow)
     {
+
         if (chosenRow != null)
         {
             if (seatInt != chosenRow) return false;
+            bool allowseat = false;
+            try
+            {
+                if (flight.PlaneType.SeatsLayout[rowInt - 1][seatInt].Reservation == Layout.LoggedInUser) allowseat = true;
+                if (flight.PlaneType.SeatsLayout[rowInt + 1][seatInt].Reservation == Layout.LoggedInUser) allowseat = true;
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            
+            return allowseat;
         }
+        
         try
         {
             Seat tryseat = flight.PlaneType.SeatsLayout[rowInt - 1][seatInt];
@@ -125,7 +141,6 @@ public class SelectReservation : Window
         {
             return true;
         }
-        
         
         if (flight.PlaneType.SeatsLayout[rowInt - 1][seatInt].Reservation != null) return true;
         if (flight.PlaneType.SeatsLayout[rowInt + 1][seatInt].Reservation != null) return true;
