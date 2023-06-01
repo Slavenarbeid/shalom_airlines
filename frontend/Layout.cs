@@ -34,9 +34,17 @@ public class Layout : Toplevel
                     {
                         new MenuItem("Overview", "See all Flights", OpenWindow<Admin.Flights.Index>),
                         new MenuItem("Create", "Create a Flight", OpenWindow<Create>),
+                    }),
+                    new MenuBarItem("Logout", new[]
+                    {
+                        new MenuItem("Logout", "Logout Account", () =>
+                        {
+                            Application.Top.RequestStop();
+                            Application.Run<MainMenu>();
+                        })
                     })
                 });
-                break;
+                    break;
             default:
                 _win = new UserOverview();
                 menu = new MenuBar(new[]
@@ -48,6 +56,14 @@ public class Layout : Toplevel
                     new MenuBarItem("Flights", new[]
                     {
                         new MenuItem("Overview", "See all Flights", OpenWindow<User.Flights.Index>),
+                    }),
+                    new MenuBarItem("Logout", new[]
+                    {
+                        new MenuItem("Logout", "Logout Account", () =>
+                        {
+                            Application.Top.RequestStop();
+                            Application.Run<MainMenu>();
+                        })
                     })
                 });
                 break;
