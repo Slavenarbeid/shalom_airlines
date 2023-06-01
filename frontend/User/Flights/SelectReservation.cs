@@ -6,144 +6,62 @@ namespace shalom_airlines.User.Flights;
 
 public class SelectReservation : Window
 {
-    static int? chosenRow = null;
-    private static Flight? oldFlight = null;
-    public SelectReservation(Flight flight, string type, int amount, bool newReservation)
+    public SelectReservation(Flight flight, string type, int amount)
     {
-        if (newReservation)
+        var seats = flight.PlaneType.SeatsLayout;
+
+        // seats.Insert(0, null); // add null row to front of the list
+        seats.Add(null); // add null row to end of the list
+        int amountOfRows = 0;
+        for (int seatInt = 0; seatInt < seats.Count; seatInt++)
         {
-            oldFlight = flight;
-            chosenRow = null;
+            if (seats[seatInt] == null) continue;
+            amountOfRows = seats[seatInt].Count;
+            break;
         }
-        Title = $"{flight.FlightNumber} - Amount of selections left {amount}";
-        var flightLabel = new Label(flight.ToString());
-        Add(flightLabel);
-        
-        
-        List<string> avaibleSeatTypes = new List<string>();
+
+        var infoDisplay = new Label()
+        {
+            Text = $"( {amountOfRows} )",
+            Y = 0,
+            X = 0,
+        };
+        Add(infoDisplay);
+
+        Dictionary<int, List<Seat>> groups = new Dictionary<int, List<Seat>>();
+        int groupCounter = 0;
+        Pos xCord = 0;
         View? lastSeat = null;
-        for (int rowInt = 0; rowInt < flight.PlaneType.SeatsLayout.Count; rowInt++)
+        for (int rowInt = 0; rowInt < amountOfRows; rowInt++)
         {
-            Pos xCord = 0;
-            lastSeat = null;
-            if (flight.PlaneType.SeatsLayout[rowInt] == null) continue;
-            for (int seatInt = 0; seatInt < flight.PlaneType.SeatsLayout[rowInt].Count; seatInt++)
+            if (lastSeat != null)
             {
-                String seatType = flight.PlaneType.SeatsLayout[rowInt][seatInt].Type;
-                if (lastSeat != null)
+                xCord = Pos.Right(lastSeat) + 1;
+            }
+            for (int seatInt = 0; seatInt < seats.Count; seatInt++)
+            {
+                if (seats[seatInt] == null)
                 {
-                    xCord = Pos.Right(lastSeat) + 1;
+                    groupCounter++;
+                    continue;
                 }
 
 
-                int rowInt1 = rowInt;
-                int seatInt1 = seatInt;
-                bool firstSeatSelectionBool = Firstselectionseat(flight, rowInt, seatInt, chosenRow);
-                if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation == null
-                    && flight.PlaneType.SeatsLayout[rowInt][seatInt].Type == type
-                    && amount != 0
-                    && firstSeatSelectionBool)
+                if (!groups.ContainsKey(groupCounter))
                 {
-                    var seatButton = new Button()
-                    {
-                        Text = $"{seatType[0]}: {rowInt1}-{seatInt1}",
-                        Y = Pos.Bottom(flightLabel) + 2 + rowInt,
-                        X = xCord,
-                    };
-
-                    seatButton.Clicked += () =>
-                    {
-                        chosenRow = seatInt1;
-                        ReservationController.ReserveSeat(flight, rowInt1, seatInt1, Layout.LoggedInUser);
-                        MessageBox.Query("Seat", $"{seatType[0]}: {rowInt1}-{seatInt1}", "Ok");
-                        amount--;
-                        Layout.OpenWindow<SelectReservation>(flight, type, amount, false);
-                    };
-                    Add(seatButton);
-                    lastSeat = seatButton;
+                    groups.Add(groupCounter, new List<Seat>());
                 }
-                else
+
+                groups[groupCounter].Add(seats[seatInt][rowInt]);
+                var seatDisplay = new Label()
                 {
-                    string LabelText = "( xxxxxx )";
-                    if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation == Layout.LoggedInUser)
-                    {
-                        LabelText = "( Yours  )";
-                    }
-                    
-                    var seatDisplay = new Label()
-                    {
-                        Text = LabelText,
-                        Y = Pos.Bottom(flightLabel) + 2 + rowInt,
-                        X = xCord,
-                    };
-                    Add(seatDisplay);
-                    lastSeat = seatDisplay;
-                }
+                    Text = $"( {groupCounter} )",
+                    Y = Pos.Bottom(infoDisplay) + seatInt,
+                    X = xCord,
+                };
+                Add(seatDisplay);
+                lastSeat = seatDisplay;
             }
         }
-
-        if (lastSeat != null)
-        {
-            var confirmReservationButton = new Button()
-            {
-                Text = "Confirm",
-                Y = Pos.Bottom(lastSeat) + 2,
-                X = 0,
-            };
-
-            confirmReservationButton.Clicked += () =>
-            {
-                FlightController.UpdateFlightByFlightNumber(flight.FlightNumber, flight);
-                MessageBox.Query("Saved", $"Reservations Saved", "Ok");
-                Layout.OpenWindow<Show>(flight);
-            };
-            Add(confirmReservationButton);
-
-            var CancelReservationButton = new Button()
-            {
-                Text = "Cancel",
-                Y = Pos.Bottom(lastSeat) + 2,
-                X = Pos.Right(confirmReservationButton),
-            };
-
-            CancelReservationButton.Clicked += () => { Layout.OpenWindow<Show>(oldFlight); };
-            Add(CancelReservationButton);
-        }
-    }
-
-
-    private bool Firstselectionseat(Flight flight, int rowInt, int seatInt, int? chosenRow)
-    {
-
-        if (chosenRow != null)
-        {
-            if (seatInt != chosenRow) return false;
-            bool allowseat = false;
-            try
-            {
-                if (flight.PlaneType.SeatsLayout[rowInt - 1][seatInt].Reservation == Layout.LoggedInUser) allowseat = true;
-                if (flight.PlaneType.SeatsLayout[rowInt + 1][seatInt].Reservation == Layout.LoggedInUser) allowseat = true;
-            }
-            catch (Exception e)
-            {
-                // ignored
-            }
-            
-            return allowseat;
-        }
-        
-        try
-        {
-            Seat tryseat = flight.PlaneType.SeatsLayout[rowInt - 1][seatInt];
-            Seat tryseat1 = flight.PlaneType.SeatsLayout[rowInt + 1][seatInt];
-        }
-        catch (Exception e)
-        {
-            return true;
-        }
-        
-        if (flight.PlaneType.SeatsLayout[rowInt - 1][seatInt].Reservation != null) return true;
-        if (flight.PlaneType.SeatsLayout[rowInt + 1][seatInt].Reservation != null) return true;
-        return false;
     }
 }

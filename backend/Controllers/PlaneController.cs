@@ -6,28 +6,38 @@ public static class PlaneController
 {
     private static string[]?[]? _boeing737Layout =
     {
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
         null,
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
     };
     private static string[]?[]? _airbus330Layout = new string[][]
     {
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
         null,
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
     };
     private static string[]?[]? _boeing787Layout = new string[][]
     {
         new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
         new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
         new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
         null,
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        null,
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
         new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
         new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
         new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},

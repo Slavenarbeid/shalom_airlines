@@ -73,6 +73,8 @@ public class Show : Window
             if (flight.PlaneType.SeatsLayout[rowInt] == null) continue;
             for (int seatInt = 0; seatInt < flight.PlaneType.SeatsLayout[rowInt].Count; seatInt++)
             {
+                string extraspace = "";
+                if (flight.PlaneType.SeatsLayout.Count > 9) extraspace = " ";
                 String seatType = flight.PlaneType.SeatsLayout[rowInt][seatInt].Type;
                 if (lastSeat != null)
                 {
@@ -80,12 +82,13 @@ public class Show : Window
                 }
                 int rowInt1 = rowInt;
                 int seatInt1 = seatInt;
+                if (rowInt > 9) extraspace = "";
                 if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation == null)
                 {
 
                     var seatButton = new Button()
                     {
-                        Text = $"{seatType[0]}: {rowInt1}-{seatInt1}",
+                        Text = $"{seatType[0]}: {rowInt1}{extraspace}-{seatInt1}",
                         Y = Pos.Bottom(btnEdit) + 2 + rowInt,
                         X = xCord,
                     };
