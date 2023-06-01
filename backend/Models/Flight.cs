@@ -26,5 +26,23 @@ public class Flight : Model<Flight>
         return flights.Find(flight => flight.FlightNumber == flightNumber) != null;
     }
 
+    public bool FlightHasUser(User user)
+    {
+        foreach (var seats in PlaneType.SeatsLayout)
+        {
+            if (seats == null)
+            {
+                continue;
+            }
+
+            if (seats.Any(seat => seat?.Reservation?.Email == user.Email))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public override string ToString() => $"[{FlightNumber}] {DepartureAirport} -> {ArrivalAirport} | {DepartureTime.ToString()}";
 }
