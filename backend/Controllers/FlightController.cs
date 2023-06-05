@@ -10,7 +10,6 @@ public static class FlightController
     }
     
     
-    
     public static Flight Create(int flightNumber, Plane planeType, string departureAirport, DateTime departureTime, string arrivalAirport, DateTime arrivalTime)
     {
         Flight flight = new(flightNumber, planeType, departureAirport, departureTime, arrivalAirport, arrivalTime);

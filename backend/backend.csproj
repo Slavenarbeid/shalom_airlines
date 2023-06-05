@@ -13,4 +13,8 @@
       <PackageReference Include="PluralizeService.Core" Version="1.2.21147.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Data" />
+    </ItemGroup>
+
 </Project>

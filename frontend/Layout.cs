@@ -37,6 +37,10 @@ public class Layout : Toplevel
                         new MenuItem("Overview", "See all Flights", OpenWindow<Admin.Flights.Index>),
                         new MenuItem("Create", "Create a Flight", OpenWindow<Create>),
                     }),
+                    new MenuBarItem("Account", new[]
+                    {
+                        new MenuItem("Profile", "See Profile", OpenWindow<User.Account.Profile>),
+                    }),
                     new MenuBarItem("Logout", new[]
                     {
                         new MenuItem("Logout", "Logout Account", () =>
@@ -58,6 +62,10 @@ public class Layout : Toplevel
                     new MenuBarItem("Flights", new[]
                     {
                         new MenuItem("Overview", "See all Flights", OpenWindow<User.Flights.Index>),
+                    }),
+                    new MenuBarItem("Account", new[]
+                    {
+                        new MenuItem("Profile", "See Profile", OpenWindow<User.Account.Profile>),
                     }),
                     new MenuBarItem("Logout", new[]
                     {
