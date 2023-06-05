@@ -39,4 +39,12 @@ public abstract class Model<TModel>
         var lambda = Expression.Lambda<Func<TModel, bool>>(binaryFilter, param);
         return query.Where(lambda).ToList();
     }
+
+    public string CreateUUID()
+    {
+        Guid guid = Guid.NewGuid();
+        string UUID = guid.ToString();
+
+        return UUID;
+    }
 }
