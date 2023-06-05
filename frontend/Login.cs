@@ -48,11 +48,37 @@ public class Login : Window
         var btnLogin = new Button()
         {
             Text = "Login",
-            Y = Pos.Bottom(passwordLabel) + 1,
-            // center the login button horizontally
-            X = Pos.Center(),
             IsDefault = true,
         };
+
+        var btnBack = new Button()
+        {
+            Text = "Back",
+            X = Pos.Right(btnLogin),
+        };
+
+        void BackAction()
+        {
+            btnBack.Clicked -= BackAction;
+            Application.RequestStop();
+            Application.Top.RemoveAll();
+            Application.Run<MainMenu>();
+        }
+
+        btnBack.Clicked += BackAction;
+        
+        var btns = new FrameView()
+        {
+            Y = Pos.Bottom(passwordLabel) + 1,
+            X = Pos.Center(),
+            Width = Dim.Width(btnLogin) + Dim.Width(btnBack) + 1,
+            Height = Dim.Height(btnLogin),
+            Border = new Border()
+            {
+                BorderStyle = BorderStyle.None
+            }
+        };
+        btns.Add(btnLogin, btnBack);
 
         // When login button is clicked display a message popup
         void BtnLoginClickedHandler()
@@ -73,6 +99,6 @@ public class Login : Window
         btnLogin.Clicked += BtnLoginClickedHandler;
 
         // Add the views to the Window
-        Add(emailLabel, emailText, passwordLabel, passwordText, btnLogin);
+        Add(emailLabel, emailText, passwordLabel, passwordText, btns);
     }
 }

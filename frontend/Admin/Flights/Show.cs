@@ -13,9 +13,7 @@ public class Show : Window
 
         var flightLabel = new Label()
         {
-            Text = $"From {flight.DepartureAirport} to {flight.ArrivalAirport}\nDeparture date and time:{flight.DepartureTime.Date}\nArrival date and time: {flight.ArrivalTime}",
-             
-            
+            Text = $"From {flight.DepartureAirport} to {flight.ArrivalAirport}\nDeparture date and time: {flight.DepartureTime.Date}\nArrival date and time: {flight.ArrivalTime}",
         };
 
 
@@ -58,13 +56,8 @@ public class Show : Window
             Y = Pos.Bottom(btnEdit) + 1,
             X = 0,
         };
+        btnBack.Clicked += Layout.Back;
         
-        btnBack.Clicked += () =>
-        {
-            {
-                Layout.OpenWindow<Admin.Flights.Index>();
-            }
-        };
         View? lastSeat = null;
         for (int rowInt = 0; rowInt < flight.PlaneType.SeatsLayout.Count; rowInt++)
         {

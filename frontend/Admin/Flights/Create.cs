@@ -5,7 +5,7 @@ using Terminal.Gui;
 
 namespace shalom_airlines.Admin.Flights;
 
-public partial class Create : Window
+public class Create : Window
 {
     public Create()
     {
@@ -170,13 +170,7 @@ public partial class Create : Window
             Y = Pos.Bottom(btnCreate) + 2,
             X = Pos.Center(),
         };
-        
-        btnBack.Clicked += () =>
-        {
-            {
-                Layout.OpenWindow<Admin.Flights.Index>();
-            }
-        };
+        btnBack.Clicked += Layout.Back;
 
         Add(flightNumberLabel, flightNumberText, 
             planeTypeLabel, planeType, 
