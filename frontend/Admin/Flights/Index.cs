@@ -72,18 +72,10 @@ public class Index : Window
             Width = Dim.Percent(30),
         };
 
-        // Button Search
-        var SearchFieldButton = new Button()
-        {
-            Y = Pos.Bottom(SearchDeparturelLabel) + 1,
-            Text = "Search",
-        };
-
         // Button Reset
         var SearchResetButton = new Button()
         {
             Y = Pos.Bottom(SearchDeparturelLabel) + 1,
-            X = Pos.Right(SearchFieldButton) + 1,
             Text = "Reset",
         };
         SearchResetButton.Clicked += Layout.OpenWindow<Index>;
@@ -93,7 +85,7 @@ public class Index : Window
 
         var list = new ListView(flightView)
         {
-            Y = Pos.Bottom(SearchFieldButton) + 2,
+            Y = Pos.Bottom(SearchResetButton) + 2,
             Width = Width,
             Height = Dim.Fill(),
         };
@@ -137,7 +129,7 @@ public class Index : Window
         Add(SearchIdlLabel, SearchIdFieldText, // ID search
             SearchDeparturelLabel, SearchDepartureFieldText, SearchArrivalFieldText,
             SearchArrivallLabel, // Departure -> Arrival search
-            SearchFieldButton, SearchResetButton, // Search buttons
+            SearchResetButton, // Search buttons
             list);
     }
 }
