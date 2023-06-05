@@ -1,10 +1,11 @@
 using NStack;
 using backend.Controllers;
+using backend.Models;
 using Terminal.Gui;
 
 namespace shalom_airlines.Admin.Flights;
 
-public partial class Create : Window
+public class Create : Window
 {
     public Create()
     {
@@ -143,7 +144,12 @@ public partial class Create : Window
             string arrivalAirportValue = (string)arrivalAirportText.Text;
             DateTime arrivalDateTimeValue = arrivalDateText.Date + arrivalTimeText.Time;
             
-            // validate values
+            // Field validation
+            if (Flight.FlightNumberUsedBefore(flightNumberValue))
+            {
+                MessageBox.ErrorQuery("Creating Flight", "Flight number used before", "Ok");
+                return;
+            }
 
             // create flight
             FlightController.Create(
@@ -164,13 +170,7 @@ public partial class Create : Window
             Y = Pos.Bottom(btnCreate) + 2,
             X = Pos.Center(),
         };
-        
-        btnBack.Clicked += () =>
-        {
-            {
-                Layout.OpenWindow<Admin.Flights.Index>();
-            }
-        };
+        btnBack.Clicked += Layout.Back;
 
         Add(flightNumberLabel, flightNumberText, 
             planeTypeLabel, planeType, 

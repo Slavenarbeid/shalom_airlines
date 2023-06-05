@@ -72,21 +72,31 @@ public class Index : Window
             Width = Dim.Percent(30),
         };
 
-        // Button Search
-        var SearchFieldButton = new Button()
+        // Button Reset
+        var SearchResetButton = new Button()
         {
             Y = Pos.Bottom(SearchDeparturelLabel) + 1,
-            Text = "Search",
+            Text = "Reset",
         };
-        SearchFieldButton.Clicked += () =>
+        SearchResetButton.Clicked += Layout.OpenWindow<Index>;
+
+        List<Flight> flightView = new List<Flight>();
+        flightView = filters == null ? Flight.All() : Flight.Search(filters);
+
+        var list = new ListView(flightView)
         {
-            Dictionary<string, object> newFilter = new Dictionary<string, object>
-            {
-            };
+            Y = Pos.Bottom(SearchResetButton) + 2,
+            Width = Width,
+            Height = Dim.Fill(),
+        };
+        
+        // Search on text input
+        void SearchAction()
+        {
+            Dictionary<string, object> newFilter = new();
             if (SearchIdFieldText.Text != "")
             {
-                int a;
-                if (int.TryParse((string)SearchIdFieldText.Text, out a))
+                if (int.TryParse((string)SearchIdFieldText.Text, out int a))
                 {
                     int SearchIdValue = Convert.ToInt32(a);
                     newFilter.Add("FlightNumber", SearchIdValue);
@@ -105,34 +115,21 @@ public class Index : Window
                 newFilter.Add("ArrivalAirport", SearchArrivalValue);
             }
 
-            Layout.OpenWindow<Admin.Flights.Index>(newFilter);
+            // Layout.OpenWindow<Index>(newFilter);
+            var flights = newFilter.Count > 0 ? Flight.Search(newFilter) : Flight.All();
+            list.SetSource(flights);
+            list.Redraw(new Rect(new Point(list.GetAutoSize()), list.GetAutoSize()));
         };
-
-        // Button Reset
-        var SearchResetButton = new Button()
-        {
-            Y = Pos.Bottom(SearchDeparturelLabel) + 1,
-            X = Pos.Right(SearchFieldButton) + 1,
-            Text = "Reset",
-        };
-        SearchResetButton.Clicked += () => { Layout.OpenWindow<Admin.Flights.Index>(null); };
-
-        List<Flight> flightView = new List<Flight>();
-        flightView = filters == null ? Flight.All() : Flight.Search(filters);
-
-        var list = new ListView(flightView)
-        {
-            Y = Pos.Bottom(SearchFieldButton) + 2,
-            Width = Width,
-            Height = Dim.Fill(),
-        };
+        SearchIdFieldText.TextChanged += _ => SearchAction();
+        SearchDepartureFieldText.TextChanged += _ => SearchAction();
+        SearchArrivalFieldText.TextChanged += _ => SearchAction();
 
         list.OpenSelectedItem += f => { Layout.OpenWindow<Show>(f.Value); };
 
         Add(SearchIdlLabel, SearchIdFieldText, // ID search
             SearchDeparturelLabel, SearchDepartureFieldText, SearchArrivalFieldText,
             SearchArrivallLabel, // Departure -> Arrival search
-            SearchFieldButton, SearchResetButton, // Search buttons
+            SearchResetButton, // Search buttons
             list);
     }
 }
