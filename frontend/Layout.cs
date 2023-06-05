@@ -11,6 +11,8 @@ public class Layout : Toplevel
 
     public static backend.Models.User LoggedInUser;
 
+    private static readonly List<Window> WindowHistory = new();
+
     public Layout(backend.Models.User user)
     {
         LoggedInUser = user;
@@ -48,7 +50,7 @@ public class Layout : Toplevel
                         })
                     })
                 });
-                    break;
+                break;
             default:
                 _win = new UserOverview();
                 menu = new MenuBar(new[]
@@ -79,31 +81,38 @@ public class Layout : Toplevel
         Add(menu, _win);
     }
 
-    public static void OpenWindow(Window window)
+    internal static void OpenWindow(Window window, bool silent = false)
     {
-        if (Application.Top is Layout layout)
-        {
-            layout.Remove(layout._win);
-            layout._win = window;
-            layout.Add(layout._win);
-        }
-        else
+        if (Application.Top is not Layout layout)
         {
             throw new Exception("Toplevel is not of class `Layout`.");
         }
+        
+        if (!silent) WindowHistory.Add(layout._win);
+        
+        layout.Remove(layout._win);
+        layout._win = window;
+        layout.Add(layout._win);
     }
 
-    public static void OpenWindow<TWindow>(params object?[]? args) where TWindow : Window
+    internal static void OpenWindow<TWindow>(params object?[]? args) where TWindow : Window
     {
         var window = (TWindow)Activator.CreateInstance(typeof(TWindow), args)!;
+        window.Height = Dim.Fill();
         if (window == null)
             throw new Exception($"Class `{typeof(TWindow)}` is not of class `Window`.");
 
         OpenWindow(window);
     }
 
-    public static void OpenWindow<TWindow>() where TWindow : Window
+    internal static void OpenWindow<TWindow>() where TWindow : Window
     {
         OpenWindow<TWindow>(null);
+    }
+
+    internal static void Back()
+    {
+        OpenWindow(WindowHistory.Last(), true);
+        WindowHistory.RemoveAt(WindowHistory.Count - 1);
     }
 }
