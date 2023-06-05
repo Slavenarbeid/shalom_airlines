@@ -1,4 +1,5 @@
-﻿using backend.Models;
+﻿using System.Runtime.InteropServices;
+using backend.Models;
 
 
 namespace backend.Controllers;
@@ -17,13 +18,14 @@ public class UserController
         return user;
     }
 
-    public static void Update(User oldUser, string email, string firstName, string lastname, string password)
+    public static User Update(User oldUser, string email, string firstName, string lastname, string password)
     {
         string passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
 
-        User newUser = new(email, firstName, lastname, passwordHash, oldUser.Level);
+        User newUser = new(oldUser.ID, email, firstName, lastname, passwordHash, oldUser.Level);
 
         JsonHandle<User> jsonHandle = new JsonHandle<User>("Users");
         jsonHandle.UpdateJson(oldUser, newUser);
+        return newUser;
     }
 }

@@ -102,10 +102,11 @@ public class EditUser : Window
                 return;
             }
 
-            UserController.Update(user, (string)emailText.Text, (string)firstNameText.Text, (string)lastNameText.Text,
+            backend.Models.User newUser = UserController.Update(user, (string)emailText.Text, (string)firstNameText.Text, (string)lastNameText.Text,
                 (string)passwordText.Text);
-
+            
             MessageBox.Query("Editing User", "User Edited", "Ok");
+            Layout.LoggedInUser = newUser;
             Layout.OpenWindow<Profile>();
         };
 
