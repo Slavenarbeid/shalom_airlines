@@ -101,17 +101,13 @@ public class Show : Window
                 }
                 else
                 {
-                    
-                    var myColor = Application.Driver.MakeAttribute (Color.Blue, Color.Red);
                     var seatDisplay = new Label()
                     {
-
                         Text = $"( {seatType[0]}: {rowInt}-{seatInt} )",
                         
                         Y = Pos.Bottom(btnEdit) + 2 + rowInt,
                         X = xCord,
                     };
-                    // seatDisplay.ColorScheme.Normal = new Attribute(Color.Red, Color.Black);
                     seatDisplay.Clicked += () =>
                     {
                         Layout.OpenWindow<ShowReservation>(flight, rowInt1, seatInt1);
