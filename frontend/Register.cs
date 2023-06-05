@@ -90,9 +90,6 @@ public class Register : Window
         var btnRegister = new Button()
         {
             Text = "Register",
-            Y = Pos.Bottom(passwordAuthText) + 1,
-            // center the login button horizontally
-            X = Pos.Center(),
             IsDefault = true,
         };
 
@@ -116,11 +113,42 @@ public class Register : Window
             // create user
             UserController.Create((string)emailText.Text, (string)firstNameText.Text, (string)lastNameText.Text, (string)passwordText.Text);
             MessageBox.Query("Creating User", "User Created", "Ok");
+            Application.RequestStop();
+            Application.Top.RemoveAll();
             Application.Run<MainMenu>();
         }
         btnRegister.Clicked += BtnRegisterClickedHandler;
+        
+        var btnBack = new Button()
+        {
+            Text = "Back",
+            X = Pos.Right(btnRegister),
+        };
+
+        void BackAction()
+        {
+            btnBack.Clicked -= BackAction;
+            Application.RequestStop();
+            Application.Top.RemoveAll();
+            Application.Run<MainMenu>();
+        }
+
+        btnBack.Clicked += BackAction;
+        
+        var btns = new FrameView()
+        {
+            Y = Pos.Bottom(passwordAuthText) + 1,
+            X = Pos.Center(),
+            Width = Dim.Width(btnRegister) + Dim.Width(btnBack) + 1,
+            Height = Dim.Height(btnRegister),
+            Border = new Border()
+            {
+                BorderStyle = BorderStyle.None
+            }
+        };
+        btns.Add(btnRegister, btnBack);
 
         // Add the views to the Window
-        Add(emailLabel, emailText, firstNameLabel, firstNameText, lastNameLabel, lastNameText, passwordLabel, passwordText, passwordAuthLabel, passwordAuthText, btnRegister);
+        Add(emailLabel, emailText, firstNameLabel, firstNameText, lastNameLabel, lastNameText, passwordLabel, passwordText, passwordAuthLabel, passwordAuthText, btns);
     }
 }

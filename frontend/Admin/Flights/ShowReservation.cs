@@ -18,7 +18,7 @@ public class ShowReservation : Window
             Y = 0,
             X = 0,
         };
-        btnBack.Clicked += () => { Layout.OpenWindow<Show>(flight); };
+        btnBack.Clicked += Layout.Back;
         Add(btnBack);
         
         var seatDisplay = new Label()

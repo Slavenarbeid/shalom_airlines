@@ -32,7 +32,6 @@ _  ___ |  / _  /   _  / _  / _  / / /  __/(__  )
         {
             Text = "Register",
             X = Pos.Right(btnLogin) + 1,
-            IsDefault = true,
         };
 
         var btns = new FrameView()
