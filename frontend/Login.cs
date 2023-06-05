@@ -14,7 +14,7 @@ public class Login : Window
         // Create input components and labels
         var emailLabel = new Label()
         {
-            Text = "Username:",
+            Text = "Email:",
             Y = Pos.Center()
         };
 
