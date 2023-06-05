@@ -54,7 +54,7 @@ public class SelectReservation : Window
                 {
                     var colorScheme = new ColorScheme();
                     string LabelText = "( xxxxxx )";
-                    if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation.ID == Layout.LoggedInUser.ID)
+                    if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation?.ID == Layout.LoggedInUser.ID)
                     {
                         LabelText = "( Yours  )";
                         

@@ -40,7 +40,7 @@ public abstract class Model<TModel>
         return query.Where(lambda).ToList();
     }
 
-    public string CreateUUID()
+    public static string CreateUUID()
     {
         Guid guid = Guid.NewGuid();
         string UUID = guid.ToString();

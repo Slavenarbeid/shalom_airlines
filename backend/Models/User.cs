@@ -11,9 +11,9 @@ public class User : Model<User>
     public string Password { get; set; }
     public string Level { get; }
 
-    public User(string email, string firstName, string lastname, string password, string level = "user")
+    public User(string id, string email, string firstName, string lastname, string password, string level = "user")
     {
-        ID = CreateUUID();
+        ID = id;
         Email = email;
         FirstName = firstName;
         Lastname = lastname;

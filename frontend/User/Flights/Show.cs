@@ -45,7 +45,7 @@ public class Show : Window
                     if (avaibleSeatTypes.Contains(seatType)) continue;
                     avaibleSeatTypes.Add(seatType);
                 }
-                else if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation.ID == Layout.LoggedInUser.ID)
+                else if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation?.ID == Layout.LoggedInUser.ID)
                 {
                     var colorScheme = new ColorScheme();
                     colorScheme.Normal = new Attribute(Color.Black, Color.White);
