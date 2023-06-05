@@ -13,16 +13,11 @@ public class Register : Window
         var emailLabel = new Label()
         {
             Text = "Email:",
-            Y = Pos.Center()
         };
 
         var emailText = new TextField("")
         {
-            // Position text field adjacent to the label
-            X = Pos.Right(emailLabel) + 1,
-            Y = Pos.Center(),
-
-            // Fill remaining horizontal space
+            Y = Pos.Bottom(emailLabel),
             Width = Dim.Fill(),
         };
         
@@ -30,13 +25,12 @@ public class Register : Window
         {
             Text = "First Name:",
             X = Pos.Left(emailLabel),
-            Y = Pos.Bottom(emailLabel) + 1
+            Y = Pos.Bottom(emailLabel) + 2
         };
 
         var firstNameText = new TextField("")
         {
-            X = Pos.Left(emailText),
-            Y = Pos.Top(firstNameLabel),
+            Y = Pos.Bottom(firstNameLabel),
             Width = Dim.Fill(),
         };
         
@@ -44,13 +38,12 @@ public class Register : Window
         {
             Text = "Last Name:",
             X = Pos.Left(firstNameLabel),
-            Y = Pos.Bottom(firstNameLabel) + 1
+            Y = Pos.Bottom(firstNameLabel) + 2
         };
 
         var lastNameText = new TextField("")
         {
-            X = Pos.Left(firstNameText),
-            Y = Pos.Top(lastNameLabel),
+            Y = Pos.Bottom(lastNameLabel),
             Width = Dim.Fill(),
         };
 
@@ -58,15 +51,13 @@ public class Register : Window
         {
             Text = "Password:",
             X = Pos.Left(lastNameLabel),
-            Y = Pos.Bottom(lastNameLabel) + 1
+            Y = Pos.Bottom(lastNameLabel) + 2
         };
 
         var passwordText = new TextField("")
         {
             Secret = true,
-            // align with the text box above
-            X = Pos.Left(lastNameText),
-            Y = Pos.Top(passwordLabel),
+            Y = Pos.Bottom(passwordLabel),
             Width = Dim.Fill(),
         };
         
@@ -74,15 +65,13 @@ public class Register : Window
         {
             Text = "Password:",
             X = Pos.Left(passwordLabel),
-            Y = Pos.Bottom(passwordLabel) + 1
+            Y = Pos.Bottom(passwordLabel) + 2
         };
 
         var passwordAuthText = new TextField("")
         {
             Secret = true,
-            // align with the text box above
-            X = Pos.Left(passwordText),
-            Y = Pos.Top(passwordAuthLabel),
+            Y = Pos.Bottom(passwordAuthLabel),
             Width = Dim.Fill(),
         };
         

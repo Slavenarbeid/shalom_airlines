@@ -28,7 +28,7 @@ public class User : Model<User>
         return users.Find(user => user.Email == email) != null;
     }
     
-    public override string ToString() => $"[{Email}] {FirstName} {Lastname} {Password} {Level}";
+    public override string ToString() => $"[{ID} {Email}] {FirstName} {Lastname} {Password} {Level}";
 }
     
     
