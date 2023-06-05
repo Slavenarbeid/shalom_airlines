@@ -35,6 +35,7 @@ public class JsonHandle<TItem>
         List<TItem> listOfObjects = LoadJson();
         
         TItem listItemToUpdate = listOfObjects.Find(obj => obj.ToString() == itemToUpdate.ToString());
+        if (listItemToUpdate == null) return;
         var index = listOfObjects.IndexOf(listItemToUpdate);
         if(index != -1)
             listOfObjects[index] = newItem;
