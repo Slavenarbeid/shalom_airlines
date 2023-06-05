@@ -1,6 +1,7 @@
 using backend.Controllers;
 using backend.Models;
 using Terminal.Gui;
+using Attribute = Terminal.Gui.Attribute;
 
 namespace shalom_airlines.User.Flights;
 
@@ -43,6 +44,26 @@ public class Show : Window
                     lastSeat = seatButton;
                     if (avaibleSeatTypes.Contains(seatType)) continue;
                     avaibleSeatTypes.Add(seatType);
+                }
+                else if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation?.ID == Layout.LoggedInUser.ID)
+                {
+                    var colorScheme = new ColorScheme();
+                    colorScheme.Normal = new Attribute(Color.Black, Color.White);
+                    var seatDisplay = new Label()
+                    {
+                        Text = $"( Yours  )",
+
+                        Y = Pos.Bottom(flightLabel) + 2 + rowInt,
+                        X = xCord,
+                        
+                        ColorScheme = colorScheme,
+                    };
+                    seatDisplay.Clicked += () =>
+                    {
+                        Layout.OpenWindow<ShowReservation>(flight, rowInt1, seatInt1);
+                    };
+                    Add(seatDisplay);
+                    lastSeat = seatDisplay;
                 }
                 else
                 {
