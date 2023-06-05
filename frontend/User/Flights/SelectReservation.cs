@@ -22,14 +22,16 @@ public class SelectReservation : Window
 
         var infoDisplay = new Label()
         {
-            Text = $"( {amountOfRows} )",
+            Text = $"- {amountOfRows} -",
             Y = 0,
             X = 0,
         };
         Add(infoDisplay);
 
-        Dictionary<int, List<Seat>> groups = new Dictionary<int, List<Seat>>();
+        Dictionary<int, List<View>> groups = new Dictionary<int, List<View>>();
+        Dictionary<int, int> groupsAvailableSeats = new Dictionary<int, int>();
         int groupCounter = 0;
+        int groupCounterAvailableSeats = 0;
         Pos xCord = 0;
         View? lastSeat = null;
         for (int rowInt = 0; rowInt < amountOfRows; rowInt++)
@@ -38,28 +40,39 @@ public class SelectReservation : Window
             {
                 xCord = Pos.Right(lastSeat) + 1;
             }
+
             for (int seatInt = 0; seatInt < seats.Count; seatInt++)
             {
                 if (seats[seatInt] == null)
                 {
+                    groupCounterAvailableSeats = 0;
                     groupCounter++;
                     continue;
                 }
 
-
                 if (!groups.ContainsKey(groupCounter))
                 {
-                    groups.Add(groupCounter, new List<Seat>());
+                    groups.Add(groupCounter, new List<View>());
+                    groupsAvailableSeats.Add(groupCounter, 0);
                 }
 
-                groups[groupCounter].Add(seats[seatInt][rowInt]);
+                if (seats[seatInt][rowInt].Reservation == null)
+                {
+                    groupCounterAvailableSeats++;
+                    groupsAvailableSeats[groupCounter] = groupCounterAvailableSeats;
+                }
+
+
                 var seatDisplay = new Label()
                 {
-                    Text = $"( {groupCounter} )",
+                    Text = $"( {groupCounter}-{groupCounterAvailableSeats} )",
                     Y = Pos.Bottom(infoDisplay) + seatInt,
                     X = xCord,
                 };
+                
+                groups[groupCounter].Add(seatDisplay);
                 Add(seatDisplay);
+                
                 lastSeat = seatDisplay;
             }
         }
