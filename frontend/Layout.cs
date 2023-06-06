@@ -39,8 +39,8 @@ public class Layout : Toplevel
                     }),
                     new MenuBarItem("Account", new[]
                     {
-                        new MenuItem("Profile", "See Profile", OpenWindow<Admin.Account.Profile>),
                         new MenuItem("Overview", "See All Users", OpenWindow<Admin.Account.Index>),
+                        new MenuItem("Profile", "See Profile", OpenWindow<Admin.Account.Profile>),
                     }),
                     new MenuBarItem("Logout", new[]
                     {

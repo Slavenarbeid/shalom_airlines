@@ -121,7 +121,6 @@ public class Index : Window
             list.Redraw(new Rect(new Point(list.GetAutoSize()), list.GetAutoSize()));
         }
 
-        ;
         SearchEmailFieldText.TextChanged += _ => SearchAction();
         SearchFirstNameFieldText.TextChanged += _ => SearchAction();
         SearchLastNameFieldText.TextChanged += _ => SearchAction();
