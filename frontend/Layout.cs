@@ -39,7 +39,7 @@ public class Layout : Toplevel
                     }),
                     new MenuBarItem("Account", new[]
                     {
-                        new MenuItem("Profile", "See Profile", OpenWindow<User.Account.Profile>),
+                        new MenuItem("Profile", "See Profile", OpenWindow<Admin.Account.Profile>),
                     }),
                     new MenuBarItem("Logout", new[]
                     {

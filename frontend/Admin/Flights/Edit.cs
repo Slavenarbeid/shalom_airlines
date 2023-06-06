@@ -19,13 +19,12 @@ public class EditFlight : Window
         var flightNumberText = new TextField("")
         {
             Text = flight.FlightNumber.ToString(),
-            X = Pos.Right(flightNumberLabel) + 2,
-            Width = Dim.Percent(75),
+            Y = Pos.Bottom(flightNumberLabel),
+            Width = Dim.Fill(),
         };
         
         var planeTypeLabel = new Label("Select Planetype:  ")
         {
-            X = Pos.Left(flightNumberLabel),
             Y = Pos.Bottom(flightNumberLabel) + 2
         };
         
@@ -35,8 +34,7 @@ public class EditFlight : Window
         
         var planeType = new RadioGroup(planeTypeRadioGroup)
         {
-            X = Pos.Left(flightNumberText),
-            Y = Pos.Top(planeTypeLabel)
+            Y = Pos.Bottom(planeTypeLabel)
         };
 
         var departureAirportLabel = new Label()
@@ -49,9 +47,8 @@ public class EditFlight : Window
         var departureAirportText = new TextField("")
         {
             Text = flight.DepartureAirport,
-            X = Pos.Left(planeType),
-            Y = Pos.Top(departureAirportLabel),
-            Width = Dim.Percent(75),
+            Y = Pos.Bottom(departureAirportLabel),
+            Width = Dim.Fill(),
         };
         
         var departureDateLabel = new Label()
@@ -64,9 +61,8 @@ public class EditFlight : Window
         var departureDateText = new DateField(DateTime.Today)
         {
             Date = flight.DepartureTime.Date,
-            X = Pos.Left(departureAirportText),
-            Y = Pos.Top(departureDateLabel),
-            Width = Dim.Percent(75),
+            Y = Pos.Bottom(departureDateLabel),
+            Width = Dim.Fill(),
         };
 
         var departureTimeLabel = new Label()
@@ -79,9 +75,8 @@ public class EditFlight : Window
         var departureTimeText = new TimeField(new TimeSpan(0,0, 0))
         {
             Time = flight.DepartureTime.TimeOfDay,
-            X = Pos.Left(departureDateText),
-            Y = Pos.Top(departureTimeLabel),
-            Width = Dim.Percent(75),
+            Y = Pos.Bottom(departureTimeLabel),
+            Width = Dim.Fill(),
         };
 
         var arrivalAirportLabel = new Label()
@@ -94,9 +89,8 @@ public class EditFlight : Window
         var arrivalAirportText = new TextField("")
         {
             Text = flight.ArrivalAirport,
-            X = Pos.Left(departureTimeText),
-            Y = Pos.Top(arrivalAirportLabel),
-            Width = Dim.Percent(75),
+            Y = Pos.Bottom(arrivalAirportLabel),
+            Width = Dim.Fill(),
         };
 
         var arrivalDateLabel = new Label()
@@ -109,9 +103,8 @@ public class EditFlight : Window
         var arrivalDateText = new DateField(DateTime.Today)
         {
             Date = flight.ArrivalTime.Date,
-            X = Pos.Left(arrivalAirportText),
-            Y = Pos.Top(arrivalDateLabel),
-            Width = Dim.Percent(75),
+            Y = Pos.Bottom(arrivalDateLabel),
+            Width = Dim.Fill(),
         };
         
         var arrivalTimeLabel = new Label()
@@ -124,9 +117,8 @@ public class EditFlight : Window
         var arrivalTimeText = new TimeField(new TimeSpan(0,0, 0))
         {
             Time = flight.ArrivalTime.TimeOfDay,
-            X = Pos.Left(arrivalDateText),
-            Y = Pos.Top(arrivalTimeLabel),
-            Width = Dim.Percent(75),
+            Y = Pos.Bottom(arrivalTimeLabel),
+            Width = Dim.Fill(),
         };
         
         var btnEdit = new Button()
