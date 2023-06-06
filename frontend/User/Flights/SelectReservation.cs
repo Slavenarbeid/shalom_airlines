@@ -29,11 +29,12 @@ public class SelectReservation : Window
         Add(infoDisplay);
 
         Dictionary<int, List<View>> groups = new Dictionary<int, List<View>>();
-        Dictionary<int, int> groupsAvailableSeats = new Dictionary<int, int>();
+        Dictionary<int, List<int>> groupsAvailableSeats = new Dictionary<int, List<int>>();
         int groupCounter = 0;
         int groupCounterAvailableSeats = 0;
         Pos xCord = 0;
         View? lastSeat = null;
+        int maxSeatSize = 0;
         for (int rowInt = 0; rowInt < amountOfRows; rowInt++)
         {
             if (lastSeat != null)
@@ -45,6 +46,13 @@ public class SelectReservation : Window
             {
                 if (seats[seatInt] == null)
                 {
+                    if (!groupsAvailableSeats.ContainsKey(groupCounterAvailableSeats))
+                    {
+                        groupsAvailableSeats.Add(groupCounterAvailableSeats, new List<int>());
+                    }
+
+                    if (groupCounterAvailableSeats > maxSeatSize) maxSeatSize = groupCounterAvailableSeats;
+                    groupsAvailableSeats[groupCounterAvailableSeats].Add(groupCounter);
                     groupCounterAvailableSeats = 0;
                     groupCounter++;
                     continue;
@@ -53,13 +61,13 @@ public class SelectReservation : Window
                 if (!groups.ContainsKey(groupCounter))
                 {
                     groups.Add(groupCounter, new List<View>());
-                    groupsAvailableSeats.Add(groupCounter, 0);
                 }
+
+
 
                 if (seats[seatInt][rowInt].Reservation == null)
                 {
                     groupCounterAvailableSeats++;
-                    groupsAvailableSeats[groupCounter] = groupCounterAvailableSeats;
                 }
 
 
@@ -76,5 +84,16 @@ public class SelectReservation : Window
                 lastSeat = seatDisplay;
             }
         }
+
+        int optimalgroupsize = amount;
+        if (maxSeatSize < amount) optimalgroupsize = maxSeatSize;
+        string text = $"max:{maxSeatSize}\noptimal:{optimalgroupsize}\n";
+        foreach (var amountofseats in groupsAvailableSeats)
+        {
+            
+            text += $"{amountofseats.Key} {string.Join(",", amountofseats.Value)}\n";
+        }
+        infoDisplay.Text = text;
+
     }
 }
