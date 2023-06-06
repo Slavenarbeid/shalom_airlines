@@ -6,9 +6,9 @@ namespace shalom_airlines.Admin.Account;
 
 public class EditUser : Window
 {
-    public EditUser()
+    public EditUser(backend.Models.User user)
     {
-        var user = Layout.LoggedInUser;
+        // var user = Layout.LoggedInUser;
         Title = $"Edit User: {user.FirstName} {user.Lastname}";
 
         var emailLabel = new Label()

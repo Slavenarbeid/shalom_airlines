@@ -31,7 +31,7 @@ public class Profile : Window
         
         btnEdit.Clicked += () =>
         {
-            Layout.OpenWindow<EditUser>();
+            Layout.OpenWindow<EditUser>(user);
         };
         
         Add(fullName, email, btnEdit);
