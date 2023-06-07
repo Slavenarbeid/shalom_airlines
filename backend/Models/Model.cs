@@ -13,11 +13,12 @@ public abstract class Model<TModel>
         return jsonHandle.LoadJson();
     }
 
+
     public static List<TModel> Search(Dictionary<string, object> filters)
     {
         var models = All();
         if (!models.Any()) return models;
-        
+
         var query = models.AsQueryable();
         var param = Expression.Parameter(typeof(TModel), "model");
         BinaryExpression? binaryFilter = null;
@@ -28,7 +29,7 @@ public abstract class Model<TModel>
             var constantExpression = Expression.Constant(filter.Value.ToString());
             var binaryExpression = Expression.Equal(
                 Expression.Call(
-                    Expression.Call(memberExpression, typeof(object).GetMethod("ToString")!), 
+                    Expression.Call(memberExpression, typeof(object).GetMethod("ToString")!),
                     "Contains",
                     null, constantExpression),
                 Expression.Constant(true));

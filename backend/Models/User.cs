@@ -21,6 +21,7 @@ public class User : Model<User>
         Level = level;
     }
     
+    
     public static bool EmailUsedBefore(string email)
     {
         List<User> users = All();
@@ -28,7 +29,11 @@ public class User : Model<User>
         return users.Find(user => user.Email == email) != null;
     }
     
-    public override string ToString() => $"[{ID} {Email}] {FirstName} {Lastname} {Password} {Level}";
+    public string ToStringName() => $"{Email} {FirstName} {Lastname}";
+    
+    public override string ToString() => $"{ID} {Email} {FirstName} {Lastname} {Password} {Level}";
+    
+   
 }
     
     
