@@ -18,6 +18,31 @@ public class Flight : Model<Flight>
         ArrivalAirport = arrivalAirport;
         ArrivalTime = arrivalTime;
     }
+    
+    public static bool FlightNumberUsedBefore(int flightNumber)
+    {
+        List<Flight> flights = All();
+
+        return flights.Find(flight => flight.FlightNumber == flightNumber) != null;
+    }
+
+    public bool FlightHasUser(User user)
+    {
+        foreach (var seats in PlaneType.SeatsLayout)
+        {
+            if (seats == null)
+            {
+                continue;
+            }
+
+            if (seats.Any(seat => seat?.Reservation?.Email == user.Email))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public override string ToString() => $"[{FlightNumber}] {DepartureAirport} -> {ArrivalAirport} | {DepartureTime.ToString()}";
 }

@@ -3,7 +3,7 @@ using backend.Models;
 using Terminal.Gui;
 using Attribute = Terminal.Gui.Attribute;
 
-namespace shalom_airlines.Admin.Flights;
+namespace shalom_airlines.User.Flights;
 
 public class ShowReservation : Window
 {
@@ -18,7 +18,7 @@ public class ShowReservation : Window
             Y = 0,
             X = 0,
         };
-        btnBack.Clicked += Layout.Back;
+        btnBack.Clicked += () => { Layout.OpenWindow<Show>(flight); };
         Add(btnBack);
         
         var seatDisplay = new Label()

@@ -1,15 +1,16 @@
-﻿using backend.Controllers;
+﻿using backend.Models;
+using backend.Controllers;
 using Terminal.Gui;
 
-namespace shalom_airlines;
+namespace shalom_airlines.User.Account;
 
-public class Register : Window
+public class EditUser : Window
 {
-    public Register()
+    public EditUser()
     {
-        Title = "Register";
+        var user = Layout.LoggedInUser;
+        Title = $"Edit User: {user.FirstName} {user.Lastname}";
 
-        // Create input components and labels
         var emailLabel = new Label()
         {
             Text = "Email:",
@@ -17,10 +18,11 @@ public class Register : Window
 
         var emailText = new TextField("")
         {
+            Text = user.Email,
             Y = Pos.Bottom(emailLabel),
             Width = Dim.Fill(),
         };
-        
+
         var firstNameLabel = new Label()
         {
             Text = "First Name:",
@@ -30,10 +32,11 @@ public class Register : Window
 
         var firstNameText = new TextField("")
         {
+            Text = user.FirstName,
             Y = Pos.Bottom(firstNameLabel),
             Width = Dim.Fill(),
         };
-        
+
         var lastNameLabel = new Label()
         {
             Text = "Last Name:",
@@ -43,6 +46,7 @@ public class Register : Window
 
         var lastNameText = new TextField("")
         {
+            Text = user.Lastname,
             Y = Pos.Bottom(lastNameLabel),
             Width = Dim.Fill(),
         };
@@ -60,10 +64,10 @@ public class Register : Window
             Y = Pos.Bottom(passwordLabel),
             Width = Dim.Fill(),
         };
-        
+
         var passwordAuthLabel = new Label()
         {
-            Text = "Password:",
+            Text = "Password Auth:",
             X = Pos.Left(passwordLabel),
             Y = Pos.Bottom(passwordLabel) + 2
         };
@@ -74,70 +78,39 @@ public class Register : Window
             Y = Pos.Bottom(passwordAuthLabel),
             Width = Dim.Fill(),
         };
-        
-        // Create login button
-        var btnRegister = new Button()
+
+        // Create edit button
+        var btnEdit = new Button()
         {
-            Text = "Register",
+            Text = "Edit",
+            Y = Pos.Bottom(passwordAuthText) + 2,
+            X = Pos.Center(),
             IsDefault = true,
         };
 
-        // When login button is clicked display a message popup
-        void BtnRegisterClickedHandler()
+        btnEdit.Clicked += () =>
         {
-            // Field validation
             if (backend.Models.User.EmailUsedBefore((string)emailText.Text))
             {
                 MessageBox.ErrorQuery("Creating User", "Email used before", "Ok");
                 return;
             }
-            
+
             if (passwordText.Text != passwordAuthText.Text)
             {
                 MessageBox.ErrorQuery("Creating User", "Passwords do not match", "Ok");
                 return;
             }
 
-            btnRegister.Clicked -= BtnRegisterClickedHandler;
-            // create user
-            UserController.Create((string)emailText.Text, (string)firstNameText.Text, (string)lastNameText.Text, (string)passwordText.Text);
-            MessageBox.Query("Creating User", "User Created", "Ok");
-            Application.RequestStop();
-            Application.Top.RemoveAll();
-            Application.Run<MainMenu>();
-        }
-        btnRegister.Clicked += BtnRegisterClickedHandler;
-        
-        var btnBack = new Button()
-        {
-            Text = "Back",
-            X = Pos.Right(btnRegister),
+            backend.Models.User newUser = UserController.Update(user, (string)emailText.Text, (string)firstNameText.Text, (string)lastNameText.Text,
+                (string)passwordText.Text);
+            
+            MessageBox.Query("Editing User", "User Edited", "Ok");
+            Layout.LoggedInUser = newUser;
+            Layout.OpenWindow<Profile>();
         };
 
-        void BackAction()
-        {
-            btnBack.Clicked -= BackAction;
-            Application.RequestStop();
-            Application.Top.RemoveAll();
-            Application.Run<MainMenu>();
-        }
-
-        btnBack.Clicked += BackAction;
-        
-        var btns = new FrameView()
-        {
-            Y = Pos.Bottom(passwordAuthText) + 1,
-            X = Pos.Center(),
-            Width = Dim.Width(btnRegister) + Dim.Width(btnBack) + 1,
-            Height = Dim.Height(btnRegister),
-            Border = new Border()
-            {
-                BorderStyle = BorderStyle.None
-            }
-        };
-        btns.Add(btnRegister, btnBack);
-
-        // Add the views to the Window
-        Add(emailLabel, emailText, firstNameLabel, firstNameText, lastNameLabel, lastNameText, passwordLabel, passwordText, passwordAuthLabel, passwordAuthText, btns);
+        Add(emailLabel, emailText, firstNameLabel, firstNameText, lastNameLabel, lastNameText, passwordLabel,
+            passwordText, passwordAuthLabel, passwordAuthText, btnEdit);
     }
 }
