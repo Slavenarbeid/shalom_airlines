@@ -20,18 +20,15 @@ public class Index : Window
             Text = "ID: ",
         };
 
-        string text = "";
-        if (filters != null && filters.ContainsKey("FlightNumber"))
-        {
-            text = Convert.ToString(filters["FlightNumber"]);
-        }
-
         var SearchIdFieldText = new TextField("")
         {
-            Text = text,
             X = Pos.Right(SearchIdlLabel) + 1,
             Width = Dim.Percent(30),
         };
+        if (filters != null && filters.TryGetValue("FlightNumber", out var filterFlightNumber))
+        {
+            SearchIdFieldText.Text = Convert.ToString(filterFlightNumber)!;
+        }
 
         // Field  Departure -> Arrival
         var SearchDeparturelLabel = new Label()
@@ -39,38 +36,36 @@ public class Index : Window
             Text = "Flight: ",
             Y = Pos.Bottom(SearchIdlLabel) + 1,
         };
-        text = "";
-        if (filters != null && filters.ContainsKey("DepartureAirport"))
-        {
-            text = Convert.ToString(filters["DepartureAirport"]);
-        }
-
+        
         var SearchDepartureFieldText = new TextField("")
         {
-            Text = text,
             Y = Pos.Bottom(SearchIdlLabel) + 1,
             X = Pos.Right(SearchDeparturelLabel) + 1,
             Width = Dim.Percent(30),
         };
+        if (filters != null && filters.TryGetValue("DepartureAirport", out var filterDepartureAirport))
+        {
+            SearchDepartureFieldText.Text = Convert.ToString(filterDepartureAirport);
+        }
+        
         var SearchArrivallLabel = new Label()
         {
             Text = "->",
             Y = Pos.Bottom(SearchIdlLabel) + 1,
             X = Pos.Right(SearchDepartureFieldText) + 1,
         };
-        text = "";
-        if (filters != null && filters.ContainsKey("ArrivalAirport"))
-        {
-            text = Convert.ToString(filters["ArrivalAirport"]);
-        }
-
+        
         var SearchArrivalFieldText = new TextField("")
         {
-            Text = text,
             Y = Pos.Bottom(SearchIdlLabel) + 1,
             X = Pos.Right(SearchArrivallLabel) + 1,
             Width = Dim.Percent(30),
         };
+        if (filters != null && filters.TryGetValue("ArrivalAirport", out var filterArrivalAirport))
+        {
+            SearchArrivalFieldText.Text = Convert.ToString(filterArrivalAirport);
+        }
+
 
 
         // Button Reset
