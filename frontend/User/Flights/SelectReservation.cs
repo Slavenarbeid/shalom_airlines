@@ -28,20 +28,15 @@ public class SelectReservation : Window
         };
         Add(infoDisplay);
 
+
+        // calculating the group sizes
         Dictionary<int, List<View>> groups = new Dictionary<int, List<View>>();
         Dictionary<int, List<int>> groupsAvailableSeats = new Dictionary<int, List<int>>();
         int groupCounter = 0;
         int groupCounterAvailableSeats = 0;
-        Pos xCord = 0;
-        View? lastSeat = null;
         int maxSeatSize = 0;
         for (int rowInt = 0; rowInt < amountOfRows; rowInt++)
         {
-            if (lastSeat != null)
-            {
-                xCord = Pos.Right(lastSeat) + 1;
-            }
-
             for (int seatInt = 0; seatInt < seats.Count; seatInt++)
             {
                 if (seats[seatInt] == null)
@@ -58,42 +53,79 @@ public class SelectReservation : Window
                     continue;
                 }
 
+                if (seats[seatInt][rowInt].Type != type) continue;
                 if (!groups.ContainsKey(groupCounter))
                 {
                     groups.Add(groupCounter, new List<View>());
                 }
 
 
-
                 if (seats[seatInt][rowInt].Reservation == null)
                 {
                     groupCounterAvailableSeats++;
                 }
-
-
-                var seatDisplay = new Label()
-                {
-                    Text = $"( {groupCounter}-{groupCounterAvailableSeats} )",
-                    Y = Pos.Bottom(infoDisplay) + seatInt,
-                    X = xCord,
-                };
-                
-                groups[groupCounter].Add(seatDisplay);
-                Add(seatDisplay);
-                
-                lastSeat = seatDisplay;
             }
         }
 
+
+        // Calculate optimal seat size
         int optimalgroupsize = amount;
         if (maxSeatSize < amount) optimalgroupsize = maxSeatSize;
+        // debug info
         string text = $"max:{maxSeatSize}\noptimal:{optimalgroupsize}\n";
         foreach (var amountofseats in groupsAvailableSeats)
         {
-            
             text += $"{amountofseats.Key} {string.Join(",", amountofseats.Value)}\n";
         }
+
         infoDisplay.Text = text;
 
+
+        // Display the seats
+        Pos xCord = 0;
+        View? lastSeat = null;
+        int groupviewcount = 0;
+        for (int rowInt = 0; rowInt < amountOfRows; rowInt++)
+        {
+            if (lastSeat != null)
+            {
+                xCord = Pos.Right(lastSeat) + 1;
+            }
+
+            for (int seatInt = 0; seatInt < seats.Count; seatInt++)
+            {
+                if (seats[seatInt] == null)
+                {
+                    groupviewcount++;
+                    continue;
+                }
+
+                string seatTaken = "O";
+                if (seats[seatInt][rowInt].Reservation != null) seatTaken = "X";
+                if (groupsAvailableSeats.ContainsKey(optimalgroupsize) &&
+                    groupsAvailableSeats[optimalgroupsize].Contains(groupviewcount))
+                {
+                    var seatDisplay = new Label()
+                    {
+                        Text = $"[ {groupviewcount}-{seatTaken} ]",
+                        Y = Pos.Bottom(infoDisplay) + seatInt,
+                        X = xCord,
+                    };
+                    Add(seatDisplay);
+                    lastSeat = seatDisplay;
+                }
+                else
+                {
+                    var seatDisplay = new Label()
+                    {
+                        Text = $"( {groupviewcount}-{seatTaken} )",
+                        Y = Pos.Bottom(infoDisplay) + seatInt,
+                        X = xCord,
+                    };
+                    Add(seatDisplay);
+                    lastSeat = seatDisplay;
+                }
+            }
+        }
     }
 }
