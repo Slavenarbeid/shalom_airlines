@@ -90,12 +90,6 @@ public class EditUser : Window
 
         btnEdit.Clicked += () =>
         {
-            if (backend.Models.User.EmailUsedBefore((string)emailText.Text))
-            {
-                MessageBox.ErrorQuery("Creating User", "Email used before", "Ok");
-                return;
-            }
-
             if (passwordText.Text != passwordAuthText.Text)
             {
                 MessageBox.ErrorQuery("Creating User", "Passwords do not match", "Ok");
