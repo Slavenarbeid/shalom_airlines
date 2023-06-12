@@ -96,8 +96,8 @@ public class EditUser : Window
                 return;
             }
 
-            backend.Models.User newUser = UserController.Update(user, (string)emailText.Text, (string)firstNameText.Text, (string)lastNameText.Text,
-                (string)passwordText.Text);
+            backend.Models.User newUser = UserController.UpdateUserByID(user.ID, (string)emailText.Text, (string)firstNameText.Text, (string)lastNameText.Text,
+                (string)passwordText.Text, user.Level);
             
             MessageBox.Query("Editing User", "User Edited", "Ok");
             Layout.LoggedInUser = newUser;
