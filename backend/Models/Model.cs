@@ -26,10 +26,11 @@ public abstract class Model<TModel>
         foreach (var filter in filters)
         {
             var memberExpression = Expression.PropertyOrField(param, filter.Key);
-            var constantExpression = Expression.Constant(filter.Value.ToString());
+            var memberExpressionString = Expression.Call(memberExpression, typeof(object).GetMethod("ToString")!);
+            var constantExpression = Expression.Constant(filter.Value.ToString()?.ToLower());
             var binaryExpression = Expression.Equal(
                 Expression.Call(
-                    Expression.Call(memberExpression, typeof(object).GetMethod("ToString")!),
+                    memberExpressionString, 
                     "Contains",
                     null, constantExpression),
                 Expression.Constant(true));

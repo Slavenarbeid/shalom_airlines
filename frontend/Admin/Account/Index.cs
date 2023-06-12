@@ -96,11 +96,8 @@ public class Index : Window
             Dictionary<string, object> newFilter = new();
             if (SearchEmailFieldText.Text != "")
             {
-                if (int.TryParse((string)SearchEmailFieldText.Text, out int a))
-                {
-                    int SearchEmailValue = Convert.ToInt32(a);
-                    newFilter.Add("Email", SearchEmailValue);
-                }
+                string SearchEmailValue = (string)SearchEmailFieldText.Text;
+                newFilter.Add("Email", SearchEmailValue);
             }
 
             if (SearchFirstNameFieldText.Text != "")

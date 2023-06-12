@@ -4,7 +4,7 @@ namespace backend.Controllers;
 
 public static class PlaneController
 {
-    private static string[]?[]? _boeing737Layout =
+    private static readonly string[]?[]? Boeing737Layout =
     {
         new []{"B", "B", "B", "B", "E", "E", "E"},
         new []{"B", "B", "B", "B", "E", "E", "E"},
@@ -12,7 +12,7 @@ public static class PlaneController
         new []{"B", "B", "B", "B", "E", "E", "E"},
         new []{"B", "B", "B", "B", "E", "E", "E"},
     };
-    private static string[]?[]? _airbus330Layout = new string[][]
+    private static readonly string[]?[]? Airbus330Layout =
     {
         new []{"B", "B", "B", "B", "E", "E", "E"},
         new []{"B", "B", "B", "B", "E", "E", "E"},
@@ -20,7 +20,7 @@ public static class PlaneController
         new []{"B", "B", "B", "B", "E", "E", "E"},
         new []{"B", "B", "B", "B", "E", "E", "E"},
     };
-    private static string[]?[]? _boeing787Layout = new string[][]
+    private static readonly string[]?[]? Boeing787Layout =
     {
         new []{"B", "B", "B", "B", "E", "E", "E"},
         new []{"B", "B", "B", "B", "E", "E", "E"},
@@ -30,14 +30,14 @@ public static class PlaneController
     };
     public static List<Plane> Planes { get; } = new()
     {
-        new Plane("Boeing 737", SeatsConvertStringsToObjects(_boeing737Layout), "A small Boeing 737"),
-        new Plane("Airbus 330", SeatsConvertStringsToObjects(_airbus330Layout), "An small Airbus 330"),
-        new Plane("Boeing 787", SeatsConvertStringsToObjects(_boeing787Layout), "A big Boeing 787"),
+        new Plane("Boeing 737", SeatsConvertStringsToObjects(Boeing737Layout), "A small Boeing 737"),
+        new Plane("Airbus 330", SeatsConvertStringsToObjects(Airbus330Layout), "An small Airbus 330"),
+        new Plane("Boeing 787", SeatsConvertStringsToObjects(Boeing787Layout), "A big Boeing 787"),
     };
 
     public static List<List<Seat?>?> SeatsConvertStringsToObjects(string[]?[]? seatLayout)
     {
-        List<List<Seat?>?> seatLayoutObjects = new List<List<Seat?>?> {};
+        List<List<Seat?>?> seatLayoutObjects = new();
         
         for (int rowInt = 0; rowInt < seatLayout.Length; rowInt++)
         {
@@ -88,7 +88,7 @@ public static class PlaneController
 
     public static void Delete(string modelToDelete)
     {
-        Planes.Remove(Planes.Find(plane => plane.Model == modelToDelete));
+        Planes.Remove(Planes.Find(plane => plane.Model == modelToDelete)!);
     }
     
 }

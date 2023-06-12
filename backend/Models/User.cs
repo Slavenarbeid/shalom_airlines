@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace backend.Models;
+﻿namespace backend.Models;
 
 public class User : Model<User>
 {
