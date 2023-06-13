@@ -131,15 +131,16 @@ public class SelectReservation : Window
                 var colorScheme = new ColorScheme();
                 string seatTaken = "O";
                 if (seats[seatInt][rowInt].Reservation != null) seatTaken = "X";
-                if (seats[seatInt][rowInt].Reservation == Layout.LoggedInUser) {
-                    colorScheme.Normal = new Attribute(Color.Blue, Color.Black);
-                }
+
                 if (groupsAvailableSeats.ContainsKey(optimalgroupsize) &&
                     groupsAvailableSeats[optimalgroupsize].Contains(groupviewcount) &&
                     amount > 0)
                 {   // if seat is available
                     
-                    colorScheme.Normal = new Attribute(Color.Green, Color.Black);
+                    colorScheme.Normal = new Attribute(Color.Green, Color.Black); // Give Green Color to available seats
+                    if (seats[seatInt][rowInt].Reservation == Layout.LoggedInUser) {
+                        colorScheme.Normal = new Attribute(Color.Blue, Color.Black); // Give Blue color to seat user selected
+                    }
                     var seatDisplay = new Label()
                     {
                         Text = $"[ {groupviewcount}-{seatTaken} ]",
@@ -165,21 +166,24 @@ public class SelectReservation : Window
                 }
                 else
                 {   // if seat is not available
-
+                    if (seats[seatInt][rowInt].Reservation == Layout.LoggedInUser) {
+                        colorScheme.Normal = new Attribute(Color.Blue, Color.Black); // Give Blue color to seat user selected
+                    }
                     var seatDisplay = new Label()
                     {
                         Text = $"( {groupviewcount}-{seatTaken} )",
                         Y = Pos.Bottom(infoDisplay) + seatInt,
                         X = xCord,
+                        ColorScheme = colorScheme,
                     };
                     Add(seatDisplay);
                     lastSeat = seatDisplay;
                 }
             }
         }
-        if (amount <= 0)
+        if (amount <= 0) // Only show button when user selected all seats
         {
-            var confirmationButton = new Label()
+            var confirmationButton = new Button()
             {
                 Text = $"Confirm",
                 Y = Pos.Bottom(lastSeat),

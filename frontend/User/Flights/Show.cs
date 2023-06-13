@@ -19,8 +19,9 @@ public class Show : Window
         for (int rowInt = 0; rowInt < flight.PlaneType.SeatsLayout.Count; rowInt++)
         {
             Pos xCord = 0;
-            lastSeat = null;
             if (flight.PlaneType.SeatsLayout[rowInt] == null) continue;
+            lastSeat = null;
+
             for (int seatInt = 0; seatInt < flight.PlaneType.SeatsLayout[rowInt].Count; seatInt++)
             {
                 String seatType = flight.PlaneType.SeatsLayout[rowInt][seatInt].Type;
@@ -55,13 +56,10 @@ public class Show : Window
 
                         Y = Pos.Bottom(flightLabel) + 2 + rowInt,
                         X = xCord,
-                        
+
                         ColorScheme = colorScheme,
                     };
-                    seatDisplay.Clicked += () =>
-                    {
-                        Layout.OpenWindow<ShowReservation>(flight, rowInt1, seatInt1);
-                    };
+                    seatDisplay.Clicked += () => { Layout.OpenWindow<ShowReservation>(flight, rowInt1, seatInt1); };
                     Add(seatDisplay);
                     lastSeat = seatDisplay;
                 }
@@ -87,15 +85,16 @@ public class Show : Window
             availableSeatsString += $"{seat.Key}: {seat.Value}, ";
         }
 
-        var availableSeatsLabel = new Label()
-        {
-            Text = availableSeatsString,
-            Y = Pos.Bottom(lastSeat) + 1,
-            X = 0,
-        };
-        Add(availableSeatsLabel);
         if (lastSeat != null)
         {
+            var availableSeatsLabel = new Label()
+            {
+                Text = availableSeatsString,
+                Y = Pos.Bottom(lastSeat) + 1,
+                X = 0,
+            };
+            Add(availableSeatsLabel);
+
             View? lastButton = null;
             Pos xCord = 0;
             for (int i = 0; i < avaibleSeatTypes.Count; i++)
@@ -136,8 +135,19 @@ public class Show : Window
                         string seatType = avaibleSeatTypes[i2];
                         if (int.TryParse((string)AmountOfReservation.Text, out a))
                         {
+                            if (availableSeats[avaibleSeatTypes[i2]] >= a)
+                            {
+                                Layout.OpenWindow<SelectReservation>(flight, seatType, a);
+                            }
+                            else
+                            {
+                                MessageBox.ErrorQuery("Error", $"Selected amount is too big", "Ok");
+                            }
                             
-                            Layout.OpenWindow<SelectReservation>(flight, seatType, a);
+                        }
+                        else
+                        {
+                            MessageBox.ErrorQuery("Error", $"Please enter a int", "Ok");
                         }
                     };
                     Add(AmountOfReservation, StartReservation);
