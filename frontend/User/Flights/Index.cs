@@ -105,7 +105,7 @@ public class Index : Window
                 newFilter.Add("ArrivalAirport", SearchArrivalValue);
             }
 
-            Layout.OpenWindow<Admin.Flights.Index>(newFilter);
+            Layout.OpenWindow<Index>(newFilter);
         };
 
         // Button Reset
@@ -115,7 +115,7 @@ public class Index : Window
             X = Pos.Right(SearchFieldButton) + 1,
             Text = "Reset",
         };
-        SearchResetButton.Clicked += () => { Layout.OpenWindow<Admin.Flights.Index>(null); };
+        SearchResetButton.Clicked += () => { Layout.OpenWindow<Index>(null); };
 
         List<Flight> flightView = new List<Flight>();
         flightView = filters == null ? Flight.All() : Flight.Search(filters);

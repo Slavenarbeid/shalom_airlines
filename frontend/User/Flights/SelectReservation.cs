@@ -13,7 +13,7 @@ public class SelectReservation : Window
 
         // seats.Insert(0, null); // add null row to front of the list
         if (seats.Last() != null) seats.Add(null); // add null row to end of the list
-         
+
         int amountOfRows = 0;
         for (int seatInt = 0; seatInt < seats.Count; seatInt++)
         {
@@ -60,7 +60,8 @@ public class SelectReservation : Window
                 {
                     groups.Add(groupCounter, new List<int[]>());
                 }
-                groups[groupCounter].Add(new []{seatInt, rowInt});
+
+                groups[groupCounter].Add(new[] { seatInt, rowInt });
                 if (seats[seatInt][rowInt].Reservation == null)
                 {
                     groupCounterAvailableSeats++;
@@ -74,26 +75,29 @@ public class SelectReservation : Window
 
         if (maxSeatSize < amount) optimalgroupsize = maxSeatSize;
         int startgroupsize = optimalgroupsize;
-        
-        while (true)
+        if (optimalgroupsize > 0)
         {
-            if (optimalgroupsize <= 0)
+            while (true)
             {
-                optimalgroupsize = startgroupsize;
-                while (true)
+                if (optimalgroupsize <= 0)
                 {
-                    
-                    optimalgroupsize++;
-                    if (groupsAvailableSeats.ContainsKey(optimalgroupsize)) break;
+                    optimalgroupsize = startgroupsize;
+                    while (true)
+                    {
+                        optimalgroupsize++;
+                        if (groupsAvailableSeats.ContainsKey(optimalgroupsize)) break;
+                    }
+
+                    break;
                 }
-                break;
+
+                if (groupsAvailableSeats.ContainsKey(optimalgroupsize)) break;
+                optimalgroupsize--;
             }
-            if (groupsAvailableSeats.ContainsKey(optimalgroupsize)) break;
-            optimalgroupsize--;
         }
-        
+
         // debug info
-        string text = $"max:{maxSeatSize}\noptimal:{optimalgroupsize}\n";
+        string text = $"selection:{amount}\nmax:{maxSeatSize}\noptimal:{optimalgroupsize}\n";
         // foreach (var amountofseats in groupsAvailableSeats)
         // {
         //     text += $"{amountofseats.Key} {string.Join(",", amountofseats.Value)}\n";
@@ -105,8 +109,10 @@ public class SelectReservation : Window
             {
                 text += $"[ {val[0]}-{val[1]} ]";
             }
+
             text += $"\n";
         }
+
         infoDisplay.Text = text;
 
 
@@ -128,19 +134,24 @@ public class SelectReservation : Window
                     groupviewcount++;
                     continue;
                 }
+
                 var colorScheme = new ColorScheme();
                 string seatTaken = "O";
                 if (seats[seatInt][rowInt].Reservation != null) seatTaken = "X";
 
                 if (groupsAvailableSeats.ContainsKey(optimalgroupsize) &&
                     groupsAvailableSeats[optimalgroupsize].Contains(groupviewcount) &&
-                    amount > 0)
-                {   // if seat is available
-                    
+                    optimalgroupsize > 0)
+                {
+                    // if seat is available
+
                     colorScheme.Normal = new Attribute(Color.Green, Color.Black); // Give Green Color to available seats
-                    if (seats[seatInt][rowInt].Reservation == Layout.LoggedInUser) {
-                        colorScheme.Normal = new Attribute(Color.Blue, Color.Black); // Give Blue color to seat user selected
+                    if (seats[seatInt][rowInt].Reservation == Layout.LoggedInUser)
+                    {
+                        colorScheme.Normal =
+                            new Attribute(Color.Blue, Color.Black); // Give Blue color to seat user selected
                     }
+
                     var seatDisplay = new Label()
                     {
                         Text = $"[ {groupviewcount}-{seatTaken} ]",
@@ -152,23 +163,27 @@ public class SelectReservation : Window
                     var groupviewcount1 = groupviewcount;
                     seatDisplay.Clicked += () =>
                     {
-                        MessageBox.Query("Test", $"Group: {groupviewcount1}", "Ok");
                         int reservationAmount = optimalgroupsize;
                         if (optimalgroupsize > amount) reservationAmount = amount;
-                        flight = ReservationController.FillReservation(flight, groups[groupviewcount1], Layout.LoggedInUser, reservationAmount);
+                        flight = ReservationController.FillReservation(flight, groups[groupviewcount1],
+                            Layout.LoggedInUser, reservationAmount);
                         amount -= optimalgroupsize;
 
                         Layout.OpenWindow<SelectReservation>(flight, type, amount);
                     };
-                    
+
                     Add(seatDisplay);
                     lastSeat = seatDisplay;
                 }
                 else
-                {   // if seat is not available
-                    if (seats[seatInt][rowInt].Reservation == Layout.LoggedInUser) {
-                        colorScheme.Normal = new Attribute(Color.Blue, Color.Black); // Give Blue color to seat user selected
+                {
+                    // if seat is not available
+                    if (seats[seatInt][rowInt].Reservation == Layout.LoggedInUser)
+                    {
+                        colorScheme.Normal =
+                            new Attribute(Color.Blue, Color.Black); // Give Blue color to seat user selected
                     }
+
                     var seatDisplay = new Label()
                     {
                         Text = $"( {groupviewcount}-{seatTaken} )",
@@ -181,13 +196,24 @@ public class SelectReservation : Window
                 }
             }
         }
+        var cancelButton = new Button()
+        {
+            Text = $"Cancel",
+            Y = Pos.Bottom(lastSeat),
+            X = 0,
+        };
+        cancelButton.Clicked += () =>
+        {
+            Layout.OpenWindow<Show>(FlightController.GetFlightByFlightNumber(flight.FlightNumber));
+        };
+        Add(cancelButton);
         if (amount <= 0) // Only show button when user selected all seats
         {
             var confirmationButton = new Button()
             {
                 Text = $"Confirm",
                 Y = Pos.Bottom(lastSeat),
-                X = 0,
+                X = Pos.Right(cancelButton),
             };
             confirmationButton.Clicked += () =>
             {
@@ -197,7 +223,4 @@ public class SelectReservation : Window
             Add(confirmationButton);
         }
     }
-
-
-
 }

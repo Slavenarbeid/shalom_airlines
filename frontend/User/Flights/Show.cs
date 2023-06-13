@@ -143,14 +143,23 @@ public class Show : Window
                             {
                                 MessageBox.ErrorQuery("Error", $"Selected amount is too big", "Ok");
                             }
-                            
                         }
                         else
                         {
                             MessageBox.ErrorQuery("Error", $"Please enter a int", "Ok");
                         }
                     };
-                    Add(AmountOfReservation, StartReservation);
+
+                    var CancelReservation = new Button()
+                    {
+                        Text = "Cancel",
+                        Y = Pos.Bottom(AmountOfReservation),
+                        X = 0,
+                    };
+                    CancelReservation.Clicked += () => { Layout.OpenWindow<Show>(flight); };
+
+
+                    Add(AmountOfReservation, StartReservation, CancelReservation);
                     Remove(confirmReservationButton);
                 };
                 Add(confirmReservationButton);
