@@ -10,6 +10,7 @@ public class EditFlight : Window
     public EditFlight(Flight flight)
     {
         Title = $"Edit flight: {flight.FlightNumber}";
+        var planeTypeValue = flight.PlaneType;
         
         var flightNumberLabel = new Label()
         {
@@ -22,26 +23,12 @@ public class EditFlight : Window
             Y = Pos.Bottom(flightNumberLabel),
             Width = Dim.Fill(),
         };
-        
-        var planeTypeLabel = new Label("Select Planetype:  ")
-        {
-            Y = Pos.Bottom(flightNumberLabel) + 2
-        };
-        
-        ustring[] planeTypeRadioGroup = PlaneController.Planes
-            .Select(plane => ustring.Make(plane.Model))
-            .ToArray();
-        
-        var planeType = new RadioGroup(planeTypeRadioGroup)
-        {
-            Y = Pos.Bottom(planeTypeLabel)
-        };
 
         var departureAirportLabel = new Label()
         {
             Text = "Departure Airport:  ",
-            X = Pos.Left(planeTypeLabel),
-            Y = Pos.Bottom(planeTypeLabel) + 4
+            X = Pos.Left(flightNumberLabel),
+            Y = Pos.Bottom(flightNumberLabel) + 2
         };
 
         var departureAirportText = new TextField("")
@@ -132,11 +119,17 @@ public class EditFlight : Window
         btnEdit.Clicked += () =>
         {
             // extract values
-            int flightNumberValue = Convert.ToInt32(flightNumberText.Text);
+            int flightNumberValue;
+            if (int.TryParse((string)flightNumberText.Text, out int fn))
+            {
+                flightNumberValue = Convert.ToInt32(fn);
+            }
+            else
+            {
+                MessageBox.ErrorQuery("Creating Flight", "Flight number must be integer", "Ok");
+                return;
+            }
             
-            var selectedPlane = PlaneController.Planes[planeType.SelectedItem];
-            var planeTypeValue = PlaneController.Create(selectedPlane.Model, selectedPlane.SeatsLayout, selectedPlane.Info);
-
             string departureAirportValue = (string)departureAirportText.Text;
             DateTime departureDateTimeValue = departureDateText.Date + departureTimeText.Time;
             
@@ -146,22 +139,22 @@ public class EditFlight : Window
             // validate values
 
             // update flight
-            FlightController.Update(
-                flight,
-                flightNumberValue, 
-                planeTypeValue, 
-                departureAirportValue, 
-                departureDateTimeValue, 
-                arrivalAirportValue, 
-                arrivalDateTimeValue);
-            
+            FlightController.UpdateFlightByFlightNumber(
+                flightNumberValue,
+                new Flight(
+                    flightNumberValue,
+                    planeTypeValue, 
+                    departureAirportValue, 
+                    departureDateTimeValue, 
+                    arrivalAirportValue, 
+                    arrivalDateTimeValue)
+                );
+
             MessageBox.Query("Editing Flight", "Flight Edited", "Ok");
-            Layout.OpenWindow<Show>(flight);
+            Layout.OpenWindow<Index>();
         };
 
-        Add(flightNumberLabel, flightNumberText, 
-            planeTypeLabel, planeType, 
-            departureAirportLabel, departureAirportText, 
+        Add(departureAirportLabel, departureAirportText, 
             departureDateLabel, departureDateText, 
             departureTimeLabel ,departureTimeText, 
             arrivalAirportLabel, arrivalAirportText,

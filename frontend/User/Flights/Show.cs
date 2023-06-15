@@ -168,7 +168,7 @@ public class Show : Window
                         }
                         else
                         {
-                            MessageBox.ErrorQuery("Error", $"Please enter a int", "Ok");
+                            MessageBox.ErrorQuery("Error", $"Please enter a integer", "Ok");
                         }
                     };
 
@@ -185,9 +185,6 @@ public class Show : Window
                     Remove(confirmReservationButton);
                 };
                 Add(confirmReservationButton);
-
-
-                
             }
         }
     }
