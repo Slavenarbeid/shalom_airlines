@@ -1,21 +1,31 @@
 ﻿namespace backend.Controllers;
+
 using Newtonsoft.Json;
 
 public class JsonHandle<TItem>
 {
-    public string JsonFileName;
+    private readonly string _jsonFileName;
+
+    private readonly string _debugDataPath = "../../../../backend/Data/";
+    private readonly string _releaseDataPath = "Data/";
 
     public JsonHandle(string jsonFileName)
     {
-        JsonFileName = @"../../../../backend/Data/" + jsonFileName + ".json";
+#if DEBUG
+        Directory.CreateDirectory(_debugDataPath);
+        _jsonFileName = $"{_debugDataPath}{jsonFileName}.json";
+#else
+        Directory.CreateDirectory(_releaseDataPath);
+        _jsonFileName = $"{_releaseDataPath}{jsonFileName}.json";
+#endif
     }
 
     public void AddToJson(TItem item)
     {
         List<TItem> listOfObjects = LoadJson();
-        
+
         listOfObjects.Add(item);
-        
+
         SaveJsonFile(listOfObjects);
     }
 
@@ -23,19 +33,19 @@ public class JsonHandle<TItem>
     {
         List<TItem> listOfObjects = LoadJson();
         TItem itemToRemove = listOfObjects.FirstOrDefault(obj => obj.ToString() == item.ToString());
-        bool succes = listOfObjects.Remove(itemToRemove);
-        
+        bool success = listOfObjects.Remove(itemToRemove!);
+
         SaveJsonFile(listOfObjects);
 
-        return succes;
+        return success;
     }
-    
+
     public void UpdateJson(TItem itemToUpdate, TItem newItem)
     {
         List<TItem> listOfObjects = LoadJson();
 
         var type = itemToUpdate.GetType();
-        
+
         TItem listItemToUpdate;
         if (type.GetMethod("Equals") != null)
         {
@@ -45,32 +55,34 @@ public class JsonHandle<TItem>
         {
             listItemToUpdate = listOfObjects.Find(obj => obj.ToString() == itemToUpdate.ToString());
         }
-        
+
         if (listItemToUpdate == null) return;
         var index = listOfObjects.IndexOf(listItemToUpdate);
-        if(index != -1)
+        if (index != -1)
             listOfObjects[index] = newItem;
-        
+
         SaveJsonFile(listOfObjects);
     }
-    
+
 
     public List<TItem> LoadJson()
     {
         List<TItem> listOfObjects = new List<TItem>();
-        if(File.Exists(JsonFileName)){
-            using (StreamReader reader = new StreamReader(JsonFileName))
+        if (File.Exists(_jsonFileName))
+        {
+            using (StreamReader reader = new StreamReader(_jsonFileName))
             {
                 string file2Json = reader.ReadToEnd();
                 listOfObjects = JsonConvert.DeserializeObject<List<TItem>>(file2Json) ?? new List<TItem>();
             }
         }
+
         return listOfObjects;
     }
 
     public void SaveJsonFile(List<TItem> listOfObjects)
     {
-        using (StreamWriter writer = new StreamWriter(JsonFileName))
+        using (StreamWriter writer = new StreamWriter(_jsonFileName))
         {
             string list2Json = JsonConvert.SerializeObject(listOfObjects);
             writer.Write(list2Json);
