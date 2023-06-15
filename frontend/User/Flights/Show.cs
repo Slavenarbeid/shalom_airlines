@@ -9,11 +9,22 @@ public class Show : Window
 {
     public Show(Flight flight)
     {
-        Title = $"Viewing flight {flight.FlightNumber}";
+        Title = $"Viewing flight details of flight {flight.FlightNumber}";
 
-        var flightLabel = new Label(flight.ToString());
-
-        Add(flightLabel);
+        var flightLabel = new Label()
+        {
+            Text = $"From {flight.DepartureAirport} to {flight.ArrivalAirport}\nDeparture date and time: {flight.DepartureTime.Date}\nArrival date and time: {flight.ArrivalTime}",
+        };
+        
+        var btnBack = new Button()
+        {
+            Text = "Back",
+            Y = Pos.Bottom(flightLabel) + 1,
+            X = 0,
+        };
+        btnBack.Clicked += Layout.Back;
+        
+        Add(flightLabel, btnBack);
         List<string> avaibleSeatTypes = new List<string>();
         View? lastSeat = null;
         bool hasReservation = false;

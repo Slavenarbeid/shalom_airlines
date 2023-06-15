@@ -28,27 +28,6 @@ public class Show : Window
 
         btnEdit.Clicked += () => { Layout.OpenWindow<EditUser>(user); };
 
-
-        var btnDelete = new Button()
-        {
-            Text = "Delete",
-            Y = Pos.Bottom(userlabel) + 1,
-            X = Pos.Bottom(btnEdit) + 6,
-        };
-
-        // btnDelete.Clicked += () =>
-        // {
-        //     if (FlightController.Delete(user))
-        //     {
-        //         MessageBox.Query("Deleting Flight", "Flight Deleted", "Ok");
-        //         Layout.OpenWindow<Index>();
-        //         return;
-        //     }
-        //
-        //     MessageBox.Query("Deleting Flight Failed", "Flight not Deleted", "Ok");
-        // };
-
-
         var btnBack = new Button()
         {
             Text = "Back",
@@ -57,6 +36,6 @@ public class Show : Window
         };
         btnBack.Clicked += Layout.Back;
 
-        Add(userlabel, btnDelete, btnEdit, btnBack);
+        Add(userlabel, btnEdit, btnBack);
     }
 }
