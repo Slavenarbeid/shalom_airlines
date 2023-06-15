@@ -62,8 +62,8 @@ public class Show : Window
         for (int rowInt = 0; rowInt < flight.PlaneType.SeatsLayout.Count; rowInt++)
         {
             Pos xCord = 0;
-            lastSeat = null;
             if (flight.PlaneType.SeatsLayout[rowInt] == null) continue;
+            lastSeat = null;
             for (int seatInt = 0; seatInt < flight.PlaneType.SeatsLayout[rowInt].Count; seatInt++)
             {
                 string extraspace = "";
