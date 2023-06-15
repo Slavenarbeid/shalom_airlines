@@ -6,42 +6,45 @@ public static class PlaneController
 {
     private static readonly string[]?[]? Boeing737Layout =
     {
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
         null,
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
     };
+
     private static readonly string[]?[]? Airbus330Layout =
     {
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
         null,
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
     };
+
     private static readonly string[]?[]? Boeing787Layout =
     {
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
         null,
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
         null,
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
+        new[] { "B", "B", "B", "B", "E", "E", "E", "E", "E", "E" },
     };
+
     public static List<Plane> Planes { get; } = new()
     {
         new Plane("Boeing 737", SeatsConvertStringsToObjects(Boeing737Layout), "A small Boeing 737"),
@@ -52,7 +55,7 @@ public static class PlaneController
     public static List<List<Seat?>?> SeatsConvertStringsToObjects(string[]?[]? seatLayout)
     {
         List<List<Seat?>?> seatLayoutObjects = new();
-        
+
         for (int rowInt = 0; rowInt < seatLayout.Length; rowInt++)
         {
             if (seatLayout[rowInt] == null)
@@ -60,16 +63,17 @@ public static class PlaneController
                 seatLayoutObjects.Add(null);
                 continue;
             }
+
             seatLayoutObjects.Add(new List<Seat?>());
             for (int seatInt = 0; seatInt < seatLayout[rowInt].Length; seatInt++)
             {
                 switch (seatLayout[rowInt][seatInt])
                 {
                     case "B":
-                        seatLayoutObjects[rowInt].Add(new Seat("Business", null)) ;
+                        seatLayoutObjects[rowInt].Add(new Seat("Business", null));
                         break;
                     case "E":
-                        seatLayoutObjects[rowInt].Add( new Seat("Economy", null));
+                        seatLayoutObjects[rowInt].Add(new Seat("Economy", null));
                         break;
                     case null:
                         seatLayoutObjects[rowInt].Add(null);
@@ -85,9 +89,6 @@ public static class PlaneController
     {
         Plane plane = new Plane(model, seatsLayout, info);
 
-        JsonHandle<Plane> jsonHandle = new JsonHandle<Plane>("Planes");
-        jsonHandle.AddToJson(plane);
-        
         return plane;
     }
 
@@ -104,5 +105,4 @@ public static class PlaneController
     {
         Planes.Remove(Planes.Find(plane => plane.Model == modelToDelete)!);
     }
-    
 }
