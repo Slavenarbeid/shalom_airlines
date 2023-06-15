@@ -6,27 +6,41 @@ public static class PlaneController
 {
     private static readonly string[]?[]? Boeing737Layout =
     {
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
         null,
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
     };
     private static readonly string[]?[]? Airbus330Layout =
     {
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
         null,
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
     };
     private static readonly string[]?[]? Boeing787Layout =
     {
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
         null,
-        new []{"B", "B", "B", "B", "E", "E", "E"},
-        new []{"B", "B", "B", "B", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        null,
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
+        new []{"B", "B", "B", "B", "E", "E", "E", "E", "E", "E"},
     };
     public static List<Plane> Planes { get; } = new()
     {

@@ -24,4 +24,19 @@ public static class ReservationController
         
         return flight;
     }
+    
+    public static Flight FillReservation(Flight flight, List<int[]> groupToFill, User user, int amountToFill)
+    {
+
+        foreach (var seats in groupToFill)
+        {
+            if (amountToFill == 0) break;
+            if (flight.PlaneType.SeatsLayout[seats[0]][seats[1]].Reservation != null) continue;
+            flight.PlaneType.SeatsLayout[seats[0]][seats[1]].Reservation = user;
+            amountToFill--;
+        }
+        
+        return flight;
+    }
+    
 }
