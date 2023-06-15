@@ -16,6 +16,7 @@ public class Show : Window
         Add(flightLabel);
         List<string> avaibleSeatTypes = new List<string>();
         View? lastSeat = null;
+        bool hasReservation = false;
         for (int rowInt = 0; rowInt < flight.PlaneType.SeatsLayout.Count; rowInt++)
         {
             Pos xCord = 0;
@@ -48,6 +49,7 @@ public class Show : Window
                 }
                 else if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation?.ID == Layout.LoggedInUser.ID)
                 {
+                    hasReservation = true;
                     var colorScheme = new ColorScheme();
                     colorScheme.Normal = new Attribute(Color.Black, Color.White);
                     var seatDisplay = new Label()
@@ -87,10 +89,30 @@ public class Show : Window
 
         if (lastSeat != null)
         {
+            var cancelReserverdSeats = new Button("")
+            {
+                Text = "Cancel reserved seats",
+                Y = Pos.Bottom(lastSeat) + 1,
+                X = 0,
+            };
+            cancelReserverdSeats.Clicked += () =>
+            {
+                var n = MessageBox.Query ("Cancel reservation", "Are you sure you want cancel the reservation?", "Yes", "No");
+                if (n == 0){
+                    flight = ReservationController.CancelReservation(flight, Layout.LoggedInUser);
+                    Layout.OpenWindow<Show>(flight);
+                }
+            };
+            if (hasReservation)
+            {
+                Add(cancelReserverdSeats);
+            }
+            
+            
             var availableSeatsLabel = new Label()
             {
                 Text = availableSeatsString,
-                Y = Pos.Bottom(lastSeat) + 1,
+                Y = Pos.Bottom(lastSeat) + 3,
                 X = 0,
             };
             Add(availableSeatsLabel);
@@ -107,7 +129,7 @@ public class Show : Window
                 var confirmReservationButton = new Button()
                 {
                     Text = $"{avaibleSeatTypes[i]}",
-                    Y = Pos.Bottom(lastSeat) + 2,
+                    Y = Pos.Bottom(availableSeatsLabel) + 1,
                     X = xCord,
                 };
                 lastButton = confirmReservationButton;
@@ -116,7 +138,7 @@ public class Show : Window
                 {
                     var AmountOfReservation = new TextField("")
                     {
-                        Y = Pos.Bottom(lastSeat) + 2,
+                        Y = Pos.Bottom(availableSeatsLabel) + 1,
                         X = 0,
                         Width = Dim.Percent(10),
                     };
@@ -163,6 +185,9 @@ public class Show : Window
                     Remove(confirmReservationButton);
                 };
                 Add(confirmReservationButton);
+
+
+                
             }
         }
     }
