@@ -17,4 +17,10 @@
       <Folder Include="Data" />
     </ItemGroup>
 
+    <ItemGroup>
+        <None Update="Data/Users.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </None>
+    </ItemGroup>
 </Project>
