@@ -53,12 +53,19 @@ public static class FlightController
             for (int seatInt = 0; seatInt < flight.PlaneType.SeatsLayout[rowInt].Count; seatInt++)
             {
                 String seatType = flight.PlaneType.SeatsLayout[rowInt][seatInt].Type;
-                if (!availableSeats.ContainsKey(seatType)) availableSeats.Add(seatType, 1);
+                if (!availableSeats.ContainsKey(seatType)) availableSeats.Add(seatType, 0);
                 if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation != null) continue;
                 availableSeats[seatType]++;
             }
         }
 
         return availableSeats;
+    }
+    
+    public static Flight GetFlightByFlightNumber(int flightNumber)
+    {
+        JsonHandle<Flight> jsonHandle = new JsonHandle<Flight>("Flights");
+        List<Flight> flights = Flight.All();
+        return flights.Find(obj => obj.FlightNumber == flightNumber);
     }
 }

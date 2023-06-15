@@ -9,18 +9,31 @@ public class Show : Window
 {
     public Show(Flight flight)
     {
-        Title = $"Viewing flight {flight.FlightNumber}";
+        Title = $"Viewing flight details of flight {flight.FlightNumber}";
 
-        var flightLabel = new Label(flight.ToString());
-
-        Add(flightLabel);
+        var flightLabel = new Label()
+        {
+            Text = $"From {flight.DepartureAirport} to {flight.ArrivalAirport}\nDeparture date and time: {flight.DepartureTime.Date}\nArrival date and time: {flight.ArrivalTime}",
+        };
+        
+        var btnBack = new Button()
+        {
+            Text = "Back",
+            Y = Pos.Bottom(flightLabel) + 1,
+            X = 0,
+        };
+        btnBack.Clicked += Layout.Back;
+        
+        Add(flightLabel, btnBack);
         List<string> avaibleSeatTypes = new List<string>();
         View? lastSeat = null;
+        bool hasReservation = false;
         for (int rowInt = 0; rowInt < flight.PlaneType.SeatsLayout.Count; rowInt++)
         {
             Pos xCord = 0;
-            lastSeat = null;
             if (flight.PlaneType.SeatsLayout[rowInt] == null) continue;
+            lastSeat = null;
+
             for (int seatInt = 0; seatInt < flight.PlaneType.SeatsLayout[rowInt].Count; seatInt++)
             {
                 String seatType = flight.PlaneType.SeatsLayout[rowInt][seatInt].Type;
@@ -47,6 +60,7 @@ public class Show : Window
                 }
                 else if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation?.ID == Layout.LoggedInUser.ID)
                 {
+                    hasReservation = true;
                     var colorScheme = new ColorScheme();
                     colorScheme.Normal = new Attribute(Color.Black, Color.White);
                     var seatDisplay = new Label()
@@ -55,13 +69,10 @@ public class Show : Window
 
                         Y = Pos.Bottom(flightLabel) + 2 + rowInt,
                         X = xCord,
-                        
+
                         ColorScheme = colorScheme,
                     };
-                    seatDisplay.Clicked += () =>
-                    {
-                        Layout.OpenWindow<ShowReservation>(flight, rowInt1, seatInt1);
-                    };
+                    seatDisplay.Clicked += () => { Layout.OpenWindow<ShowReservation>(flight, rowInt1, seatInt1); };
                     Add(seatDisplay);
                     lastSeat = seatDisplay;
                 }
@@ -87,15 +98,36 @@ public class Show : Window
             availableSeatsString += $"{seat.Key}: {seat.Value}, ";
         }
 
-        var availableSeatsLabel = new Label()
-        {
-            Text = availableSeatsString,
-            Y = Pos.Bottom(lastSeat) + 1,
-            X = 0,
-        };
-        Add(availableSeatsLabel);
         if (lastSeat != null)
         {
+            var cancelReserverdSeats = new Button("")
+            {
+                Text = "Cancel reserved seats",
+                Y = Pos.Bottom(lastSeat) + 1,
+                X = 0,
+            };
+            cancelReserverdSeats.Clicked += () =>
+            {
+                var n = MessageBox.Query ("Cancel reservation", "Are you sure you want cancel the reservation?", "Yes", "No");
+                if (n == 0){
+                    flight = ReservationController.CancelReservation(flight, Layout.LoggedInUser);
+                    Layout.OpenWindow<Show>(flight);
+                }
+            };
+            if (hasReservation)
+            {
+                Add(cancelReserverdSeats);
+            }
+            
+            
+            var availableSeatsLabel = new Label()
+            {
+                Text = availableSeatsString,
+                Y = Pos.Bottom(lastSeat) + 3,
+                X = 0,
+            };
+            Add(availableSeatsLabel);
+
             View? lastButton = null;
             Pos xCord = 0;
             for (int i = 0; i < avaibleSeatTypes.Count; i++)
@@ -108,7 +140,7 @@ public class Show : Window
                 var confirmReservationButton = new Button()
                 {
                     Text = $"{avaibleSeatTypes[i]}",
-                    Y = Pos.Bottom(lastSeat) + 2,
+                    Y = Pos.Bottom(availableSeatsLabel) + 1,
                     X = xCord,
                 };
                 lastButton = confirmReservationButton;
@@ -117,7 +149,7 @@ public class Show : Window
                 {
                     var AmountOfReservation = new TextField("")
                     {
-                        Y = Pos.Bottom(lastSeat) + 2,
+                        Y = Pos.Bottom(availableSeatsLabel) + 1,
                         X = 0,
                         Width = Dim.Percent(10),
                     };
@@ -136,11 +168,31 @@ public class Show : Window
                         string seatType = avaibleSeatTypes[i2];
                         if (int.TryParse((string)AmountOfReservation.Text, out a))
                         {
-                            
-                            Layout.OpenWindow<SelectReservation>(flight, seatType, a);
+                            if (availableSeats[avaibleSeatTypes[i2]] >= a)
+                            {
+                                Layout.OpenWindow<SelectReservation>(flight, seatType, a);
+                            }
+                            else
+                            {
+                                MessageBox.ErrorQuery("Error", $"Selected amount is too big", "Ok");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.ErrorQuery("Error", $"Please enter a integer", "Ok");
                         }
                     };
-                    Add(AmountOfReservation, StartReservation);
+
+                    var CancelReservation = new Button()
+                    {
+                        Text = "Cancel",
+                        Y = Pos.Bottom(AmountOfReservation),
+                        X = 0,
+                    };
+                    CancelReservation.Clicked += () => { Layout.OpenWindow<Show>(flight); };
+
+
+                    Add(AmountOfReservation, StartReservation, CancelReservation);
                     Remove(confirmReservationButton);
                 };
                 Add(confirmReservationButton);

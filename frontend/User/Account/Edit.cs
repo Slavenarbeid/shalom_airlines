@@ -90,20 +90,14 @@ public class EditUser : Window
 
         btnEdit.Clicked += () =>
         {
-            if (backend.Models.User.EmailUsedBefore((string)emailText.Text))
-            {
-                MessageBox.ErrorQuery("Creating User", "Email used before", "Ok");
-                return;
-            }
-
             if (passwordText.Text != passwordAuthText.Text)
             {
                 MessageBox.ErrorQuery("Creating User", "Passwords do not match", "Ok");
                 return;
             }
 
-            backend.Models.User newUser = UserController.Update(user, (string)emailText.Text, (string)firstNameText.Text, (string)lastNameText.Text,
-                (string)passwordText.Text);
+            backend.Models.User newUser = UserController.UpdateUserByID(user.ID, (string)emailText.Text, (string)firstNameText.Text, (string)lastNameText.Text,
+                (string)passwordText.Text, user.Level);
             
             MessageBox.Query("Editing User", "User Edited", "Ok");
             Layout.LoggedInUser = newUser;

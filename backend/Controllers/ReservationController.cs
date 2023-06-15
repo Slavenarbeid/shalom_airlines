@@ -24,4 +24,38 @@ public static class ReservationController
         
         return flight;
     }
+    
+    public static Flight FillReservation(Flight flight, List<int[]> groupToFill, User user, int amountToFill)
+    {
+
+        foreach (var seats in groupToFill)
+        {
+            if (amountToFill == 0) break;
+            if (flight.PlaneType.SeatsLayout[seats[0]][seats[1]].Reservation != null) continue;
+            flight.PlaneType.SeatsLayout[seats[0]][seats[1]].Reservation = user;
+            amountToFill--;
+        }
+        
+        return flight;
+    }
+    
+    
+    public static Flight CancelReservation(Flight flight, User user)
+    {
+
+        for (int rowInt = 0; rowInt < flight.PlaneType.SeatsLayout.Count; rowInt++)
+        {
+            if (flight.PlaneType.SeatsLayout[rowInt] == null) continue;
+            for (int seatInt = 0; seatInt < flight.PlaneType.SeatsLayout[rowInt].Count; seatInt++)
+            {
+                if (flight.PlaneType.SeatsLayout[rowInt][seatInt] == null || flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation == null) continue;
+                if (flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation.ID == user.ID)
+                {
+                    flight.PlaneType.SeatsLayout[rowInt][seatInt].Reservation = null;
+                }
+            }
+        }
+        FlightController.UpdateFlightByFlightNumber(flight.FlightNumber, flight);
+        return flight;
+    }
 }
