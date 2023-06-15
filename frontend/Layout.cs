@@ -39,7 +39,12 @@ public class Layout : Toplevel
                     }),
                     new MenuBarItem("Account", new[]
                     {
-                        new MenuItem("Profile", "See Profile", OpenWindow<User.Account.Profile>),
+                        new MenuItem("Overview", "See All Users", OpenWindow<Admin.Account.Index>),
+                        new MenuItem("Profile", "See Profile", OpenWindow<Admin.Account.Profile>),
+                    }),
+                    new MenuBarItem("Contact", new[]
+                    {
+                        new MenuItem("About us", "", OpenWindow<Info>),
                     }),
                     new MenuBarItem("Logout", new[]
                     {
@@ -48,7 +53,7 @@ public class Layout : Toplevel
                             Application.Top.RequestStop();
                             Application.Run<MainMenu>();
                         })
-                    })
+                    }),
                 });
                 break;
             default:
@@ -67,6 +72,10 @@ public class Layout : Toplevel
                     {
                         new MenuItem("Profile", "See Profile", OpenWindow<User.Account.Profile>),
                     }),
+                    new MenuBarItem("Contact", new[]
+                    {
+                        new MenuItem("About us", "", OpenWindow<Info>),
+                    }),
                     new MenuBarItem("Logout", new[]
                     {
                         new MenuItem("Logout", "Logout Account", () =>
@@ -74,7 +83,7 @@ public class Layout : Toplevel
                             Application.Top.RequestStop();
                             Application.Run<MainMenu>();
                         })
-                    })
+                    }),
                 });
                 break;
         }

@@ -12,7 +12,7 @@ public class Register : Window
         // Create input components and labels
         var emailLabel = new Label()
         {
-            Text = "Email:",
+            Text = "Email: ",
         };
 
         var emailText = new TextField("")

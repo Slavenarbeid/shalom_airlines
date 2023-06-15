@@ -14,16 +14,14 @@ public class Login : Window
         // Create input components and labels
         var emailLabel = new Label()
         {
-            Text = "Username:",
-            Y = Pos.Center()
+            Text = "Email:",
+            Y = Pos.Center(),
         };
 
         emailText = new TextField("")
         {
             // Position text field adjacent to the label
-            X = Pos.Right(emailLabel) + 1,
-            Y = Pos.Center(),
-
+            Y = Pos.Bottom(emailLabel),
             // Fill remaining horizontal space
             Width = Dim.Fill(),
         };
@@ -39,8 +37,7 @@ public class Login : Window
         {
             Secret = true,
             // align with the text box above
-            X = Pos.Left(emailText),
-            Y = Pos.Top(passwordLabel),
+            Y = Pos.Bottom(passwordLabel),
             Width = Dim.Fill(),
         };
 
@@ -69,7 +66,7 @@ public class Login : Window
         
         var btns = new FrameView()
         {
-            Y = Pos.Bottom(passwordLabel) + 1,
+            Y = Pos.Bottom(passwordLabel) + 2,
             X = Pos.Center(),
             Width = Dim.Width(btnLogin) + Dim.Width(btnBack) + 1,
             Height = Dim.Height(btnLogin),

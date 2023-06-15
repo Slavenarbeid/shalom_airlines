@@ -28,4 +28,21 @@ public class UserController
         jsonHandle.UpdateJson(oldUser, newUser);
         return newUser;
     }
+    
+    public static User UpdateUserByID(string uuid, string email, string firstName, string lastname, string password, string level)
+    {
+        string passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
+        
+        User newUser = new User(uuid, email, firstName, lastname, passwordHash, level);
+        
+        JsonHandle<User> jsonHandle = new JsonHandle<User>("Users");
+        List<User> users = User.All();
+        User userToUpdate = users.Find(obj => obj.ID == uuid);
+        var index = users.IndexOf(userToUpdate);
+        if(index != -1)
+            users[index] = newUser;
+        jsonHandle.SaveJsonFile(users);
+        
+        return newUser;
+    }
 }

@@ -2,13 +2,13 @@
 using backend.Controllers;
 using Terminal.Gui;
 
-namespace shalom_airlines.User.Account;
+namespace shalom_airlines.Admin.Account;
 
 public class EditUser : Window
 {
-    public EditUser()
+    public EditUser(backend.Models.User user)
     {
-        var user = Layout.LoggedInUser;
+        // var user = Layout.LoggedInUser;
         Title = $"Edit User: {user.FirstName} {user.Lastname}";
 
         var emailLabel = new Label()
@@ -101,7 +101,7 @@ public class EditUser : Window
             
             MessageBox.Query("Editing User", "User Edited", "Ok");
             Layout.LoggedInUser = newUser;
-            Layout.OpenWindow<Profile>();
+            Layout.OpenWindow<AdminOverview>();
         };
 
         Add(emailLabel, emailText, firstNameLabel, firstNameText, lastNameLabel, lastNameText, passwordLabel,

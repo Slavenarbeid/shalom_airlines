@@ -33,8 +33,19 @@ public class JsonHandle<TItem>
     public void UpdateJson(TItem itemToUpdate, TItem newItem)
     {
         List<TItem> listOfObjects = LoadJson();
+
+        var type = itemToUpdate.GetType();
         
-        TItem listItemToUpdate = listOfObjects.Find(obj => obj.ToString() == itemToUpdate.ToString());
+        TItem listItemToUpdate;
+        if (type.GetMethod("Equals") != null)
+        {
+            listItemToUpdate = listOfObjects.Find(obj => obj.Equals(newItem));
+        }
+        else
+        {
+            listItemToUpdate = listOfObjects.Find(obj => obj.ToString() == itemToUpdate.ToString());
+        }
+        
         if (listItemToUpdate == null) return;
         var index = listOfObjects.IndexOf(listItemToUpdate);
         if(index != -1)
