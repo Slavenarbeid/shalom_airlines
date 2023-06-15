@@ -125,8 +125,17 @@ public class Create : Window
         btnCreate.Clicked += () =>
         {
             // extract values
-            int flightNumberValue = Convert.ToInt32(flightNumberText.Text);
-            
+            int flightNumberValue;
+            if (int.TryParse((string)flightNumberText.Text, out int fn))
+            {
+                flightNumberValue = Convert.ToInt32(fn);
+            }
+            else
+            {
+                MessageBox.ErrorQuery("Creating Flight", "Flight number must be integer", "Ok");
+                return;
+            }
+
             var selectedPlane = PlaneController.Planes[planeType.SelectedItem];
             var planeTypeValue = PlaneController.Create(selectedPlane.Model, selectedPlane.SeatsLayout, selectedPlane.Info);
 
