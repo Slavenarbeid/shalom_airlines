@@ -6,9 +6,18 @@ public class JsonHandle<TItem>
 {
     private readonly string _jsonFileName;
 
+    private readonly string _debugDataPath = "../../../../backend/Data/";
+    private readonly string _releaseDataPath = "Data/";
+
     public JsonHandle(string jsonFileName)
     {
-        _jsonFileName = @"../../../../backend/Data/" + jsonFileName + ".json";
+#if DEBUG
+        Directory.CreateDirectory(_debugDataPath);
+        _jsonFileName = $"{_debugDataPath}{jsonFileName}.json";
+#else
+        Directory.CreateDirectory(_releaseDataPath);
+        _jsonFileName = $"{_releaseDataPath}{jsonFileName}.json";
+#endif
     }
 
     public void AddToJson(TItem item)
@@ -35,7 +44,18 @@ public class JsonHandle<TItem>
     {
         List<TItem> listOfObjects = LoadJson();
 
-        TItem listItemToUpdate = listOfObjects.Find(obj => obj.ToString() == itemToUpdate.ToString());
+        var type = itemToUpdate.GetType();
+
+        TItem listItemToUpdate;
+        if (type.GetMethod("Equals") != null)
+        {
+            listItemToUpdate = listOfObjects.Find(obj => obj.Equals(newItem));
+        }
+        else
+        {
+            listItemToUpdate = listOfObjects.Find(obj => obj.ToString() == itemToUpdate.ToString());
+        }
+
         if (listItemToUpdate == null) return;
         var index = listOfObjects.IndexOf(listItemToUpdate);
         if (index != -1)
@@ -48,17 +68,24 @@ public class JsonHandle<TItem>
     public List<TItem> LoadJson()
     {
         List<TItem> listOfObjects = new List<TItem>();
-        if (!File.Exists(_jsonFileName)) return listOfObjects;
+        if (File.Exists(_jsonFileName))
+        {
+            using (StreamReader reader = new StreamReader(_jsonFileName))
+            {
+                string file2Json = reader.ReadToEnd();
+                listOfObjects = JsonConvert.DeserializeObject<List<TItem>>(file2Json) ?? new List<TItem>();
+            }
+        }
 
-        using StreamReader reader = new StreamReader(_jsonFileName);
-        string file2Json = reader.ReadToEnd();
-        return JsonConvert.DeserializeObject<List<TItem>>(file2Json) ?? new List<TItem>();
+        return listOfObjects;
     }
 
     public void SaveJsonFile(List<TItem> listOfObjects)
     {
-        using StreamWriter writer = new StreamWriter(_jsonFileName);
-        string list2Json = JsonConvert.SerializeObject(listOfObjects);
-        writer.Write(list2Json);
+        using (StreamWriter writer = new StreamWriter(_jsonFileName))
+        {
+            string list2Json = JsonConvert.SerializeObject(listOfObjects);
+            writer.Write(list2Json);
+        }
     }
 }
