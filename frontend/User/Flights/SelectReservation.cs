@@ -24,10 +24,15 @@ public class SelectReservation : Window
 
         var infoDisplay = new Label()
         {
-            Text = $"- {amountOfRows} -",
+            Text = $"Please select {amount} more seats",
             Y = 0,
             X = 0,
         };
+        if (amount <= 0)
+        {
+            infoDisplay.Text = $"Please confirm your selection";
+        }
+
         Add(infoDisplay);
 
 
@@ -95,26 +100,6 @@ public class SelectReservation : Window
                 optimalgroupsize--;
             }
         }
-
-        // debug info
-        string text = $"selection:{amount}\nmax:{maxSeatSize}\noptimal:{optimalgroupsize}\n";
-        // foreach (var amountofseats in groupsAvailableSeats)
-        // {
-        //     text += $"{amountofseats.Key} {string.Join(",", amountofseats.Value)}\n";
-        // }
-        foreach (var amountofseats in groups)
-        {
-            text += $"{amountofseats.Key}: ";
-            foreach (var val in amountofseats.Value)
-            {
-                text += $"[ {val[0]}-{val[1]} ]";
-            }
-
-            text += $"\n";
-        }
-
-        infoDisplay.Text = text;
-
 
         // Display the seats
         Pos xCord = 0;
@@ -196,6 +181,7 @@ public class SelectReservation : Window
                 }
             }
         }
+
         var cancelButton = new Button()
         {
             Text = $"Cancel",
